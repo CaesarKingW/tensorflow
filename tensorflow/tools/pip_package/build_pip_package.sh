@@ -136,6 +136,15 @@ function prepare_src() {
   popd > /dev/null
   cp -R $RUNFILES/third_party/eigen3 ${TMPDIR}/third_party
 
+  mkdir -p ${TMPDIR}/tensorflow/third_party/coriander
+  cp third_party/coriander/build/libcocl.${SO_SUFFIX} ${TMPDIR}/tensorflow/third_party/coriander/ || true
+  cp third_party/coriander/build/libeasycl.${SO_SUFFIX} ${TMPDIR}/tensorflow/third_party/coriander/ || true
+  cp third_party/coriander/build/libclew.${SO_SUFFIX} ${TMPDIR}/tensorflow/third_party/coriander/ || true
+  cp third_party/coriander/build/libclblast.${SO_SUFFIX} ${TMPDIR}/tensorflow/third_party/coriander/ || true
+  ls ${TMPDIR}/tensorflow/third_party/coriander
+  touch ${TMPDIR}/tensorflow/third_party/__init__.py
+  touch ${TMPDIR}/tensorflow/third_party/coriander/__init__.py
+  
   cp tensorflow/tools/pip_package/MANIFEST.in ${TMPDIR}
   cp tensorflow/tools/pip_package/README ${TMPDIR}
   cp tensorflow/tools/pip_package/setup.py ${TMPDIR}

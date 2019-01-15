@@ -11,6 +11,14 @@ load(
     "if_mkl_ml",
 )
 
+# configure may change the following lines to True
+WITH_GCP_SUPPORT = False
+WITH_HDFS_SUPPORT = False
+SO_SUFFIX = ".so"
+
+def tf_add_so_suffix(name):
+  return name + SO_SUFFIX
+  
 # Appends a suffix to a list of deps.
 def tf_deps(deps, suffix):
     tf_deps = []

@@ -8,6 +8,7 @@ STREAM_EXECUTOR_HEADERS = glob([
     "*.h",
     "cuda/*.h",
     "host/*.h",
+    "cl/*.h",    
     "lib/*.h",
     "lib/gtl/*.h",
     "platform/**/*.h",
@@ -22,6 +23,7 @@ cc_library(
             "cuda/cuda_platform_id.cc",
             "lib/*.cc",
             "platform/default/*.cc",
+            "cl/*.cc",
         ],
         exclude = [
             "**/*_test.cc",
@@ -32,13 +34,25 @@ cc_library(
         "//tensorflow:freebsd": [],
         "//tensorflow:windows": [],
         "//conditions:default": ["-ldl"],
+         "-ldl",
+        '-lcocl',
+        '-lclblast',
+        '-leasycl',
+        '-lclew',       
     }),
     visibility = ["//visibility:public"],
     deps = [
+        "//third_party:cocl",
         "//tensorflow/core:lib",
         "//tensorflow/core:ptr_util",
         "@local_config_cuda//cuda:cuda_headers",
     ],
+    copts = [
+        '-Ithird_party/coriander/include/cocl',
+        '-Ithird_party/coriander/include/cocl/proxy_includes',
+        '-Ithird_party/coriander/src/EasyCL',
+        '-Ithird_party/coriander/src/EasyCL/third_party/clew/include',
+    ],    
     alwayslink = 1,
 )
 

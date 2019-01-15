@@ -26,8 +26,8 @@ StreamExecutorFactory* MakeCUDAExecutorImplementation() {
 }
 
 // -- OpenCL
-
-StreamExecutorFactory* MakeOpenCLExecutorImplementation() {
+StreamExecutorFactory* MakeCLExecutorImplementation() {
+//StreamExecutorFactory* MakeOpenCLExecutorImplementation() {
   static StreamExecutorFactory instance;
   return &instance;
 }

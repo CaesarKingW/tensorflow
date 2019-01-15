@@ -3014,7 +3014,13 @@ tf_cuda_library(
         "common_runtime/gpu/gpu_util_platform_specific.cc",
     ],
     hdrs = GPU_RUNTIME_HEADERS,
-    copts = tf_copts(),
+    #copts = tf_copts(),
+    copts = tf_copts() + [
+        '-Ithird_party/coriander/include/cocl',
+        '-Ithird_party/coriander/include/cocl/proxy_includes',
+        '-Ithird_party/coriander/src/EasyCL',
+        '-Ithird_party/coriander/src/EasyCL/thirdparty/clew',
+    ],    
     deps = [
         ":core_cpu_impl",
         ":core_cpu_lib",
@@ -3029,6 +3035,7 @@ tf_cuda_library(
         ":protos_all_cc",
         ":stream_executor",
         "//third_party/eigen3",
+        "//third_party:cocl",        
     ],
     alwayslink = 1,
 )

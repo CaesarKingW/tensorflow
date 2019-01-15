@@ -1,5 +1,41 @@
 # -*- Python -*-
 
+# Parse the bazel version string from `native.bazel_version`.
+def _parse_bazel_version(bazel_version):
+  # Remove commit from version.
+  version = bazel_version.split(" ", 1)[0]
+
+  # Split into (release, date) parts and only return the release
+  # as a tuple of integers.
+  parts = version.split('-', 1)
+
+  # Turn "release" into a tuple of strings
+  version_tuple = ()
+  for number in parts[0].split('.'):
+    version_tuple += (str(number),)
+  return version_tuple
+
+# Given a source file, generate a test name.
+# i.e. "common_runtime/direct_session_test.cc" becomes
+#      "common_runtime_direct_session_test"
+def src_to_test_name(src):
+  return src.replace("/", "_").split(".")[0]
+
+# Check that a specific bazel version is being used.
+def check_version(bazel_version):
+  if "bazel_version" not in dir(native):
+    fail("\nCurrent Bazel version is lower than 0.2.1, expected at least %s\n" % bazel_version)
+  elif not native.bazel_version:
+    print("\nCurrent Bazel is not a release version, cannot check for compatibility.")
+    print("Make sure that you are running at least Bazel %s.\n" % bazel_version)
+  else:
+    current_bazel_version = _parse_bazel_version(native.bazel_version)
+    minimum_bazel_version = _parse_bazel_version(bazel_version)
+    if minimum_bazel_version > current_bazel_version:
+      fail("\nCurrent Bazel version is {}, expected at least {}\n".format(
+          native.bazel_version, bazel_version))
+  pass
+  
 # Return the options to use for a C++ library or binary build.
 # Uses the ":optmode" config_setting to pick the options.
 load(
@@ -1000,6 +1036,7 @@ register_extension_info(
     label_regex_for_dep = "{extension_name}",
 )
 
+
 def _cuda_copts():
     """Gets the appropriate set of copts for (maybe) CUDA compilation.
 
@@ -1169,6 +1206,13 @@ def tf_kernel_library(
         "req_dep=%s" % clean_dep("//tensorflow/core:gpu_lib"),
         "req_dep=@local_config_cuda//cuda:cuda_headers",
     ]
+    copts += [
+       '-Iexternal/eigen_archive',
+       '-Ithird_party/coriander/include/cocl',
+       '-Ithird_party/coriander/include/cocl/proxy_includes',
+       '-Ithird_party/coriander/src/EasyCL',
+       '-Ithird_party/coriander/src/EasyCL/thirdparty/clew/include'
+    ]    
     tf_cuda_library(
         name = name,
         srcs = srcs,

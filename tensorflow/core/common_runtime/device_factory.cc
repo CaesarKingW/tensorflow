@@ -104,7 +104,16 @@ Status DeviceFactory::AddDevices(const SessionOptions& options,
     return errors::NotFound("No CPU devices are available in this process");
   }
 
-  // Then the rest (including GPU).
+  // Then GPU.
+  auto gpu_factory = GetFactory("GPU");
+  // std::cout << "DeviceFactory::AddDevices GPU" << std::endl;
+  if (gpu_factory) {
+    // std::cout << " we have a gpu factory" << std::endl;
+    TF_RETURN_IF_ERROR(
+        gpu_factory->CreateDevices(options, name_prefix, devices));
+  }
+
+  // Then the rest.
   mutex_lock l(*get_device_factory_lock());
   for (auto& p : device_factories()) {
     auto factory = p.second.factory.get();

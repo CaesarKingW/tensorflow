@@ -86,7 +86,7 @@ Allocator* GPUProcessState::GetGPUAllocator(const GPUOptions& options,
                                             TfGpuId tf_gpu_id,
                                             size_t total_bytes) {
   CHECK(process_state_);
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
   const string& allocator_type = options.allocator_type();
   mutex_lock lock(mu_);
   GpuIdUtil::CheckValidTfGpuId(tf_gpu_id);
@@ -151,10 +151,10 @@ Allocator* GPUProcessState::GetGPUAllocator(const GPUOptions& options,
   if (process_state_->ProcessState::FLAGS_brain_gpu_record_mem_types)
     return gpu_al_[tf_gpu_id.value()];
   return gpu_allocators_[tf_gpu_id.value()];
-#else
-  LOG(FATAL) << "GPUAllocator unavailable. Not compiled with --config=cuda.";
-  return nullptr;
-#endif  // GOOGLE_CUDA
+//#else
+//  LOG(FATAL) << "GPUAllocator unavailable. Not compiled with --config=cuda.";
+//  return nullptr;
+//#endif  // GOOGLE_CUDA
 }
 
 Allocator* GPUProcessState::GetCUDAHostAllocator(int numa_node) {
@@ -237,7 +237,7 @@ Allocator* GPUProcessState::GetCUDAHostAllocator(int numa_node) {
 void GPUProcessState::AddGPUAllocVisitor(int bus_id,
                                          const AllocVisitor& visitor) {
   CHECK(process_state_);
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
   mutex_lock lock(mu_);
   for (int i = 0; i < static_cast<int64>(gpu_allocators_.size()); ++i) {
     se::StreamExecutor* se =
@@ -251,7 +251,7 @@ void GPUProcessState::AddGPUAllocVisitor(int bus_id,
     gpu_visitors_.push_back(std::vector<AllocVisitor>());
   }
   gpu_visitors_[bus_id].push_back(visitor);
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 }
 
 void GPUProcessState::TestOnlyReset() {

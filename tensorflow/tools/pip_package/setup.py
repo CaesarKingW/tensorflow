@@ -45,7 +45,7 @@ DOCLINES = __doc__.split('\n')
 # This version string is semver compatible, but incompatible with pip.
 # For pip, we will remove all '-' characters from this string, and use the
 # result for pip.
-_VERSION = '1.11.0'
+_VERSION = '1.11.0pan0'
 
 REQUIRED_PACKAGES = [
     'absl-py >= 0.1.6',
@@ -240,10 +240,10 @@ setup(
     version=_VERSION.replace('-', ''),
     description=DOCLINES[0],
     long_description='\n'.join(DOCLINES[2:]),
-    url='https://www.tensorflow.org/',
-    download_url='https://github.com/tensorflow/tensorflow/tags',
-    author='Google Inc.',
-    author_email='opensource@google.com',
+    url='https://www.tensorflow.org/;https://github.com/pint1022/tensorflow-cl'',
+    download_url='https://github.com/pint1022/tensorflow',
+    author='Pintuitive Inc.',
+    author_email='swang@panyi.com',
     # Contained modules and scripts.
     packages=find_packages(),
     entry_points={
@@ -286,5 +286,5 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     license='Apache 2.0',
-    keywords='tensorflow tensor machine learning',
+    keywords='tensorflow tensor machine learning OpenCL',
 )

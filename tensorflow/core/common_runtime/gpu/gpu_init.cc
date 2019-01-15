@@ -29,13 +29,16 @@ limitations under the License.
 namespace tensorflow {
 
 Status ValidateGPUMachineManager() {
-  return se::MultiPlatformManager::PlatformWithName("CUDA").status();
+//  return se::MultiPlatformManager::PlatformWithName("CUDA").status();
+  return se::MultiPlatformManager::PlatformWithName("CL").status();
 }
 
 se::Platform* GPUMachineManager() {
-  auto result = se::MultiPlatformManager::PlatformWithName("CUDA");
+//  auto result = se::MultiPlatformManager::PlatformWithName("CUDA");
+  auto result = gpu::MultiPlatformManager::PlatformWithName("CL");  
   if (!result.ok()) {
-    LOG(FATAL) << "Could not find Platform with name CUDA";
+    LOG(FATAL) << "Could not find Platform with name CL";
+//    LOG(FATAL) << "Could not find Platform with name CUDA";
     return nullptr;
   }
 

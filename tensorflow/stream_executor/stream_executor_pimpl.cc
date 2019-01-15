@@ -70,7 +70,8 @@ internal::StreamExecutorInterface *StreamExecutorImplementationFromPlatformKind(
       factory = *internal::MakeCUDAExecutorImplementation();
       break;
     case PlatformKind::kOpenCL:
-      factory = *internal::MakeOpenCLExecutorImplementation();
+//      factory = *internal::MakeOpenCLExecutorImplementation();
+      factory = *internal::MakeCLExecutorImplementation();      
       break;
     case PlatformKind::kHost:
       factory = internal::MakeHostExecutorImplementation;

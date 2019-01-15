@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_UTIL_CUDA_KERNEL_HELPER_H_
 #define TENSORFLOW_CORE_UTIL_CUDA_KERNEL_HELPER_H_
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #include "tensorflow/core/util/cuda_device_functions.h"
 #include "tensorflow/core/util/cuda_launch_config.h"
@@ -115,5 +115,5 @@ __device__ IntType upper_bound(IntType* first, IntType count, IntType val) {
 }  // namespace cuda_helper
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 #endif  // TENSORFLOW_CORE_UTIL_CUDA_KERNEL_HELPER_H_
