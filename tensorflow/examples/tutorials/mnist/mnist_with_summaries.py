@@ -29,6 +29,8 @@ import os
 import sys
 
 import tensorflow as tf
+from tensorflow.python.client import timeline
+
 
 from tensorflow.examples.tutorials.mnist import input_data
 
@@ -171,6 +173,11 @@ def train():
                               run_metadata=run_metadata)
         train_writer.add_run_metadata(run_metadata, 'step%03d' % i)
         train_writer.add_summary(summary, i)
+        tl = timeline.Timeline(run_metadata.step_stats)
+        ctf = tl.generate_chrome_trace_format()
+        with open('timeline.json', 'w') as f:
+            f.write(ctf)
+
         print('Adding run metadata for', i)
       else:  # Record a summary
         summary, _ = sess.run([merged, train_step], feed_dict=feed_dict(True))
