@@ -4,7 +4,7 @@ set -e
 set -x
 
 # BUILDTYPE=
-#echo BUILDTYPE ${BUILDTYPE}
+echo BUILDTYPE ${BUILDTYPE}
 #TEST_TMPDIR=/tmp/bazel/ bazel build ${LOCALRESOURCES} ${BUILDTYPE} -c dbg  @grpc//:grpc_cpp_plugin
 #TEST_TMPDIR=/tmp/bazel/ bazel build ${LOCALRESOURCES} ${BUILDTYPE} -c dbg @protobuf//:protoc
 #mkdir -p bazel-out/host/bin/external/grpc
