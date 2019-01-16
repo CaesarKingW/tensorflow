@@ -43,4 +43,4 @@ popd
 
 
 . ~/conda3/bin/activate
-pip install -r util/requirements.txt
+#pip install -r util/requirements.txt

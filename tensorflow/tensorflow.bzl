@@ -77,8 +77,8 @@ def register_extension_info(**kwargs):
 # Given a source file, generate a test name.
 # i.e. "common_runtime/direct_session_test.cc" becomes
 #      "common_runtime_direct_session_test"
-def src_to_test_name(src):
-    return src.replace("/", "_").split(".")[0]
+#def src_to_test_name(src):
+#    return src.replace("/", "_").split(".")[0]
 
 def full_path(relative_paths):
     return [native.package_name() + "/" + relative for relative in relative_paths]

@@ -33,12 +33,12 @@ cc_library(
     linkopts = select({
         "//tensorflow:freebsd": [],
         "//tensorflow:windows": [],
-        "//conditions:default": ["-ldl"],
-         "-ldl",
-        '-lcocl',
-        '-lclblast',
-        '-leasycl',
-        '-lclew',       
+        "//conditions:default": ["-ldl",        
+                                 '-lcocl',
+                                 '-lclblast',
+                                 '-leasycl',
+                                 '-lclew',
+        ],
     }),
     visibility = ["//visibility:public"],
     deps = [
