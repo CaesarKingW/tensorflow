@@ -43,10 +43,10 @@ limitations under the License.
 #include "tensorflow/core/util/use_cudnn.h"
 #include "tensorflow/core/util/work_sharder.h"
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #include "tensorflow/core/kernels/conv_ops_gpu.h"
 #include "tensorflow/core/platform/stream_executor.h"
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 namespace {
 
@@ -602,7 +602,7 @@ template struct LaunchConv2DBackpropInputOp<CPUDevice, float>;
 template struct LaunchConv2DBackpropInputOp<CPUDevice, double>;
 
 // GPU definitions.
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 // The slow version (but compiles for GPU)
 
 // A dummy type to group forward backward data autotune results together.
@@ -1134,6 +1134,6 @@ template struct LaunchConv2DBackpropInputOp<GPUDevice, float>;
 template struct LaunchConv2DBackpropInputOp<GPUDevice, Eigen::half>;
 template struct LaunchConv2DBackpropInputOp<GPUDevice, double>;
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

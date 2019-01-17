@@ -1305,7 +1305,7 @@ struct CudaVersion {
   int major_part = -1;
   int minor_part = -1;
 };
-
+#define TF_CUDA_CAPABILITIES CudaVersion("3.0")
 std::vector<CudaVersion> supported_cuda_compute_capabilities = {
     TF_CUDA_CAPABILITIES,};
 

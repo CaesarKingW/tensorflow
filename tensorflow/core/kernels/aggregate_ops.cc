@@ -224,12 +224,12 @@ REGISTER_ADDN_CPU(Variant);
 
 #undef REGISTER_ADDN_CPU
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define REGISTER_ADDN_GPU(type) REGISTER_ADDN(type, GPU)
 TF_CALL_GPU_NUMBER_TYPES(REGISTER_ADDN_GPU);
-TF_CALL_complex64(REGISTER_ADDN_GPU);
-TF_CALL_complex128(REGISTER_ADDN_GPU);
-TF_CALL_variant(REGISTER_ADDN_GPU);
+//TF_CALL_complex64(REGISTER_ADDN_GPU);
+//TF_CALL_complex128(REGISTER_ADDN_GPU);
+//TF_CALL_variant(REGISTER_ADDN_GPU);
 #undef REGISTER_ADDN_GPU
 
 // A special GPU kernel for int32.
@@ -242,7 +242,7 @@ REGISTER_KERNEL_BUILDER(Name("AddN")
                             .HostMemory("sum"),
                         AddNOp<CPUDevice, int32>);
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER_ADDN(float, SYCL);

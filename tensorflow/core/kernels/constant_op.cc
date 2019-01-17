@@ -17,9 +17,9 @@ limitations under the License.
 
 #define EIGEN_USE_THREADS
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define EIGEN_USE_GPU
-#endif
+//#endif
 
 #include "tensorflow/core/kernels/constant_op.h"
 
@@ -91,7 +91,7 @@ ConstantOp::~ConstantOp() {}
 
 REGISTER_KERNEL_BUILDER(Name("Const").Device(DEVICE_CPU), ConstantOp);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define REGISTER_KERNEL(D, TYPE)                                      \
   REGISTER_KERNEL_BUILDER(                                            \
       Name("Const").Device(DEVICE_##D).TypeConstraint<TYPE>("dtype"), \
@@ -298,7 +298,7 @@ REGISTER_KERNEL_BUILDER(Name("ZerosLike")
                         ZerosLikeOp<CPUDevice, int32>);
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER_KERNEL(bool, GPU);
 REGISTER_KERNEL(Eigen::half, GPU);
 REGISTER_KERNEL(bfloat16, GPU);

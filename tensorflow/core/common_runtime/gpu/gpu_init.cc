@@ -35,7 +35,7 @@ Status ValidateGPUMachineManager() {
 
 se::Platform* GPUMachineManager() {
 //  auto result = se::MultiPlatformManager::PlatformWithName("CUDA");
-  auto result = gpu::MultiPlatformManager::PlatformWithName("CL");  
+  auto result = se::MultiPlatformManager::PlatformWithName("CL");
   if (!result.ok()) {
     LOG(FATAL) << "Could not find Platform with name CL";
 //    LOG(FATAL) << "Could not find Platform with name CUDA";

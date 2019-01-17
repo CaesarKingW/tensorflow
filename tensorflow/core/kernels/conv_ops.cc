@@ -18,9 +18,9 @@ limitations under the License.
 #define USE_EIGEN_TENSOR
 #define EIGEN_USE_THREADS
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define EIGEN_USE_GPU
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #include "tensorflow/core/kernels/conv_ops.h"
 
@@ -467,7 +467,7 @@ template struct LaunchConv2DOp<CPUDevice, Eigen::half>;
 template struct LaunchConv2DOp<CPUDevice, float>;
 template struct LaunchConv2DOp<CPUDevice, double>;
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 int64 GetCudnnWorkspaceLimit(const string& envvar_in_mb,
                              int64 default_value_in_bytes) {
   const char* workspace_limit_in_mb_str = getenv(envvar_in_mb.c_str());
@@ -856,6 +856,6 @@ template struct LaunchConv2DOp<GPUDevice, float>;
 template struct LaunchConv2DOp<GPUDevice, Eigen::half>;
 template struct LaunchConv2DOp<GPUDevice, double>;
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

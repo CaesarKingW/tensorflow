@@ -35,6 +35,9 @@ limitations under the License.
 
 #if !defined(PLATFORM_GOOGLE)
 #include "cuda/cuda_config.h"
+//#else
+#define TF_CUDA_VERSION "9.0"
+#define TF_CUDNN_VERSION "7"
 #endif
 
 namespace stream_executor {

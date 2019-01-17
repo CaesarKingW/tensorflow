@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_CONV_OPS_GPU_H_
 #define TENSORFLOW_CORE_KERNELS_CONV_OPS_GPU_H_
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #include <tuple>
 #include <unordered_map>
@@ -196,6 +196,6 @@ typedef Eigen::GpuDevice GPUDevice;
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #endif  // TENSORFLOW_CORE_KERNELS_CONV_OPS_GPU_H_
