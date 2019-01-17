@@ -20,7 +20,7 @@ REGISTER5(UnaryOp, CPU, "Abs", functor::abs, float, Eigen::half, double, int32,
           int64);
 REGISTER2(UnaryOp, CPU, "ComplexAbs", functor::abs, complex64, complex128);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER4(UnaryOp, GPU, "Abs", functor::abs, float, Eigen::half, double, int64);
 REGISTER2(UnaryOp, GPU, "ComplexAbs", functor::abs, complex64, complex128);
 
@@ -33,7 +33,7 @@ REGISTER_KERNEL_BUILDER(Name("Abs")
                             .HostMemory("y")
                             .TypeConstraint<int32>("T"),
                         UnaryOp<CPUDevice, functor::abs<int32>>);
-#endif
+//#endif
 
 #if TENSORFLOW_USE_SYCL
 REGISTER3(UnaryOp, SYCL, "Abs", functor::abs, float, double, int64);

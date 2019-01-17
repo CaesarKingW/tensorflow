@@ -18,7 +18,7 @@ limitations under the License.
 namespace tensorflow {
 REGISTER6(BinaryOp, CPU, "Minimum", functor::minimum, float, Eigen::half,
           bfloat16, double, int32, int64);
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER4(BinaryOp, GPU, "Minimum", functor::minimum, float, Eigen::half,
           double, int64);
 
@@ -32,7 +32,7 @@ REGISTER_KERNEL_BUILDER(Name("Minimum")
                             .HostMemory("z")
                             .TypeConstraint<int32>("T"),
                         BinaryOp<CPUDevice, functor::minimum<int32>>);
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER3(BinaryOp, SYCL, "Minimum", functor::minimum, float, double, int64);

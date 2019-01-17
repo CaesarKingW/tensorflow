@@ -18,9 +18,9 @@ limitations under the License.
 namespace tensorflow {
 REGISTER2(UnaryOp, CPU, "Acos", functor::acos, float, double);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER2(UnaryOp, GPU, "Acos", functor::acos, float, double);
-#endif
+//#endif
 
 #if TENSORFLOW_USE_SYCL
 REGISTER2(UnaryOp, SYCL, "Acos", functor::acos, float, double);

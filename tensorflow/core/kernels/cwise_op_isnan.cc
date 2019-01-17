@@ -19,9 +19,9 @@ namespace tensorflow {
 REGISTER4(UnaryOp, CPU, "IsNan", functor::isnan, float, Eigen::half, double,
           bfloat16);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER3(UnaryOp, GPU, "IsNan", functor::isnan, float, Eigen::half, double);
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER2(UnaryOp, SYCL, "IsNan", functor::isnan, float, double);

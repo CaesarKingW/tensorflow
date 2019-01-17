@@ -20,10 +20,10 @@ REGISTER5(BinaryOp, CPU, "Pow", functor::pow, float, Eigen::half, double,
           complex64, complex128);
 REGISTER2(BinaryOp, CPU, "Pow", functor::safe_pow, int32, int64);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER4(BinaryOp, GPU, "Pow", functor::pow, float, Eigen::half, double,
           int64);
-#endif
+//#endif
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER2(BinaryOp, SYCL, "Pow", functor::pow, float, double);
 #endif  // TENSORFLOW_USE_SYCL

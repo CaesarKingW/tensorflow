@@ -18,7 +18,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_CUDA_DEVICE_ARRAY_GPU_H_
 #define TENSORFLOW_CORE_KERNELS_CUDA_DEVICE_ARRAY_GPU_H_
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 namespace tensorflow {
 
@@ -45,6 +45,6 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE ValueType* GetCudaDeviceArrayOnDevice(
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #endif  // TENSORFLOW_CORE_KERNELS_CUDA_DEVICE_ARRAY_GPU_H_

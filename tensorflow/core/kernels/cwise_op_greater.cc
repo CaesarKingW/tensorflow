@@ -18,7 +18,7 @@ limitations under the License.
 namespace tensorflow {
 REGISTER9(BinaryOp, CPU, "Greater", functor::greater, float, Eigen::half,
           double, int32, int64, uint8, int8, int16, bfloat16);
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER7(BinaryOp, GPU, "Greater", functor::greater, float, Eigen::half,
           double, int64, uint8, int8, int16);
 
@@ -32,7 +32,7 @@ REGISTER_KERNEL_BUILDER(Name("Greater")
                             .HostMemory("z")
                             .TypeConstraint<int32>("T"),
                         BinaryOp<CPUDevice, functor::greater<int32>>);
-#endif
+//#endif
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER2(BinaryOp, SYCL, "Greater", functor::greater, float, double);
 

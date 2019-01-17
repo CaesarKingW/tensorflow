@@ -21,7 +21,7 @@ REGISTER5(BinaryOp, CPU, "LessEqual", functor::less_equal, float, Eigen::half,
 REGISTER5(BinaryOp, CPU, "LessEqual", functor::less_equal, int64, uint8, int8,
           int16, bfloat16);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER7(BinaryOp, GPU, "LessEqual", functor::less_equal, float, Eigen::half,
           double, int64, uint8, int8, int16);
 
@@ -35,7 +35,7 @@ REGISTER_KERNEL_BUILDER(Name("LessEqual")
                             .HostMemory("z")
                             .TypeConstraint<int32>("T"),
                         BinaryOp<CPUDevice, functor::less_equal<int32>>);
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER6(BinaryOp, SYCL, "LessEqual", functor::less_equal, float, double,

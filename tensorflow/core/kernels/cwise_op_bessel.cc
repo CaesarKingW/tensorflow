@@ -20,10 +20,10 @@ REGISTER3(UnaryOp, CPU, "BesselI0e", functor::bessel_i0e, Eigen::half, float,
           double);
 REGISTER3(UnaryOp, CPU, "BesselI1e", functor::bessel_i1e, Eigen::half, float,
           double);
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER3(UnaryOp, GPU, "BesselI0e", functor::bessel_i0e, Eigen::half, float,
           double);
 REGISTER3(UnaryOp, GPU, "BesselI1e", functor::bessel_i1e, Eigen::half, float,
           double);
-#endif
+//#endif
 }  // namespace tensorflow

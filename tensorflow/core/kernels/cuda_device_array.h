@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_CUDA_DEVICE_ARRAY_H_
 #define TENSORFLOW_CORE_KERNELS_CUDA_DEVICE_ARRAY_H_
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #include "tensorflow/core/common_runtime/gpu/gpu_event_mgr.h"
 #include "tensorflow/core/framework/op_kernel.h"
@@ -115,6 +115,6 @@ class CudaDeviceArrayOnHost {
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #endif  // TENSORFLOW_CORE_KERNELS_CUDA_DEVICE_ARRAY_H_

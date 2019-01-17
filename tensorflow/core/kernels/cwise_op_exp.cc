@@ -19,10 +19,10 @@ namespace tensorflow {
 REGISTER5(UnaryOp, CPU, "Exp", functor::exp, float, Eigen::half, double,
           complex64, complex128);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER5(UnaryOp, GPU, "Exp", functor::exp, float, Eigen::half, double,
           complex64, complex128);
-#endif
+//#endif
 
 #if TENSORFLOW_USE_SYCL
 REGISTER2(UnaryOp, SYCL, "Exp", functor::exp, float, double);

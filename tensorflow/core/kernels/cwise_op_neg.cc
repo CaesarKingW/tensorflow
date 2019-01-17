@@ -29,7 +29,7 @@ REGISTER_KERNEL_BUILDER(Name("Neg")
                         UnaryOp<CPUDevice, functor::neg<int32>>);
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER6(UnaryOp, GPU, "Neg", functor::neg, float, Eigen::half, double, int64,
           complex64, complex128);
 
@@ -42,5 +42,5 @@ REGISTER_KERNEL_BUILDER(Name("Neg")
                             .HostMemory("y")
                             .TypeConstraint<int32>("T"),
                         UnaryOp<CPUDevice, functor::neg<int32>>);
-#endif
+//#endif
 }  // namespace tensorflow
