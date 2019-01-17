@@ -155,6 +155,9 @@ tf_kernel_library(
     hdrs = [
         "concat_lib.h",
         "concat_lib_cpu.h",
+        "concat_lib_gpu_impl.cu.cc",
+        "cuda_device_array.h",
+        "cuda_device_array_gpu.h",        
     ],
     gpu_srcs = [
         "concat_lib_gpu_impl.cu.cc",
@@ -569,6 +572,7 @@ ARRAY_DEPS = [
     "//tensorflow/core:proto_text",
     "//tensorflow/core:protos_all_cc",
     "//third_party/eigen3",
+    '//third_party:cocl',    
 ] + if_sycl(["//tensorflow/core:sycl_runtime"])
 
 cc_library(
@@ -2828,6 +2832,7 @@ MATH_DEPS = [
     "//tensorflow/core:math_grad",
     "//tensorflow/core:math_ops_op_lib",
     "//third_party/eigen3",
+    "//third_party:cocl",    
 ]
 
 cc_library(

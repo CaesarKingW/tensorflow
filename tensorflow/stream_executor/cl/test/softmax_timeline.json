@@ -1,0 +1,110 @@
+{
+    "traceEvents": [
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 0,
+            "args": {
+                "name": "Allocators"
+            }
+        },
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 1,
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/cpu:0 Compute"
+            }
+        },
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 2,
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/cpu:0 Tensors"
+            }
+        },
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 3,
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/gpu:0 Compute"
+            }
+        },
+        {
+            "name": "process_name",
+            "ph": "M",
+            "pid": 4,
+            "args": {
+                "name": "/job:localhost/replica:0/task:0/gpu:0 Tensors"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "NoOp",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1547167748399335,
+            "dur": 44,
+            "args": {
+                "name": "_SOURCE",
+                "op": "NoOp"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "NoOp",
+            "pid": 1,
+            "tid": 0,
+            "ts": 1547167748428258,
+            "dur": 65,
+            "args": {
+                "name": "_SINK",
+                "op": "NoOp"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "NoOp",
+            "pid": 3,
+            "tid": 0,
+            "ts": 1547167748399360,
+            "dur": 607,
+            "args": {
+                "name": "_SOURCE",
+                "op": "NoOp"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "Softmax",
+            "pid": 3,
+            "tid": 0,
+            "ts": 1547167748401545,
+            "dur": 25317,
+            "args": {
+                "name": "out",
+                "op": "Softmax",
+                "input0": "_recv_a_0/_1"
+            }
+        },
+        {
+            "ph": "X",
+            "cat": "Op",
+            "name": "NoOp",
+            "pid": 3,
+            "tid": 0,
+            "ts": 1547167748427636,
+            "dur": 144,
+            "args": {
+                "name": "_SINK",
+                "op": "NoOp"
+            }
+        }
+    ]
+}
