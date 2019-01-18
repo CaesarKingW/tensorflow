@@ -40,6 +40,17 @@ limitations under the License.
 
 namespace perftools {
 namespace gputools {
+
+// Temporarily pull stream_executor into perftools::gputools while we migrate
+// code to the new namespace.  TODO(b/77980417): Remove this once we've
+// completed the migration.
+using namespace stream_executor;  // NOLINT[build/namespaces]
+
+}  // namespace gputools
+}  // namespace perftools
+
+namespace perftools {
+namespace gputools {
 namespace blas {
 class BlasSupport;
 }
@@ -297,4 +308,23 @@ class CLExecutor : public internal::StreamExecutorInterface {
 }  // namespace gputools
 }  // namespace perftools
 
+namespace perftools {
+
+namespace gputools {
+
+
+
+// Temporarily pull stream_executor into perftools::gputools while we migrate
+
+// code to the new namespace.  TODO(jlebar): Remove this once we've completed
+
+// the migration.
+
+using namespace stream_executor;  // NOLINT[build/namespaces]
+
+
+
+}  // namespace gputools
+
+}  // namespace perftools
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_GPU_EXECUTOR_H_

@@ -24,7 +24,16 @@ limitations under the License.
 #include "tensorflow/stream_executor/stream_executor_internal.h"
 
 #include <iostream>
+namespace perftools {
+namespace gputools {
 
+// Temporarily pull stream_executor into perftools::gputools while we migrate
+// code to the new namespace.  TODO(b/77980417): Remove this once we've
+// completed the migration.
+using namespace stream_executor;  // NOLINT[build/namespaces]
+
+}  // namespace gputools
+}  // namespace perftools
 // #include "cuda.h"
 namespace perftools {
 namespace gputools {
@@ -44,12 +53,14 @@ class CLStream : public internal::StreamInterface {
   // Note: teardown is handled by a parent's call to DeallocateStream.
   ~CLStream() override {}
 
-  void *CudaStreamHack() override {
-    std::cout << "cl_stream.h CLStream::CudaStreamHack()" << std::endl;
+//  void *CudaStreamHack() override {
+  void *GpuStreamHack() override {
+    std::cout << "cl_stream.h CLStream::GpuStreamHack()" << std::endl;
     return cl_stream_;
   }
-  void **CudaStreamMemberHack() override {
-    // std::cout << "cl_stream.h CLStream::CudaStreamMemberHack()" << std::endl;
+//  void **CudaStreamMemberHack() override {
+  void **GpuStreamMemberHack() override {
+    // std::cout << "cl_stream.h CLStream::GpuStreamMemberHack()" << std::endl;
     return reinterpret_cast<void **>(&cl_stream_);
   }
 

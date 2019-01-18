@@ -48,8 +48,20 @@ limitations under the License.
 
 namespace stream_executor {
 
+class KernelBase;
 class Stream;
 class Timer;
+namespace blas {
+class BlasSupport;
+}  // namespace blas
+
+namespace fft {
+class Support;
+}  // namespace fft
+
+namespace rng {
+class RngSupport;
+}  // namespace rng
 
 // An opaque handle to a loaded module.
 //

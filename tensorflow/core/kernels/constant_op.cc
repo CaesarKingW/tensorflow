@@ -116,7 +116,7 @@ REGISTER_KERNEL(GPU, complex128);
 REGISTER_KERNEL(GPU, bool);
 REGISTER_KERNEL(GPU, Variant);
 #undef REGISTER_KERNEL
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 #define REGISTER_SYCL_KERNEL(D, TYPE)                                 \
