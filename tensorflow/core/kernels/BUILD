@@ -659,6 +659,12 @@ cc_library(
         ":unravel_index_op",
         ":where_op",
     ],
+    copts = [
+        # '-Ithird_party/coriander/include/cocl',
+        '-Ithird_party/coriander/src/EasyCL',
+        '-Ithird_party/coriander/src/EasyCL/thirdparty/clew/include',
+    ],    
+#    deps = ARRAY_DEPS,    
 )
 
 tf_kernel_library(
@@ -2945,7 +2951,10 @@ tf_kernel_library(
 tf_kernel_library(
     name = "cwise_op",
     prefix = "cwise_op",
-    deps = MATH_DEPS + ["//tensorflow/core:bitwise_ops_op_lib"],
+    deps = MATH_DEPS + [
+                "//tensorflow/core:bitwise_ops_op_lib",
+                "//third_party:cocl",
+           ],
 )
 
 tf_kernel_library(
@@ -3729,6 +3738,7 @@ tf_kernel_library(
         "//tensorflow/core:nn_ops_op_lib",
         "//tensorflow/core:stream_executor",
         "//third_party/eigen3",
+        "//third_party:cocl",
     ],
 )
 

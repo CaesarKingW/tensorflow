@@ -21,12 +21,12 @@ limitations under the License.
 // algebra solvers in the cuBlas and cuSolverDN libraries for use in TensorFlow
 // kernels.
 
-#ifdef GOOGLE_CUDA
+//#ifdef GOOGLE_CUDA
 
 #include <functional>
 #include <vector>
 
-#include "cuda/include/cublas_v2.h"
+//#include "cuda/include/cublas_v2.h"
 #include "cuda/include/cusolverDn.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/tensor.h"
@@ -435,6 +435,6 @@ inline DeviceLapackInfo CudaSolver::GetDeviceLapackInfo(
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #endif  // TENSORFLOW_CORE_KERNELS_CUDA_SOLVERS_H_
