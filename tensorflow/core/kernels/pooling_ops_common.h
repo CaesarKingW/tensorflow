@@ -29,9 +29,9 @@ limitations under the License.
 #include "tensorflow/core/util/tensor_format.h"
 #include "tensorflow/core/util/work_sharder.h"
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #include "tensorflow/core/kernels/maxpooling_op_gpu.h"
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 namespace tensorflow {
 

@@ -21,9 +21,9 @@ limitations under the License.
 #include "tensorflow/core/kernels/bounds_check.h"
 #include "tensorflow/core/lib/core/threadpool.h"
 
-#ifdef GOOGLE_CUDA
+//#ifdef GOOGLE_CUDA
 #include "tensorflow/core/kernels/cuda_device_array.h"
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 namespace tensorflow {
 
