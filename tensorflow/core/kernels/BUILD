@@ -155,7 +155,6 @@ tf_kernel_library(
     hdrs = [
         "concat_lib.h",
         "concat_lib_cpu.h",
-        "concat_lib_gpu_impl.cu.cc",
         "cuda_device_array.h",
         "cuda_device_array_gpu.h",        
     ],
@@ -2832,7 +2831,9 @@ MATH_DEPS = [
     "//tensorflow/core:math_grad",
     "//tensorflow/core:math_ops_op_lib",
     "//third_party/eigen3",
-    "//third_party:cocl",    
+#    "//third_party:cocl",
+    "//tensorflow/stream_executor:stream_executor",
+    "//tensorflow/core:stream_executor",        
 ]
 
 cc_library(
@@ -3389,17 +3390,17 @@ tf_kernel_library(
     }),
     prefix = "conv_ops",
     deps = [
-        ":bounds_check",
+#        ":bounds_check",
         ":conv_2d",
         ":conv_3d",
         ":image_resizer_state",
-        ":fill_functor",
+#        ":fill_functor",
         ":ops_util",
-        "//tensorflow/core:core_cpu",
-        "//tensorflow/core:framework",
-        "//tensorflow/core:lib",
-        "//tensorflow/core:lib_internal",
-        "//tensorflow/core:nn_ops_op_lib",
+#        "//tensorflow/core:core_cpu",
+#        "//tensorflow/core:framework",
+#        "//tensorflow/core:lib",
+#        "//tensorflow/core:lib_internal",
+#        "//tensorflow/core:nn_ops_op_lib",
     ] + select({
         ":xsmm_convolutions": [
             "@libxsmm_archive//:xsmm_avx",
@@ -3408,7 +3409,7 @@ tf_kernel_library(
     }) + if_cuda([
         "//tensorflow/core/platform/default/build_config:cublas_plugin",
         "//tensorflow/core/platform/default/build_config:cudnn_plugin",
-    ]),
+    ]) + MATH_DEPS,
 )
 
 tf_kernel_library(
@@ -3699,6 +3700,9 @@ tf_kernel_library(
         "maxpooling_op.h",
         "pooling_ops_3d.h",
         "pooling_ops_common.h",
+        "maxpooling_op_gpu.h",
+        "pooling_ops_common_gpu.h",        
+        "pooling_ops_3d_gpu.h",        
     ] + if_sycl(["pooling_ops_3d_sycl.h"]),
     gpu_srcs = [
         "avgpooling_op.h",

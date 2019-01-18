@@ -771,7 +771,7 @@ CLDriver::ContextGetSharedMemConfig(ClContext* context) {
         port::bit_cast<void *>(uintptr_t(info_log_buffer_bytes)),
         port::bit_cast<void *>(info_log_buffer.data()),
         port::bit_cast<void *>(uintptr_t(log_verbose))};
-    CHECK(ARRAYSIZE(options) == ARRAYSIZE(option_values));
+    CHECK(TF_ARRAYSIZE(options) == TF_ARRAYSIZE(option_values));
 
   CUresult res = CUDA_ERROR_UNKNOWN;
     // CUresult res;
@@ -779,7 +779,7 @@ CLDriver::ContextGetSharedMemConfig(ClContext* context) {
     //   // TODO(leary) Need to see if NVIDIA can expunge the leakiness in their
     //   // module loading: see http://b/13248943
 
-    //   res = cuModuleLoadDataEx(module, ptx_data, ARRAYSIZE(options),
+    //   res = cuModuleLoadDataEx(module, ptx_data, TF_ARRAYSIZE(options),
     //                                     options, option_values);
     // }
 
