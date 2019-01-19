@@ -168,6 +168,8 @@ tf_kernel_library(
         ":bounds_check",
         "//tensorflow/core:framework",
         "//third_party/eigen3",
+        "//tensorflow/stream_executor:stream_executor",
+        "//tensorflow/core:stream_executor",         
     ],
     alwayslink = 0,
 )
@@ -2639,6 +2641,7 @@ tf_kernel_library(
 tf_kernel_library(
     name = "determinant_op",
     prefix = "determinant_op",
+    hdrs = ["cuda_solvers.h"],    
 #    deps = if_cuda([
 #        ":fill_functor",
 #    ]) + LINALG_DEPS,    

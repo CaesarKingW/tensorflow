@@ -39,9 +39,9 @@ typedef struct cublasContext *cublasHandle_t;
 //
 //}  // namespace gputools
 //}  // namespace perftools
-namespace perftools {
-namespace gputools {
-
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 class Stream;
 
 namespace cl {
@@ -119,7 +119,8 @@ class CLBlas : public blas::BlasSupport {
 };
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CLBLAST_H_
