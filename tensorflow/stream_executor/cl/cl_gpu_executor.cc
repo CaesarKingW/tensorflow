@@ -995,8 +995,8 @@ CLExecutor::GetTimerImplementation() {
   // return std::unique_ptr<internal::TimerInterface>(new CLTimer(this));
 }
 
-void *CLExecutor::CudaContextHack() { 
-  // std::cout << "CLExecutor::CudaContextHack" << std::endl;
+void *CLExecutor::GpuContextHack() {
+  // std::cout << "CLExecutor::GpuContextHack" << std::endl;
   return context_;
 }
 

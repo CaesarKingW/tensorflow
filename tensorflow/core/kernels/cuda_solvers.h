@@ -27,7 +27,7 @@ limitations under the License.
 #include <vector>
 
 //#include "cuda/include/cublas_v2.h"
-#include "cuda/include/cusolverDn.h"
+//#include "cuda/include/cusolverDn.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/lib/core/status.h"
@@ -36,34 +36,34 @@ limitations under the License.
 namespace tensorflow {
 
 // Type traits to get CUDA complex types from std::complex<T>.
-template <typename T>
-struct CUDAComplexT {
-  typedef T type;
-};
-template <>
-struct CUDAComplexT<std::complex<float>> {
-  typedef cuComplex type;
-};
-template <>
-struct CUDAComplexT<std::complex<double>> {
-  typedef cuDoubleComplex type;
-};
-// Converts pointers of std::complex<> to pointers of
-// cuComplex/cuDoubleComplex. No type conversion for non-complex types.
-template <typename T>
-inline const typename CUDAComplexT<T>::type* CUDAComplex(const T* p) {
-  return reinterpret_cast<const typename CUDAComplexT<T>::type*>(p);
-}
-template <typename T>
-inline typename CUDAComplexT<T>::type* CUDAComplex(T* p) {
-  return reinterpret_cast<typename CUDAComplexT<T>::type*>(p);
-}
-
-// Template to give the Cublas adjoint operation for real and complex types.
-template <typename T>
-cublasOperation_t CublasAdjointOp() {
-  return Eigen::NumTraits<T>::IsComplex ? CUBLAS_OP_C : CUBLAS_OP_T;
-}
+//template <typename T>
+//struct CUDAComplexT {
+//  typedef T type;
+//};
+//template <>
+//struct CUDAComplexT<std::complex<float>> {
+//  typedef cuComplex type;
+//};
+//template <>
+//struct CUDAComplexT<std::complex<double>> {
+//  typedef cuDoubleComplex type;
+//};
+//// Converts pointers of std::complex<> to pointers of
+//// cuComplex/cuDoubleComplex. No type conversion for non-complex types.
+//template <typename T>
+//inline const typename CUDAComplexT<T>::type* CUDAComplex(const T* p) {
+//  return reinterpret_cast<const typename CUDAComplexT<T>::type*>(p);
+//}
+//template <typename T>
+//inline typename CUDAComplexT<T>::type* CUDAComplex(T* p) {
+//  return reinterpret_cast<typename CUDAComplexT<T>::type*>(p);
+//}
+//
+//// Template to give the Cublas adjoint operation for real and complex types.
+//template <typename T>
+//cublasOperation_t CublasAdjointOp() {
+//  return Eigen::NumTraits<T>::IsComplex ? CUBLAS_OP_C : CUBLAS_OP_T;
+//}
 
 // Container of LAPACK info data (an array of int) generated on-device by
 // a CudaSolver call. One or more such objects can be passed to
@@ -297,11 +297,11 @@ class CudaSolver {
 
   // Hermitian (Symmetric) Eigen decomposition.
   // See: http://docs.nvidia.com/cuda/cusolver/#cuds-lt-t-gt-syevd
-  template <typename Scalar>
-  Status Heevd(cusolverEigMode_t jobz, cublasFillMode_t uplo, int n,
-               Scalar* dev_A, int lda,
-               typename Eigen::NumTraits<Scalar>::Real* dev_W,
-               int* dev_lapack_info) TF_MUST_USE_RESULT;
+//  template <typename Scalar>
+//  Status Heevd(cusolverEigMode_t jobz, cublasFillMode_t uplo, int n,
+//               Scalar* dev_A, int lda,
+//               typename Eigen::NumTraits<Scalar>::Real* dev_W,
+//               int* dev_lapack_info) TF_MUST_USE_RESULT;
 
   // Singular value decomposition.
   // Returns Status::OK() if the kernel was launched successfully.
@@ -315,7 +315,7 @@ class CudaSolver {
  private:
   OpKernelContext* context_;  // not owned.
   cudaStream_t cuda_stream_;
-  cusolverDnHandle_t cusolver_dn_handle_;
+//  cusolverDnHandle_t cusolver_dn_handle_;
   cublasHandle_t cublas_handle_;
   std::vector<TensorReference> scratch_tensor_refs_;
 

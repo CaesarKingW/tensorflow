@@ -38,16 +38,6 @@ limitations under the License.
 #include "tensorflow/stream_executor/platform/thread_annotations.h"
 #include "tensorflow/stream_executor/stream_executor_internal.h"
 
-namespace perftools {
-namespace gputools {
-
-// Temporarily pull stream_executor into perftools::gputools while we migrate
-// code to the new namespace.  TODO(b/77980417): Remove this once we've
-// completed the migration.
-using namespace stream_executor;  // NOLINT[build/namespaces]
-
-}  // namespace gputools
-}  // namespace perftools
 
 namespace perftools {
 namespace gputools {
@@ -63,6 +53,8 @@ class RngSupport;
 namespace perftools {
 namespace gputools {
 namespace cl {
+
+using namespace stream_executor;
 
 // CL-platform implementation of the platform-agnostic
 // StreamExecutorInferface.
@@ -229,7 +221,7 @@ class CLExecutor : public internal::StreamExecutorInterface {
 
   std::unique_ptr<internal::TimerInterface> GetTimerImplementation() override;
 
-  void *CudaContextHack() override;
+  void *GpuContextHack() override;
 
   ClContext* cl_context();
 
@@ -308,23 +300,23 @@ class CLExecutor : public internal::StreamExecutorInterface {
 }  // namespace gputools
 }  // namespace perftools
 
-namespace perftools {
-
-namespace gputools {
-
-
-
-// Temporarily pull stream_executor into perftools::gputools while we migrate
-
-// code to the new namespace.  TODO(jlebar): Remove this once we've completed
-
-// the migration.
-
-using namespace stream_executor;  // NOLINT[build/namespaces]
-
-
-
-}  // namespace gputools
-
-}  // namespace perftools
+//namespace perftools {
+//
+//namespace gputools {
+//
+//
+//
+//// Temporarily pull stream_executor into perftools::gputools while we migrate
+//
+//// code to the new namespace.  TODO(jlebar): Remove this once we've completed
+//
+//// the migration.
+//
+//using namespace stream_executor;  // NOLINT[build/namespaces]
+//
+//
+//
+//}  // namespace gputools
+//
+//}  // namespace perftools
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_GPU_EXECUTOR_H_

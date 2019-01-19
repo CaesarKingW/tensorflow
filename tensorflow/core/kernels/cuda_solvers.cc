@@ -165,7 +165,7 @@ CudaSolver::CudaSolver(OpKernelContext* context) : context_(context) {
         handle_map->insert(std::make_pair(cuda_stream_, std::move(new_handles)))
             .first;
   }
-  cusolver_dn_handle_ = it->second->cusolver_dn_handle;
+//  cusolver_dn_handle_ = it->second->cusolver_dn_handle;
   cublas_handle_ = it->second->cublas_handle;
 }
 
@@ -376,16 +376,16 @@ static inline Status PotrfImpl(BufSizeFnT bufsize, SolverFnT solver,
   return Status::OK();
 }
 
-#define POTRF_INSTANCE(Scalar, type_prefix)                                  \
-  template <>                                                                \
-  Status CudaSolver::Potrf<Scalar>(cublasFillMode_t uplo, int n, Scalar* A,  \
-                                   int lda, int* dev_lapack_info) {          \
-    return PotrfImpl(DN_BUFSIZE_FN(potrf, type_prefix),                      \
-                     DN_SOLVER_FN(potrf, type_prefix), this, context_,       \
-                     cusolver_dn_handle_, uplo, n, A, lda, dev_lapack_info); \
+//#define POTRF_INSTANCE(Scalar, type_prefix)                                  \
+//  template <>                                                                \
+//  Status CudaSolver::Potrf<Scalar>(cublasFillMode_t uplo, int n, Scalar* A,  \
+//                                   int lda, int* dev_lapack_info) {          \
+//    return PotrfImpl(DN_BUFSIZE_FN(potrf, type_prefix),                      \
+//                     DN_SOLVER_FN(potrf, type_prefix), this, context_,       \
+//                     cusolver_dn_handle_, uplo, n, A, lda, dev_lapack_info); \
   }
 
-TF_CALL_LAPACK_TYPES(POTRF_INSTANCE);
+//TF_CALL_LAPACK_TYPES(POTRF_INSTANCE);
 
 template <typename Scalar, typename BufSizeFnT, typename SolverFnT>
 static inline Status GetrfImpl(BufSizeFnT bufsize, SolverFnT solver,
@@ -409,17 +409,17 @@ static inline Status GetrfImpl(BufSizeFnT bufsize, SolverFnT solver,
   return Status::OK();
 }
 
-#define GETRF_INSTANCE(Scalar, type_prefix)                                 \
-  template <>                                                               \
-  Status CudaSolver::Getrf<Scalar>(int m, int n, Scalar* A, int lda,        \
-                                   int* dev_pivots, int* dev_lapack_info) { \
-    return GetrfImpl(DN_BUFSIZE_FN(getrf, type_prefix),                     \
-                     DN_SOLVER_FN(getrf, type_prefix), this, context_,      \
-                     cusolver_dn_handle_, m, n, A, lda, dev_pivots,         \
-                     dev_lapack_info);                                      \
+//#define GETRF_INSTANCE(Scalar, type_prefix)                                 \
+//  template <>                                                               \
+//  Status CudaSolver::Getrf<Scalar>(int m, int n, Scalar* A, int lda,        \
+//                                   int* dev_pivots, int* dev_lapack_info) { \
+//    return GetrfImpl(DN_BUFSIZE_FN(getrf, type_prefix),                     \
+//                     DN_SOLVER_FN(getrf, type_prefix), this, context_,      \
+//                     cusolver_dn_handle_, m, n, A, lda, dev_pivots,         \
+//                     dev_lapack_info);                                      \
   }
 
-TF_CALL_LAPACK_TYPES(GETRF_INSTANCE);
+//TF_CALL_LAPACK_TYPES(GETRF_INSTANCE);
 
 template <typename Scalar, typename SolverFnT>
 static inline Status GetrsImpl(SolverFnT solver, OpKernelContext* context,
@@ -435,17 +435,17 @@ static inline Status GetrsImpl(SolverFnT solver, OpKernelContext* context,
   return Status::OK();
 }
 
-#define GETRS_INSTANCE(Scalar, type_prefix)                                  \
-  template <>                                                                \
-  Status CudaSolver::Getrs<Scalar>(                                          \
-      cublasOperation_t trans, int n, int nrhs, const Scalar* A, int lda,    \
-      const int* pivots, Scalar* B, int ldb, int* dev_lapack_info) const {   \
-    return GetrsImpl(DN_SOLVER_FN(getrs, type_prefix), context_,             \
-                     cusolver_dn_handle_, trans, n, nrhs, A, lda, pivots, B, \
-                     ldb, dev_lapack_info);                                  \
-  }
+//#define GETRS_INSTANCE(Scalar, type_prefix)                                  \
+//  template <>                                                                \
+//  Status CudaSolver::Getrs<Scalar>(                                          \
+//      cublasOperation_t trans, int n, int nrhs, const Scalar* A, int lda,    \
+//      const int* pivots, Scalar* B, int ldb, int* dev_lapack_info) const {   \
+//    return GetrsImpl(DN_SOLVER_FN(getrs, type_prefix), context_,             \
+//                     cusolver_dn_handle_, trans, n, nrhs, A, lda, pivots, B, \
+//                     ldb, dev_lapack_info);                                  \
+//  }
 
-TF_CALL_LAPACK_TYPES(GETRS_INSTANCE);
+//TF_CALL_LAPACK_TYPES(GETRS_INSTANCE);
 
 template <typename Scalar, typename BufSizeFnT, typename SolverFnT>
 static inline Status GeqrfImpl(BufSizeFnT bufsize, SolverFnT solver,
@@ -469,16 +469,16 @@ static inline Status GeqrfImpl(BufSizeFnT bufsize, SolverFnT solver,
   return Status::OK();
 }
 
-#define GEQRF_INSTANCE(Scalar, type_prefix)                                    \
-  template <>                                                                  \
-  Status CudaSolver::Geqrf<Scalar>(int m, int n, Scalar* A, int lda,           \
-                                   Scalar* tau, int* dev_lapack_info) {        \
-    return GeqrfImpl(DN_BUFSIZE_FN(geqrf, type_prefix),                        \
-                     DN_SOLVER_FN(geqrf, type_prefix), this, context_,         \
-                     cusolver_dn_handle_, m, n, A, lda, tau, dev_lapack_info); \
-  }
+//#define GEQRF_INSTANCE(Scalar, type_prefix)                                    \
+//  template <>                                                                  \
+//  Status CudaSolver::Geqrf<Scalar>(int m, int n, Scalar* A, int lda,           \
+//                                   Scalar* tau, int* dev_lapack_info) {        \
+//    return GeqrfImpl(DN_BUFSIZE_FN(geqrf, type_prefix),                        \
+//                     DN_SOLVER_FN(geqrf, type_prefix), this, context_,         \
+//                     cusolver_dn_handle_, m, n, A, lda, tau, dev_lapack_info); \
+//  }
 
-TF_CALL_LAPACK_TYPES(GEQRF_INSTANCE);
+//TF_CALL_LAPACK_TYPES(GEQRF_INSTANCE);
 
 template <typename Scalar, typename BufSizeFnT, typename SolverFnT>
 static inline Status UnmqrImpl(BufSizeFnT bufsize, SolverFnT solver,
@@ -509,22 +509,22 @@ static inline Status UnmqrImpl(BufSizeFnT bufsize, SolverFnT solver,
 // Unfortunately the LAPACK function name differs for the real and complex case
 // (complex ones are prefixed with "UN" for "unitary"), so we instantiate each
 // one separately.
-#define UNMQR_INSTANCE(Scalar, function_prefix, type_prefix)                  \
-  template <>                                                                 \
-  Status CudaSolver::Unmqr(cublasSideMode_t side, cublasOperation_t trans,    \
-                           int m, int n, int k, const Scalar* dev_a, int lda, \
-                           const Scalar* dev_tau, Scalar* dev_c, int ldc,     \
-                           int* dev_lapack_info) {                            \
-    return UnmqrImpl(DN_BUFSIZE_FN(function_prefix##mqr, type_prefix),        \
-                     DN_SOLVER_FN(function_prefix##mqr, type_prefix), this,   \
-                     context_, cusolver_dn_handle_, side, trans, m, n, k,     \
-                     dev_a, lda, dev_tau, dev_c, ldc, dev_lapack_info);       \
-  }
-
-UNMQR_INSTANCE(float, or, S);
-UNMQR_INSTANCE(double, or, D);
-UNMQR_INSTANCE(complex64, un, C);
-UNMQR_INSTANCE(complex128, un, Z);
+//#define UNMQR_INSTANCE(Scalar, function_prefix, type_prefix)                  \
+//  template <>                                                                 \
+//  Status CudaSolver::Unmqr(cublasSideMode_t side, cublasOperation_t trans,    \
+//                           int m, int n, int k, const Scalar* dev_a, int lda, \
+//                           const Scalar* dev_tau, Scalar* dev_c, int ldc,     \
+//                           int* dev_lapack_info) {                            \
+//    return UnmqrImpl(DN_BUFSIZE_FN(function_prefix##mqr, type_prefix),        \
+//                     DN_SOLVER_FN(function_prefix##mqr, type_prefix), this,   \
+//                     context_, cusolver_dn_handle_, side, trans, m, n, k,     \
+//                     dev_a, lda, dev_tau, dev_c, ldc, dev_lapack_info);       \
+//  }
+//
+//UNMQR_INSTANCE(float, or, S);
+//UNMQR_INSTANCE(double, or, D);
+//UNMQR_INSTANCE(complex64, un, C);
+//UNMQR_INSTANCE(complex128, un, Z);
 
 template <typename Scalar, typename BufSizeFnT, typename SolverFnT>
 static inline Status UngqrImpl(BufSizeFnT bufsize, SolverFnT solver,
@@ -550,20 +550,20 @@ static inline Status UngqrImpl(BufSizeFnT bufsize, SolverFnT solver,
   return Status::OK();
 }
 
-#define UNGQR_INSTANCE(Scalar, function_prefix, type_prefix)                \
-  template <>                                                               \
-  Status CudaSolver::Ungqr(int m, int n, int k, Scalar* dev_a, int lda,     \
-                           const Scalar* dev_tau, int* dev_lapack_info) {   \
-    return UngqrImpl(DN_BUFSIZE_FN(function_prefix##gqr, type_prefix),      \
-                     DN_SOLVER_FN(function_prefix##gqr, type_prefix), this, \
-                     context_, cusolver_dn_handle_, m, n, k, dev_a, lda,    \
-                     dev_tau, dev_lapack_info);                             \
-  }
-
-UNGQR_INSTANCE(float, or, S);
-UNGQR_INSTANCE(double, or, D);
-UNGQR_INSTANCE(complex64, un, C);
-UNGQR_INSTANCE(complex128, un, Z);
+//#define UNGQR_INSTANCE(Scalar, function_prefix, type_prefix)                \
+//  template <>                                                               \
+//  Status CudaSolver::Ungqr(int m, int n, int k, Scalar* dev_a, int lda,     \
+//                           const Scalar* dev_tau, int* dev_lapack_info) {   \
+//    return UngqrImpl(DN_BUFSIZE_FN(function_prefix##gqr, type_prefix),      \
+//                     DN_SOLVER_FN(function_prefix##gqr, type_prefix), this, \
+//                     context_, cusolver_dn_handle_, m, n, k, dev_a, lda,    \
+//                     dev_tau, dev_lapack_info);                             \
+//  }
+//
+//UNGQR_INSTANCE(float, or, S);
+//UNGQR_INSTANCE(double, or, D);
+//UNGQR_INSTANCE(complex64, un, C);
+//UNGQR_INSTANCE(complex128, un, Z);
 
 template <typename Scalar, typename BufSizeFnT, typename SolverFnT>
 static inline Status HeevdImpl(BufSizeFnT bufsize, SolverFnT solver,
@@ -591,22 +591,22 @@ static inline Status HeevdImpl(BufSizeFnT bufsize, SolverFnT solver,
   return Status::OK();
 }
 
-#define HEEVD_INSTANCE(Scalar, function_prefix, type_prefix)                   \
-  template <>                                                                  \
-  Status CudaSolver::Heevd(cusolverEigMode_t jobz, cublasFillMode_t uplo,      \
-                           int n, Scalar* dev_A, int lda,                      \
-                           typename Eigen::NumTraits<Scalar>::Real* dev_W,     \
-                           int* dev_lapack_info) {                             \
-    return HeevdImpl(DN_BUFSIZE_FN(function_prefix##evd, type_prefix),         \
-                     DN_SOLVER_FN(function_prefix##evd, type_prefix), this,    \
-                     context_, cusolver_dn_handle_, jobz, uplo, n, dev_A, lda, \
-                     dev_W, dev_lapack_info);                                  \
-  }
-
-HEEVD_INSTANCE(float, sy, S);
-HEEVD_INSTANCE(double, sy, D);
-HEEVD_INSTANCE(complex64, he, C);
-HEEVD_INSTANCE(complex128, he, Z);
+//#define HEEVD_INSTANCE(Scalar, function_prefix, type_prefix)                   \
+//  template <>                                                                  \
+//  Status CudaSolver::Heevd(cusolverEigMode_t jobz, cublasFillMode_t uplo,      \
+//                           int n, Scalar* dev_A, int lda,                      \
+//                           typename Eigen::NumTraits<Scalar>::Real* dev_W,     \
+//                           int* dev_lapack_info) {                             \
+//    return HeevdImpl(DN_BUFSIZE_FN(function_prefix##evd, type_prefix),         \
+//                     DN_SOLVER_FN(function_prefix##evd, type_prefix), this,    \
+//                     context_, cusolver_dn_handle_, jobz, uplo, n, dev_A, lda, \
+//                     dev_W, dev_lapack_info);                                  \
+//  }
+//
+//HEEVD_INSTANCE(float, sy, S);
+//HEEVD_INSTANCE(double, sy, D);
+//HEEVD_INSTANCE(complex64, he, C);
+//HEEVD_INSTANCE(complex128, he, Z);
 
 template <typename Scalar, typename BufSizeFnT, typename SolverFnT>
 static inline Status GesvdImpl(
@@ -629,19 +629,19 @@ static inline Status GesvdImpl(
   return Status::OK();
 }
 
-#define GESVD_INSTANCE(Scalar, type_prefix)                              \
-  template <>                                                            \
-  Status CudaSolver::Gesvd<Scalar>(                                      \
-      signed char jobu, signed char jobvt, int m, int n, Scalar* dev_A,  \
-      int lda, Scalar* dev_S, Scalar* dev_U, int ldu, Scalar* dev_VT,    \
-      int ldvt, int* dev_lapack_info) {                                  \
-    return GesvdImpl(DN_BUFSIZE_FN(gesvd, type_prefix),                  \
-                     DN_SOLVER_FN(gesvd, type_prefix), this, context_,   \
-                     cusolver_dn_handle_, jobu, jobvt, m, n, dev_A, lda, \
-                     dev_S, dev_U, ldu, dev_VT, ldvt, dev_lapack_info);  \
-  }
-
-TF_CALL_LAPACK_TYPES_NO_COMPLEX(GESVD_INSTANCE);
+//#define GESVD_INSTANCE(Scalar, type_prefix)                              \
+//  template <>                                                            \
+//  Status CudaSolver::Gesvd<Scalar>(                                      \
+//      signed char jobu, signed char jobvt, int m, int n, Scalar* dev_A,  \
+//      int lda, Scalar* dev_S, Scalar* dev_U, int ldu, Scalar* dev_VT,    \
+//      int ldvt, int* dev_lapack_info) {                                  \
+//    return GesvdImpl(DN_BUFSIZE_FN(gesvd, type_prefix),                  \
+//                     DN_SOLVER_FN(gesvd, type_prefix), this, context_,   \
+//                     cusolver_dn_handle_, jobu, jobvt, m, n, dev_A, lda, \
+//                     dev_S, dev_U, ldu, dev_VT, ldvt, dev_lapack_info);  \
+//  }
+//
+//TF_CALL_LAPACK_TYPES_NO_COMPLEX(GESVD_INSTANCE);
 
 //=============================================================================
 // Wrappers of cuBlas computational methods begin here.

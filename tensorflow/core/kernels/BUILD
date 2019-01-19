@@ -1815,6 +1815,8 @@ DYNAMIC_DEPS = [
     "//tensorflow/core:framework",
     "//tensorflow/core:lib",
     "//tensorflow/core:lib_internal",
+    "//tensorflow/stream_executor:stream_executor",
+    "//tensorflow/core:stream_executor",       
 ]
 
 tf_kernel_library(
@@ -1833,7 +1835,9 @@ tf_kernel_library(
         "cuda_device_array_gpu.h",
     ],
     prefix = "dynamic_stitch_op",
-    deps = DYNAMIC_DEPS,
+    deps = DYNAMIC_DEPS + [ 
+       ":cuda_device_array",
+    ],
 )
 
 LOOKUP_DEPS = [
@@ -2609,9 +2613,13 @@ LINALG_DEPS = [
     "//tensorflow/core:framework",
     "//tensorflow/core:lib",
     "//tensorflow/core:linalg_ops_op_lib",
+    "//third_party:cocl",
+    "//tensorflow/stream_executor:stream_executor",
+    "//tensorflow/core:stream_executor",       
+    ":transpose_functor",    
 ] + if_cuda([
     ":cuda_solvers",
-    ":transpose_functor",
+#    ":transpose_functor",
 ])
 
 tf_kernel_library(
@@ -2631,9 +2639,10 @@ tf_kernel_library(
 tf_kernel_library(
     name = "determinant_op",
     prefix = "determinant_op",
-    deps = if_cuda([
-        ":fill_functor",
-    ]) + LINALG_DEPS,
+#    deps = if_cuda([
+#        ":fill_functor",
+#    ]) + LINALG_DEPS,    
+    deps = [":fill_functor",] + LINALG_DEPS,
 )
 
 tf_kernel_library(
@@ -2837,7 +2846,7 @@ MATH_DEPS = [
     "//tensorflow/core:math_grad",
     "//tensorflow/core:math_ops_op_lib",
     "//third_party/eigen3",
-#    "//third_party:cocl",
+    "//third_party:cocl",
     "//tensorflow/stream_executor:stream_executor",
     "//tensorflow/core:stream_executor",        
 ]
@@ -2953,7 +2962,7 @@ tf_kernel_library(
     prefix = "cwise_op",
     deps = MATH_DEPS + [
                 "//tensorflow/core:bitwise_ops_op_lib",
-                "//third_party:cocl",
+#                "//third_party:cocl",
            ],
 )
 
