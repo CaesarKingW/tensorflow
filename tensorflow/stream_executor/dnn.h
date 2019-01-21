@@ -714,14 +714,14 @@ class AlgorithmDesc {
  public:
   typedef int64 Index;
   AlgorithmDesc()
-      : algo_(kDefaultAlgo), tensor_ops_enabled_(true), scratch_size_(0) {}
+      : algo_(kDefaultAlgorithm), tensor_ops_enabled_(true), scratch_size_(0) {}
   AlgorithmDesc(Index a, bool use_tensor_ops)
       : algo_(a), tensor_ops_enabled_(use_tensor_ops), scratch_size_(0) {}
   AlgorithmDesc(Index a, bool use_tensor_ops, size_t scratch_size)
       : algo_(a),
         tensor_ops_enabled_(use_tensor_ops),
         scratch_size_(scratch_size) {}
-  bool is_default() const { return algo_ == kDefaultAlgo; }
+  bool is_default() const { return algo_ == kDefaultAlgorithm; }
   bool tensor_ops_enabled() const { return tensor_ops_enabled_; }
   Index algo_id() const { return algo_; }
   size_t scratch_size() const { return scratch_size_; }
@@ -734,14 +734,14 @@ class AlgorithmDesc {
   uint64 hash() const;
 
  private:
-  enum { kDefaultAlgo = -1 };
+  enum { kDefaultAlgorithm = -1 };
   Index algo_;
   bool tensor_ops_enabled_;
   size_t scratch_size_;
 };
 
 typedef int64 AlgorithmType;
-constexpr AlgorithmType kDefaultAlgorithm = -1;
+//constexpr AlgorithmType kDefaultAlgorithm = -1;
 // Describes the result from a perf experiment.
 //
 // Arguments:

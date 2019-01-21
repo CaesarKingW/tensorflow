@@ -197,11 +197,9 @@ bool CLExecutor::FindOnDiskForComputeCapability(
     return false;
   }
 
-  // TODO(22689637): Eliminate unnecessary ToString()s when all dependencies
-  // have been migrated.
-  string cc_specific = port::StrCat(filename.ToString(), ".cc", cc_major_,
-                                    cc_minor_, canonical_suffix.ToString());
-  if (port::FileExists(cc_specific)) {
+  string cc_specific =
+      port::StrCat(filename, ".cc", cc_major_, cc_minor_, canonical_suffix);
+  if (port::FileExists(cc_specific).ok()) {
     VLOG(2) << "found compute-capability-specific file, using that: "
             << cc_specific;
     *found_filename = cc_specific;
@@ -210,8 +208,8 @@ bool CLExecutor::FindOnDiskForComputeCapability(
 
   VLOG(2) << "could not find compute-capability specific file at: "
           << cc_specific;
-  if (port::FileExists(filename.ToString())) {
-    *found_filename = filename.ToString();
+  if (port::FileExists(string(filename)).ok()) {
+    *found_filename = string(filename);
     return true;
   }
 
@@ -372,7 +370,8 @@ bool CLExecutor::GetKernelMetadata(CLKernel *cl_kernel,
 
 bool CLExecutor::Launch(Stream *stream, const ThreadDim &thread_dims,
                           const BlockDim &block_dims, const KernelBase &kernel,
-                          const std::vector<KernelArg> &args) {
+						  const KernelArgsArrayBase &args) {
+//                          const std::vector<KernelArg> &args) {
   std::cout << "cl_gpu_executor::Launch()" << std::endl;
   return false;
   // CHECK_EQ(kernel.Arity(), args.size());
@@ -562,14 +561,15 @@ bool CLExecutor::SynchronousMemSet(DeviceMemoryBase *location, int value,
   //                                           value, size);
 }
 
-bool CLExecutor::SynchronousMemcpy(DeviceMemoryBase *gpu_dst,
+
+port::Status CLExecutor::SynchronousMemcpy(DeviceMemoryBase *gpu_dst,
                                      const void *host_src, uint64 size) {
   // std::cout << "cl_gpu_executor::SynchronousMemcpy()" << std::endl;
   return CLDriver::SynchronousMemcpyH2D(context_, AsClDevicePtr(gpu_dst),
                                         host_src, size);
 }
 
-bool CLExecutor::SynchronousMemcpy(void *host_dst,
+port::Status CLExecutor::SynchronousMemcpy(void *host_dst,
                                      const DeviceMemoryBase &gpu_src,
                                      uint64 size) {
   // std::cout << "cl_gpu_executor::SynchronousMemcpy()" << std::endl;
@@ -577,7 +577,7 @@ bool CLExecutor::SynchronousMemcpy(void *host_dst,
                                         AsClDevicePtr(gpu_src), size);
 }
 
-bool CLExecutor::SynchronousMemcpyDeviceToDevice(
+port::Status CLExecutor::SynchronousMemcpyDeviceToDevice(
     DeviceMemoryBase *gpu_dst, const DeviceMemoryBase &gpu_src, uint64 size) {
   // std::cout << "cl_gpu_executor::SynchronousMemcpyDeviceToDevice()" << std::endl;
   return CLDriver::SynchronousMemcpyD2D(context_, AsClDevicePtr(gpu_dst),

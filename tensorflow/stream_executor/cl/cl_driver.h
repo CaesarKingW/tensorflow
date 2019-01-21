@@ -253,11 +253,11 @@ class CLDriver {
   // -- Synchronous memcopies.
   // http://docs.nvidia.com/cl/cl-driver-api/group__CL__MEM.html#group__CL__MEM_1g4d32266788c440b0220b1a9ba5795169
 
-  static bool SynchronousMemcpyD2H(ClContext* context, void *host_dst,
+  static port::Status SynchronousMemcpyD2H(ClContext* context, void *host_dst,
                                    CUdeviceptr gpu_src, uint64 size);
-  static bool SynchronousMemcpyH2D(ClContext* context, CUdeviceptr gpu_dst,
+  static port::Status SynchronousMemcpyH2D(ClContext* context, CUdeviceptr gpu_dst,
                                    const void *host_src, uint64 size);
-  static bool SynchronousMemcpyD2D(ClContext* context, CUdeviceptr gpu_dst,
+  static port::Status SynchronousMemcpyD2D(ClContext* context, CUdeviceptr gpu_dst,
                                    CUdeviceptr gpu_src, uint64 size);
 
   // -- Asynchronous memcopies.

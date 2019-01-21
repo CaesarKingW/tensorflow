@@ -104,7 +104,8 @@ class CLExecutor : public internal::StreamExecutorInterface {
 
   bool Launch(Stream *stream, const ThreadDim &thread_dims,
               const BlockDim &block_dims, const KernelBase &k,
-              const std::vector<KernelArg> &args) override;
+			  const KernelArgsArrayBase &args) override;
+//              const std::vector<KernelArg> &args) override;
 
   void *Allocate(uint64 size) override;
 

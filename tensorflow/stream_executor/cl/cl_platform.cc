@@ -141,19 +141,33 @@ port::StatusOr<StreamExecutor*> ClPlatform::GetExecutor(
 port::StatusOr<std::unique_ptr<StreamExecutor>> ClPlatform::GetUncachedExecutor(
   const StreamExecutorConfig& config) {
     // std::cout << "ClPlatform::GetUncachedExecutor()" << std::endl;
-  auto executor = port::MakeUnique<StreamExecutor>(
-      this, new CLExecutor(config.plugin_config));
-  // std::cout << "cl_platform.cc GetUncachedExecutor() created new CUDAExecutor" << std::endl;
+//  auto executor = port::MakeUnique<StreamExecutor>(
+//      this, new CLExecutor(config.plugin_config));
+//  // std::cout << "cl_platform.cc GetUncachedExecutor() created new CUDAExecutor" << std::endl;
+//  auto init_status = executor->Init(config.ordinal, config.device_options);
+//  if (!init_status.ok()) {
+//    std::cout << "cl_platform.cc GetUncachedExecutor() CUDAExecutor->init() failed" << std::endl;
+//    return port::Status{
+//        port::error::INTERNAL,
+//        port::Printf(
+//            "failed initializing StreamExecutor for CL device ordinal %d: %s",
+//            config.ordinal, init_status.ToString().c_str())};
+//  }
+//  // std::cout << "created executor ok" << std::endl;
+//
+//  return std::move(executor);
+
+  auto executor = MakeUnique<StreamExecutor>(
+      this, MakeUnique<CUDAExecutor>(config.plugin_config));
   auto init_status = executor->Init(config.ordinal, config.device_options);
   if (!init_status.ok()) {
-    std::cout << "cl_platform.cc GetUncachedExecutor() CUDAExecutor->init() failed" << std::endl;
-    return port::Status{
+	 std::cout << "cl_platform.cc GetUncachedExecutor() CUDAExecutor->init() failed" << std::endl;
+    return port::Status(
         port::error::INTERNAL,
         port::Printf(
             "failed initializing StreamExecutor for CL device ordinal %d: %s",
-            config.ordinal, init_status.ToString().c_str())};
+            config.ordinal, init_status.ToString().c_str()));
   }
-  // std::cout << "created executor ok" << std::endl;
 
   return std::move(executor);
 }
