@@ -771,6 +771,11 @@ bool StreamExecutor::DeviceMemoryUsage(int64 *free, int64 *total) const {
   return implementation_->DeviceMemoryUsage(free, total);
 }
 
+//KernelArg StreamExecutor::DeviceMemoryToKernelArg(
+//    const DeviceMemoryBase &gpu_mem) const {
+//  return implementation_->DeviceMemoryToKernelArg(gpu_mem);
+//}
+
 void StreamExecutor::EnqueueOnBackgroundThread(std::function<void()> task) {
   background_threads_->Schedule(std::move(task));
 }

@@ -297,6 +297,9 @@ class StreamExecutorInterface {
   // caller.
   virtual DeviceDescription *PopulateDeviceDescription() const = 0;
 
+//  virtual KernelArg DeviceMemoryToKernelArg(
+//      const DeviceMemoryBase &gpu_mem) const = 0;
+
   // Attempts to register the provided TraceListener with the device-specific
   // Executor implementation. When this is called, the PIMPL interface has
   // already taken ownership of the object and is managing the generic tracing

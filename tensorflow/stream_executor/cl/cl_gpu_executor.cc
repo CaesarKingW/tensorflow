@@ -84,7 +84,7 @@ namespace rng {
 //namespace gputools {
 namespace stream_executor {
 
-using namespace cl;
+//using namespace cl;
 namespace cl {
 
 class CLEvent;
@@ -944,18 +944,18 @@ bool CLExecutor::FillBlockDimLimit(BlockDim *block_dim_limit) const {
   return true;
 }
 
-KernelArg CLExecutor::DeviceMemoryToKernelArg(
-    const DeviceMemoryBase &gpu_mem) const {
-  // std::cout << "CLExecutor::DeviceMemoryToKernelArg" << std::endl;
-  const void* arg = gpu_mem.opaque();
-  const uint8 *arg_ptr = reinterpret_cast<const uint8 *>(&arg);
-
-  KernelArg kernel_arg;
-  kernel_arg.type = KernelArg::kNormal;
-  kernel_arg.data = port::InlinedVector<uint8, 4>(arg_ptr, arg_ptr + sizeof(arg));
-  kernel_arg.bytes = sizeof(arg);
-  return kernel_arg;
-}
+//KernelArg CLExecutor::DeviceMemoryToKernelArg(
+//    const DeviceMemoryBase &gpu_mem) const {
+//  // std::cout << "CLExecutor::DeviceMemoryToKernelArg" << std::endl;
+//  const void* arg = gpu_mem.opaque();
+//  const uint8 *arg_ptr = reinterpret_cast<const uint8 *>(&arg);
+//
+//  KernelArg kernel_arg;
+//  kernel_arg.type = KernelArg::kNormal;
+//  kernel_arg.data = port::InlinedVector<uint8, 4>(arg_ptr, arg_ptr + sizeof(arg));
+//  kernel_arg.bytes = sizeof(arg);
+//  return kernel_arg;
+//}
 
 bool CLExecutor::SupportsBlas() const {
   std::cout << "CLExecutor::SupportsBlas" << std::endl;

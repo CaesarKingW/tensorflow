@@ -136,13 +136,13 @@ class CLExecutor : public internal::StreamExecutorInterface {
   bool SynchronousMemSet(DeviceMemoryBase *location, int value,
                          uint64 size) override;
 
-  bool SynchronousMemcpy(DeviceMemoryBase *gpu_dst, const void *host_src,
+  port::Status SynchronousMemcpy(DeviceMemoryBase *gpu_dst, const void *host_src,
                          uint64 size) override;
 
-  bool SynchronousMemcpy(void *host_dst, const DeviceMemoryBase &gpu_src,
+  port::Status SynchronousMemcpy(void *host_dst, const DeviceMemoryBase &gpu_src,
                          uint64 size) override;
 
-  bool SynchronousMemcpyDeviceToDevice(DeviceMemoryBase *gpu_dst,
+  port::Status SynchronousMemcpyDeviceToDevice(DeviceMemoryBase *gpu_dst,
                                        const DeviceMemoryBase &gpu_src,
                                        uint64 size) override;
 
@@ -189,7 +189,7 @@ class CLExecutor : public internal::StreamExecutorInterface {
 
   Event::Status PollForEventStatus(Event *event) override;
 
-  bool BlockHostUntilDone(Stream *stream) override;
+  port::Status BlockHostUntilDone(Stream *stream) override;
 
   int PlatformDeviceCount() override { return CLDriver::GetDeviceCount(); }
 
@@ -205,7 +205,7 @@ class CLExecutor : public internal::StreamExecutorInterface {
 
   // Search for the symbol and returns a device pointer and size.
   // Returns false if symbol does not exist.
-  bool GetSymbol(const string& symbol_name, void **mem, size_t *bytes) override;
+  bool GetSymbol(const string& symbol_name, ModuleHandle module_handle, void **mem, size_t *bytes) override;
 
   DeviceDescription *PopulateDeviceDescription() const override;
 
@@ -214,8 +214,8 @@ class CLExecutor : public internal::StreamExecutorInterface {
   // will be only partially populated as a result, and an error will be logged.
   bool FillBlockDimLimit(BlockDim *block_dim_limit) const;
 
-  KernelArg DeviceMemoryToKernelArg(
-      const DeviceMemoryBase &gpu_mem) const override;
+//  KernelArg DeviceMemoryToKernelArg(
+//      const DeviceMemoryBase &gpu_mem) const override;
 
   bool SupportsBlas() const override;
 
