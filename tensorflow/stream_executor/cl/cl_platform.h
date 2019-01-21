@@ -30,8 +30,9 @@ limitations under the License.
 #include "tensorflow/stream_executor/stream_executor_pimpl.h"
 #include "tensorflow/stream_executor/trace_listener.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
     extern const Platform::Id kClPlatformId;
@@ -65,5 +66,6 @@ private:
 
 }
 }
-}
+//}
+//}
 

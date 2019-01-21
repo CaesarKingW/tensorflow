@@ -51,8 +51,9 @@ bool FLAGS_gpuexec_cuda_device_0_only = false;
 // matches the expected one.
 constexpr bool kVerifyClContext = true;
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 // namespace dynload {
@@ -167,7 +168,7 @@ class CreatedContexts {
  public:
   // Returns whether context is a member of the live set.
   static bool Has(CUcontext context) {
-    shared_lock lock{mu_};
+    tf_shared_lock lock{mu_};
     return Live()->find(context) != Live()->end();
   }
 
@@ -1760,5 +1761,6 @@ static port::StatusOr<T> GetSimpleAttribute(CUdevice device,
 }
 
 }  // namespace cuda
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools

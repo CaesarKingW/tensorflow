@@ -41,8 +41,9 @@ limitations under the License.
     "CL runtime being included into CL GPU executor; should be driver only."
 #endif
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 // Wraps a CUfunction to implement the platform-independent KernelInterface.
@@ -125,7 +126,8 @@ inline CLKernel *AsCLKernel(KernelBase *kernel) {
 }
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_KERNEL_H_

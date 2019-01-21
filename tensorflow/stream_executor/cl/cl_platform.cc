@@ -38,9 +38,9 @@ limitations under the License.
 
 #include <iostream>
 
-namespace perftools {
-namespace gputools {
-
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 // PLATFORM_DEFINE_ID(kClPlatformId);
@@ -166,9 +166,9 @@ void InitializeClPlatform() {
     std::unique_ptr<cl::ClPlatform> platform(new cl::ClPlatform);
     SE_CHECK_OK(MultiPlatformManager::RegisterPlatform(std::move(platform)));
 }
-
-} // namespace gputools
-} // namespace perftools
+} // namespace stream_executor
+//} // namespace gputools
+//} // namespace perftools
 
 // REGISTER_MODULE_INITIALIZER(cl_platform,
 //                             perftools::gputools::InitializeClPlatform());

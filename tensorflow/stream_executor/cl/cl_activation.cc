@@ -21,8 +21,9 @@ limitations under the License.
 #include "tensorflow/stream_executor/stream_executor.h"
 #include "tensorflow/stream_executor/stream_executor_internal.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 cl::ClContext* ExtractClContext(CLExecutor *cl_exec);
@@ -42,5 +43,6 @@ ScopedActivateExecutorContext::~ScopedActivateExecutorContext() {
 }
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools

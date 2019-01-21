@@ -26,8 +26,9 @@ limitations under the License.
 #include "tensorflow/stream_executor/plugin_registry.h"
 #include "tensorflow/stream_executor/temporary_device_memory.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 class CLExecutor;
@@ -521,7 +522,8 @@ class CldnnSupport : public dnn::DnnSupport {
 };
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_DNN_H_

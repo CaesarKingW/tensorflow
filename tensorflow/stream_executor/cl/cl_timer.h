@@ -23,8 +23,9 @@ limitations under the License.
 #include "tensorflow/stream_executor/cl/cl_driver.h"
 #include "tensorflow/stream_executor/cl/cl_gpu_executor.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 class CLExecutor;
@@ -78,7 +79,8 @@ class CLTimer : public internal::TimerInterface {
 };
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_TIMER_H_

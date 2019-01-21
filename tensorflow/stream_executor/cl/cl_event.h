@@ -23,8 +23,10 @@ limitations under the License.
 #include "tensorflow/stream_executor/event.h"
 #include "tensorflow/stream_executor/lib/status.h"
 
-namespace perftools {
-namespace gputools {
+
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 // CLEvent wraps a CUevent in the platform-independent EventInterface
@@ -61,7 +63,8 @@ class CLEvent : public internal::EventInterface {
 };
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_EVENT_H_

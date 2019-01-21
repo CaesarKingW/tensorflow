@@ -56,8 +56,9 @@ limitations under the License.
 
 #include <iostream>
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 PLUGIN_REGISTRY_DEFINE_PLUGIN_ID(kClBlasPlugin);
@@ -2476,9 +2477,9 @@ void initialize_clblas() {
                                                      gpu::PluginKind::kBlas,
                                                      gpu::cl::kClBlasPlugin);
 }
-
-}  // namespace gputools
-}  // namespace perftools
+}    // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 // REGISTER_MODULE_INITIALIZER(register_clblas,
 //                             { perftools::gputools::initialize_clblas(); });

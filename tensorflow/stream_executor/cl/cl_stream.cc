@@ -20,8 +20,9 @@ limitations under the License.
 
 #include <iostream>
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 bool CLStream::Init() {
@@ -69,5 +70,6 @@ CUstream AsCLStreamValue(Stream *stream) {
 }
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools

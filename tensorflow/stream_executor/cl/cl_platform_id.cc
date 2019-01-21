@@ -15,12 +15,14 @@ limitations under the License.
 
 #include "tensorflow/stream_executor/cl/cl_platform_id.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 PLATFORM_DEFINE_ID(kClPlatformId);
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools

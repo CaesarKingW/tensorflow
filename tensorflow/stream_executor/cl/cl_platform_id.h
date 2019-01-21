@@ -18,8 +18,9 @@ limitations under the License.
 
 #include "tensorflow/stream_executor/platform.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 // Opaque and unique identifier for the cuda platform.
@@ -29,8 +30,9 @@ namespace cl {
 // and CudaExecutor.
 extern const Platform::Id kClPlatformId;
 
-}  // namespace cuda
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace cl
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_PLATFORM_ID_H_

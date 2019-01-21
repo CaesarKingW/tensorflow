@@ -27,8 +27,10 @@ limitations under the License.
 // #include "cuda/include/cuComplex.h"
 #include "cuda.h"
 
-namespace perftools {
-namespace gputools {
+
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 
 template <typename ElemT>
 class DeviceMemory;
@@ -101,7 +103,8 @@ T *CUDAMemoryMutable(DeviceMemory<T> *mem) {
 // }
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CL_HELPERS_H_

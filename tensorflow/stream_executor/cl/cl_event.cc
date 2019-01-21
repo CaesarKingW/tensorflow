@@ -19,8 +19,9 @@ limitations under the License.
 #include "tensorflow/stream_executor/cl/cl_stream.h"
 #include "tensorflow/stream_executor/lib/statusor.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 CLEvent::CLEvent(CLExecutor* parent)
@@ -68,5 +69,6 @@ const CUevent& CLEvent::cl_event() {
 }
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools

@@ -70,16 +70,19 @@ extern bool FLAGS_check_gpu_leaks;
 tensorflow::int32 FLAGS_register_occupancy_warning_threshold;
 bool FLAGS_prefer_cubin_to_ptx = true;
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace rng {
 // class RngSupport;
 }  // namespace rng
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 
 using namespace cl;
 namespace cl {
@@ -1225,9 +1228,9 @@ void initialize_cl_gpu_executor() {
      return new gpu::cl::CLExecutor{config};
    };
 }
-
-}  // namespace gputools
-}  // namespace perftools
+}  //namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 // REGISTER_MODULE_INITIALIZER(
 //     cl_gpu_executor, {perftools::gputools::initialize_cl_gpu_executor();});

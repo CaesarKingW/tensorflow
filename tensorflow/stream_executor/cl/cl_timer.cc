@@ -22,8 +22,9 @@ limitations under the License.
 #include "tensorflow/stream_executor/cl/cl_stream.h"
 #include "tensorflow/stream_executor/lib/status.h"
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 namespace cl {
 
 bool CLTimer::Init() {
@@ -86,5 +87,6 @@ bool CLTimer::Stop(CLStream *stream) {
 }
 
 }  // namespace cl
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools

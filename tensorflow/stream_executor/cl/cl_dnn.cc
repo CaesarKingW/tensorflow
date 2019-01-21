@@ -71,8 +71,9 @@ size_t cudnnCompatibilityVersion(size_t cudnn_version) {
 
 }  // namespace
 
-namespace perftools {
-namespace gputools {
+//namespace perftools {
+//namespace gputools {
+namespace stream_executor {
 
 using dnn::BatchDescriptor;
 using dnn::FilterDescriptor;
@@ -3850,8 +3851,9 @@ void initialize_cudnn() {
                                                      gpu::cl::kClDnnPlugin);
 }
 
-}  // namespace gputools
-}  // namespace perftools
+}  // namespace stream_executor
+//}  // namespace gputools
+//}  // namespace perftools
 
 // REGISTER_MODULE_INITIALIZER(register_cudnn,
 //                              { perftools::gputools::initialize_cudnn(); });
