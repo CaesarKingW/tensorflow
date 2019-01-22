@@ -332,8 +332,8 @@ cudnnHandle_t ToHandle(void* opaque_handle) {
   return static_cast<cudnnHandle_t>(opaque_handle);
 }
 
-cudnnConvolutionFwdAlgo_t ToConvForwardAlgo(dnn::AlgorithmType algorithm) {
-  cudnnConvolutionFwdAlgo_t algo = cudnnConvolutionFwdAlgo_t(algorithm);
+cudnnConvolutionFwdAlgo_t ToConvForwardAlgo(dnn::AlgorithmDesc algorithm) {
+  cudnnConvolutionFwdAlgo_t algo = cudnnConvolutionFwdAlgo_t(algorithm.algo_id());
    switch (algo) {
 //     case CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM:
 //     case CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_PRECOMP_GEMM:
@@ -347,13 +347,13 @@ cudnnConvolutionFwdAlgo_t ToConvForwardAlgo(dnn::AlgorithmType algorithm) {
        return algo;
      default:
        LOG(FATAL) << "Unsupported Cudnn convolution forward algorithm: "
-                  << algorithm;
+                  << algorithm.algo_id();
    }
 }
 
 cudnnConvolutionBwdDataAlgo_t ToConvBackwardDataAlgo(
-    dnn::AlgorithmType algorithm) {
-  cudnnConvolutionBwdDataAlgo_t algo = cudnnConvolutionBwdDataAlgo_t(algorithm);
+    dnn::AlgorithmDesc algorithm) {
+  cudnnConvolutionBwdDataAlgo_t algo = cudnnConvolutionBwdDataAlgo_t(algorithm.algo_id());
    switch (algo) {
      case CUDNN_CONVOLUTION_BWD_DATA_ALGO_0:
 //     case CUDNN_CONVOLUTION_BWD_DATA_ALGO_1:
@@ -366,14 +366,14 @@ cudnnConvolutionBwdDataAlgo_t ToConvBackwardDataAlgo(
      default:
        LOG(FATAL)
            << "Unsupported Cudnn convolution backward algorithm for data: "
-           << algorithm;
+           << algorithm.algo_id();
    }
 }
 
 cudnnConvolutionBwdFilterAlgo_t ToConvBackwardFilterAlgo(
-    dnn::AlgorithmType algorithm) {
+    dnn::AlgorithmDesc algorithm) {
   cudnnConvolutionBwdFilterAlgo_t algo =
-      cudnnConvolutionBwdFilterAlgo_t(algorithm);
+      cudnnConvolutionBwdFilterAlgo_t(algorithm.algo_id());
    switch (algo) {
      case CUDNN_CONVOLUTION_BWD_FILTER_ALGO_0:
 //     case CUDNN_CONVOLUTION_BWD_FILTER_ALGO_1:
@@ -383,7 +383,7 @@ cudnnConvolutionBwdFilterAlgo_t ToConvBackwardFilterAlgo(
      default:
        LOG(FATAL)
            << "Unsupported Cudnn convolution backward algorithm for filter: "
-           << algorithm;
+           << algorithm.algo_id();
    }
 }
 
@@ -875,6 +875,34 @@ class ScopedActivationDescriptor {
 };
 #endif
 
+// A helper function to decide whether to enable the TENSOR_OP_MATH math type
+bool TensorOpMathEnabled() {
+	  std::cout << "cl_dnn::TensorOpMathEnabled" << std::endl;
+	return false;
+//  static bool is_enabled = [] {
+//    bool is_disabled = false;
+//    TF_CHECK_OK(
+//        tensorflow::ReadBoolFromEnvVar("TF_DISABLE_CUDNN_TENSOR_OP_MATH",
+//                                       /*default_val=*/false, &is_disabled));
+//    return !is_disabled;
+//  }();
+//  return is_enabled;
+}
+
+// A helper function to decide whether to enable the TENSOR_OP_MATH math type
+// for RNNs.
+bool RnnTensorOpMathEnabled() {
+	  std::cout << "cl_dnn::RnnTensorOpMathEnabled" << std::endl;
+	return false;
+//  static bool is_enabled = [] {
+//    bool is_disabled = false;
+//    TF_CHECK_OK(
+//        tensorflow::ReadBoolFromEnvVar("TF_DISABLE_CUDNN_RNN_TENSOR_OP_MATH",
+//                                       /*default_val=*/false, &is_disabled));
+//    return !is_disabled;
+//  }();
+//  return is_enabled;
+}
 namespace {
 cudnnDataType_t ToCudnnDataType(dnn::DataType data_type) {
   switch (data_type) {
@@ -887,7 +915,7 @@ cudnnDataType_t ToCudnnDataType(dnn::DataType data_type) {
   }
 }
 
-#if CUDNN_VERSION >= 5000
+#if CUDNN_VERSION >= PPU_VER
 
 cudnnRNNInputMode_t ToCudnnRnnInputMode(dnn::RnnInputMode input_mode) {
   switch (input_mode) {
@@ -1887,10 +1915,12 @@ bool CldnnSupport::DoRnnBackwardImpl(
 
 port::StatusOr<std::unique_ptr<dnn::RnnDescriptor>>
 CldnnSupport::createRnnDescriptor(int num_layers, int hidden_size,
-                                  int input_size, dnn::RnnInputMode input_mode,
+                                  int input_size, int batch_size, dnn::RnnInputMode input_mode,
                                   dnn::RnnDirectionMode direction_mode,
                                   dnn::RnnMode rnn_mode,
-                                  dnn::DataType data_type, float dropout,
+                                  dnn::DataType data_type,
+								  const dnn::AlgorithmConfig& algorithm_config,
+								  float dropout,
                                   uint64 seed,
                                   ScratchAllocator* state_allocator) {
 // #if CUDNN_VERSION >= 5000
@@ -1977,7 +2007,8 @@ bool CldnnSupport::DoRnnForward(
     const dnn::RnnStateTensorDescriptor& output_c_desc,
     DeviceMemory<float>* output_c_data, bool is_training,
     ScratchAllocator* reserve_space_allocator,
-    ScratchAllocator* workspace_allocator) {
+    ScratchAllocator* workspace_allocator,
+    dnn::ProfileResult* output_profile_result) {
 // #if CUDNN_VERSION >= 5000
 #if CUDNN_VERSION >= PPU_VER
   const CudnnRnnDescriptor& cudnn_rnn_desc =
@@ -2027,7 +2058,8 @@ bool CldnnSupport::DoRnnBackward(
     DeviceMemory<float>* input_c_backprop_data,
     DeviceMemory<float>* params_backprop_data,
     DeviceMemory<uint8>* reserve_space_data,
-    ScratchAllocator* workspace_allocator) {
+    ScratchAllocator* workspace_allocator,
+	dnn::ProfileResult* output_profile_result) {
 // #if CUDNN_VERSION >= 5000
 #if CUDNN_VERSION >= PPU_VER
 
@@ -2058,6 +2090,30 @@ bool CldnnSupport::DoRnnBackward(
   return false;
 #endif  // CUDNN_VERSION
 }
+
+// A helper class to set env-vars and choose options for cudnn-related
+// algorithms.
+template <typename EnvVar>
+class CudnnEnvVar {
+ public:
+  static bool IsEnabled() {
+    static bool is_enabled = IsEnabledImpl();
+    return is_enabled;
+  }
+
+ private:
+  static bool IsEnabledImpl() {
+    const char* tf_env_var_val = getenv(EnvVar::kName);
+    if (tf_env_var_val != nullptr) {
+      port::StringPiece tf_env_var_val_str(tf_env_var_val);
+      if (tf_env_var_val_str == "0") {
+        return false;
+      }
+      return true;
+    }
+    return EnvVar::kDefaultFlag;
+  }
+};
 
 template <class T>
 bool CldnnSupport::DoConvolveImpl(
@@ -2101,7 +2157,7 @@ bool CldnnSupport::DoConvolveImpl(
   cudnnConvolutionFwdAlgo_t algo;
   DeviceMemory<uint8> scratch;
 
-  if (algorithm_config.algorithm() == dnn::kDefaultAlgorithm) {
+  if (algorithm_config.algorithm().is_default()) {
     // With the default algorithm, use Cudnn's heuristics.
     auto get_algorithm = [&](bool specify_limit)
 
@@ -2189,7 +2245,7 @@ bool CldnnSupport::DoConvolveImpl(
       }
       LOG(FATAL) << "Cannot query the size of workspace needed for the given "
                     "algorithm: "
-                 << algorithm_config.algorithm();
+                 << ToConvForwardAlgo(algorithm_config.algorithm());
     }
     if (size_in_bytes != 0) {
       if (scratch_allocator == nullptr) {
@@ -2205,7 +2261,7 @@ bool CldnnSupport::DoConvolveImpl(
         scratch = allocated.ValueOrDie();
       }
       if (scratch == nullptr) {
-        CHECK(algorithm_config.algorithm_no_scratch() != dnn::kDefaultAlgorithm)
+        CHECK(algorithm_config.algorithm_no_scratch().is_default())
             << "The primary convolution algorithm failed memory allocation, "
                "while a secondary algorithm is not provided.";
         algo = ToConvForwardAlgo(algorithm_config.algorithm_no_scratch());
@@ -2249,7 +2305,10 @@ bool CldnnSupport::DoConvolveImpl(
       return false;
     }
 //    output_profile_result->set_is_valid(true);
-    output_profile_result->set_algorithm(algo);
+    //
+    //FIXME: algorithm seems changed to always be with scratch memory?
+    //
+    output_profile_result->set_algorithm(algorithm_config.algorithm());
     output_profile_result->set_elapsed_time_in_ms(
         timer->GetElapsedMilliseconds());
     timer->Destroy();
@@ -2268,51 +2327,124 @@ bool CldnnSupport::DoConvolveImpl(
 }
 
 bool CldnnSupport::GetConvolveAlgorithms(
-    std::vector<dnn::AlgorithmType>* out_algorithms) {
-  out_algorithms->assign({
-      // clang-format off
-//      CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM,
-//      CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_PRECOMP_GEMM,
-      CUDNN_CONVOLUTION_FWD_ALGO_GEMM,
-//      CUDNN_CONVOLUTION_FWD_ALGO_DIRECT,
-//      CUDNN_CONVOLUTION_FWD_ALGO_FFT,
-//      CUDNN_CONVOLUTION_FWD_ALGO_FFT_TILING,
-//// #if CUDNN_VERSION >= 5000
-//#if CUDNN_VERSION >= PPU_VER
-//      CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD,
-//#endif
-      // clang-format on
-  });
+	bool with_winograd_nonfused, int cc_major, int cc_minor,
+    std::vector<dnn::AlgorithmDesc>* out_algorithms) {
+
+  std::vector<dnn::AlgorithmDesc::Index> algo_types = {
+    // clang-format off
+//    CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM,
+//    CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_PRECOMP_GEMM,
+    CUDNN_CONVOLUTION_FWD_ALGO_GEMM,
+//    CUDNN_CONVOLUTION_FWD_ALGO_DIRECT,
+//    CUDNN_CONVOLUTION_FWD_ALGO_FFT,
+//    CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD,
+    // clang-format on
+  };
+//  if (CudnnEnvVar<FftTilingForward>::IsEnabled()) {
+//    algo_types.push_back(CUDNN_CONVOLUTION_FWD_ALGO_FFT_TILING);
+//  }
+//  if (CudnnEnvVar<WinogradNonfused>::IsEnabled() && with_winograd_nonfused) {
+//    algo_types.push_back(CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD_NONFUSED);
+//  }
+//
+//  out_algorithms->clear();
+//  for (auto i : algo_types) {
+//    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
+//    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
+//      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
+//    }
+//  }
   return true;
 }
 
+// A helper struct to decide whether to enable the FFT_TILING algorithms for
+// forward convolution. It is disabled for cuDNN < 7 due to memory corruption
+// caused by some shapes with this algorithm. Users can explicitly enable the
+// algorithm through an env-var "TF_ENABLE_FFT_TILING_FORWARD=1".
+struct FftTilingForward {
+  static constexpr const char* kName = "TF_ENABLE_FFT_TILING_FORWARD";
+  static constexpr bool kDefaultFlag = CUDNN_VERSION >= 7000;
+};
+
+// A helper struct to decide whether to enable the WINOGRAD_NONFUSED algorithms.
+// By default it is turned on, users can explicitly disable them through an
+// env-var "TF_ENABLE_WINOGRAD_NONFUSED=0".
+// https://github.com/tensorflow/tensorflow/pull/4901
+struct WinogradNonfused {
+  static constexpr const char* kName = "TF_ENABLE_WINOGRAD_NONFUSED";
+  // NVIDIA has fixed winograd nonfused bug for cudnn v>=7. For older versions,
+  // we have a workaround.
+  static constexpr bool kDefaultFlag = true;
+};
+
+// A helper struct to decide whether to use FP32 as the internal compute type
+// for convolution when the input data type is FP16. By default it is turned on,
+// users can explicitly disable them (choose to use FP16 as the internal compute
+// type) through an env-var "TF_FP16_CONV_USE_FP32_COMPUTE=0".
+struct ConvDoFP32ComputationFP16Input {
+  static constexpr const char* kName = "TF_FP16_CONV_USE_FP32_COMPUTE";
+  // Using FP16 as the internal compute type for convolution when the input data
+  // type is FP16 is only supported on architectures with true fp16 support
+  // (compute capability 5.3 and 6.0). Setting this to false in an unsupported
+  // architecture will cause internal errors.
+  static constexpr bool kDefaultFlag = true;
+};
 bool CldnnSupport::GetConvolveBackwardDataAlgorithms(
-    std::vector<dnn::AlgorithmType>* out_algorithms) {
-  out_algorithms->assign({
+	bool with_winograd_nonfused, int cc_major, int cc_minor,
+    std::vector<dnn::AlgorithmDesc>* out_algorithms) {
+
+  std::vector<dnn::AlgorithmDesc::Index> algo_types = {
       // clang-format off
-      CUDNN_CONVOLUTION_BWD_DATA_ALGO_0,
-//      CUDNN_CONVOLUTION_BWD_DATA_ALGO_1,
-//      CUDNN_CONVOLUTION_BWD_DATA_ALGO_FFT,
-//      CUDNN_CONVOLUTION_BWD_DATA_ALGO_FFT_TILING,
-//// #if CUDNN_VERSION >= 5000
-//#if CUDNN_VERSION >= PPU_VER
-//      CUDNN_CONVOLUTION_BWD_DATA_ALGO_WINOGRAD,
-//#endif
+    CUDNN_CONVOLUTION_BWD_DATA_ALGO_0,
+//    CUDNN_CONVOLUTION_BWD_DATA_ALGO_1,
+//    CUDNN_CONVOLUTION_BWD_DATA_ALGO_FFT,
+//    CUDNN_CONVOLUTION_BWD_DATA_ALGO_FFT_TILING,
+//    CUDNN_CONVOLUTION_BWD_DATA_ALGO_WINOGRAD,
       // clang-format on
-  });
+  };
+//  if (CudnnEnvVar<WinogradNonfused>::IsEnabled() && with_winograd_nonfused) {
+//    algo_types.push_back(CUDNN_CONVOLUTION_BWD_DATA_ALGO_WINOGRAD_NONFUSED);
+//  }
+//
+//  out_algorithms->clear();
+//  for (auto i : algo_types) {
+//    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
+//    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
+//      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
+//    }
+//  }
   return true;
 }
 
 bool CldnnSupport::GetConvolveBackwardFilterAlgorithms(
-    std::vector<dnn::AlgorithmType>* out_algorithms) {
-  out_algorithms->assign({
+	bool with_winograd_nonfused, int cc_major, int cc_minor,
+    std::vector<dnn::AlgorithmDesc>* out_algorithms) {
+
+  std::vector<dnn::AlgorithmDesc::Index> algo_types = {
       // clang-format off
       CUDNN_CONVOLUTION_BWD_FILTER_ALGO_0,
 //      CUDNN_CONVOLUTION_BWD_FILTER_ALGO_1,
 //      CUDNN_CONVOLUTION_BWD_FILTER_ALGO_FFT,
 //      CUDNN_CONVOLUTION_BWD_FILTER_ALGO_3,
+      // Based on cudnn.h, the following is not implemented.
+      // CUDNN_CONVOLUTION_BWD_FILTER_ALGO_WINOGRAD,
+
+      // Produces incorrect results for some shapes. Disabled for now, see
+      // NVIDIA bug 2072856. TODO(csigg): Only disable for subset of shapes.
+      // CUDNN_CONVOLUTION_BWD_FILTER_ALGO_FFT_TILING,
       // clang-format on
-  });
+  };
+//  if (CudnnEnvVar<WinogradNonfused>::IsEnabled() && with_winograd_nonfused) {
+////    algo_types.push_back(CUDNN_CONVOLUTION_BWD_FILTER_ALGO_WINOGRAD_NONFUSED);
+//  }
+//
+//  out_algorithms->clear();
+//  for (auto i : algo_types) {
+//    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
+//    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
+//      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
+//    }
+//  }
   return true;
 }
 
@@ -2480,7 +2612,9 @@ bool CldnnSupport::DoConvolve(
     const DeviceMemory<double>& filter_data,
     const ConvolutionDescriptor& convolution_descriptor,
     const BatchDescriptor& output_descriptor,
-    DeviceMemory<double>* output_data) {
+    DeviceMemory<double>* output_data, ScratchAllocator* scratch_allocator,
+    const dnn::AlgorithmConfig& algorithm_config,
+    dnn::ProfileResult* output_profile_result) {
   LOG(ERROR) << "double-based DNN not yet implemented";
   return false;
 }
@@ -2524,8 +2658,8 @@ DeviceMemory<T> CldnnSupport::MaybeTransformLayout(
       parent_, transformed_output_descriptor,
       static_cast<cudnnDataType_t>(cudnn_type)};
 
-  float alpha = 1.0f;
-  float beta = 0.0f;
+//  float alpha = 1.0f;
+//  float beta = 0.0f;
 //   auto status = dynload::cudnnTransformTensor(
 //       parent_, ToHandle(dnn_handle_), &alpha, orig_out_back_nd.handle(),
 //       backward_output_data.opaque(), &beta, transformed_out_back_nd.handle(),
@@ -2590,7 +2724,7 @@ bool CldnnSupport::DoConvolveBackwardDataImpl(
   cudnnConvolutionBwdDataAlgo_t algo;
   DeviceMemory<uint8> scratch;
 
-  if (algorithm_config.algorithm() == dnn::kDefaultAlgorithm) {
+  if (algorithm_config.algorithm().is_default()) {
     // With the default algorithm, use Cudnn's heuristics.
     auto get_algorithm = [&](bool specify_limit) SHARED_LOCKS_REQUIRED(
         dnn_handle_mutex_) -> cudnnConvolutionBwdDataAlgo_t {
@@ -2693,7 +2827,7 @@ bool CldnnSupport::DoConvolveBackwardDataImpl(
       }
       LOG(FATAL) << "Cannot query the size of workspace needed for the given "
                     "algorithm: "
-                 << algorithm_config.algorithm();
+                 << ToConvBackwardDataAlgo(algorithm_config.algorithm());
     }
     if (size_in_bytes != 0) {
       if (scratch_allocator == nullptr) {
@@ -2709,7 +2843,7 @@ bool CldnnSupport::DoConvolveBackwardDataImpl(
         scratch = allocated.ValueOrDie();
       }
       if (scratch == nullptr) {
-        CHECK(algorithm_config.algorithm_no_scratch() != dnn::kDefaultAlgorithm)
+        CHECK(algorithm_config.algorithm_no_scratch().is_default())
             << "The primary convolution algorithm failed memory allocation, "
                "while a secondary algorithm is not provided.";
         algo = ToConvBackwardDataAlgo(algorithm_config.algorithm_no_scratch());
@@ -2748,7 +2882,7 @@ bool CldnnSupport::DoConvolveBackwardDataImpl(
   if (is_profiling) {
     timer->Stop((CLStream*) AsCLStream(stream));
 //    output_profile_result->set_is_valid(true);
-    output_profile_result->set_algorithm(algo);
+    output_profile_result->set_algorithm(algorithm_config.algorithm());
     output_profile_result->set_elapsed_time_in_ms(
         timer->GetElapsedMilliseconds());
     timer->Destroy();
@@ -2852,7 +2986,7 @@ bool CldnnSupport::DoConvolveBackwardFilterImpl(
   cudnnConvolutionBwdFilterAlgo_t algo;
   DeviceMemory<uint8> scratch;
 
-  if (algorithm_config.algorithm() == dnn::kDefaultAlgorithm) {
+  if (algorithm_config.algorithm().is_default()) {
     // With the default algorithm, use Cudnn's heuristics.
 
     // Lambda that retrieves the algorithm.
@@ -2950,7 +3084,7 @@ bool CldnnSupport::DoConvolveBackwardFilterImpl(
       }
       LOG(FATAL) << "Cannot query the size of workspace needed for the given "
                     "algorithm: "
-                 << algorithm_config.algorithm();
+                 << ToConvBackwardFilterAlgo(algorithm_config.algorithm());
     }
     if (size_in_bytes != 0) {
       if (scratch_allocator == nullptr) {
@@ -2966,7 +3100,7 @@ bool CldnnSupport::DoConvolveBackwardFilterImpl(
         scratch = allocated.ValueOrDie();
       }
       if (scratch == nullptr) {
-        CHECK(algorithm_config.algorithm_no_scratch() != dnn::kDefaultAlgorithm)
+        CHECK(algorithm_config.algorithm_no_scratch().is_default())
             << "The primary convolution algorithm failed memory allocation, "
                "while a secondary algorithm is not provided.";
         algo =
@@ -3006,7 +3140,7 @@ bool CldnnSupport::DoConvolveBackwardFilterImpl(
   if (is_profiling) {
     timer->Stop((CLStream*)AsCLStream(stream));
 //    output_profile_result->set_is_valid(true);
-    output_profile_result->set_algorithm(algo);
+    output_profile_result->set_algorithm(algorithm_config.algorithm());
     output_profile_result->set_elapsed_time_in_ms(
         timer->GetElapsedMilliseconds());
     timer->Destroy();
@@ -3331,7 +3465,7 @@ bool CldnnSupport::DoActivate(Stream* stream,
                               dnn::ActivationMode activation_mode,
                               const dnn::BatchDescriptor& dimensions,
                               const DeviceMemory<float>& input_data,
-                              DeviceMemory<float>* output_data) {
+                              DeviceMemory<float>* output_data, uint64 options) {
   mutex_lock lock{dnn_handle_mutex_};
 //   auto status = dynload::cudnnSetStream(parent_, ToHandle(dnn_handle_),
 //                                         AsCLStreamValue(stream));
@@ -3412,7 +3546,8 @@ bool CldnnSupport::DoPoolForward(
     const dnn::BatchDescriptor& input_dimensions,
     const DeviceMemory<float>& input_data,
     const dnn::BatchDescriptor& output_dimensions,
-    DeviceMemory<float>* output_data) {
+    DeviceMemory<float>* output_data,
+    ScratchAllocator* workspace_allocator) {
   mutex_lock lock{dnn_handle_mutex_};
 //   auto status = dynload::cudnnSetStream(parent_, ToHandle(dnn_handle_),
 //                                         AsCLStreamValue(stream));
@@ -3454,7 +3589,8 @@ bool CldnnSupport::DoPoolForward(
     const dnn::BatchDescriptor& input_dimensions,
     const DeviceMemory<Eigen::half>& input_data,
     const dnn::BatchDescriptor& output_dimensions,
-    DeviceMemory<Eigen::half>* output_data) {
+    DeviceMemory<Eigen::half>* output_data,
+    ScratchAllocator* workspace_allocator) {
   mutex_lock lock{dnn_handle_mutex_};
 //   auto status = dynload::cudnnSetStream(parent_, ToHandle(dnn_handle_),
 //                                         AsCLStreamValue(stream));
@@ -3496,7 +3632,8 @@ bool CldnnSupport::DoPoolBackward(
     const dnn::BatchDescriptor& output_dimensions,
     const DeviceMemory<float>& output_data,
     const DeviceMemory<float>& input_diff_data,
-    DeviceMemory<float>* output_diff_data) {
+    DeviceMemory<float>* output_diff_data,
+    ScratchAllocator* workspace_allocator) {
   mutex_lock lock{dnn_handle_mutex_};
 //   auto status = dynload::cudnnSetStream(parent_, ToHandle(dnn_handle_),
 //                                         AsCLStreamValue(stream));
@@ -3542,7 +3679,8 @@ bool CldnnSupport::DoPoolBackward(
     const dnn::BatchDescriptor& output_dimensions,
     const DeviceMemory<Eigen::half>& output_data,
     const DeviceMemory<Eigen::half>& input_diff_data,
-    DeviceMemory<Eigen::half>* output_diff_data) {
+    DeviceMemory<Eigen::half>* output_diff_data,
+    ScratchAllocator* workspace_allocator) {
   mutex_lock lock{dnn_handle_mutex_};
 //   auto status = dynload::cudnnSetStream(parent_, ToHandle(dnn_handle_),
 //                                         AsCLStreamValue(stream));
@@ -3615,9 +3753,9 @@ bool CldnnSupport::DoNormalizeWithDimensions(
   ScopedNormalizeDescriptor normalize{parent_, normalize_descriptor};
 
   // Alpha is the scaling factor for input.
-  float alpha = 1.0f;
+//  float alpha = 1.0f;
   // Beta is the scaling factor for output.
-  float beta = 0.0f;
+//  float beta = 0.0f;
 
 //   status = dynload::cudnnLRNCrossChannelForward(
 //       parent_, ToHandle(dnn_handle_), normalize.handle(),
@@ -3635,7 +3773,8 @@ bool CldnnSupport::DoNormalizeBackwardWithDimensions(
     const dnn::BatchDescriptor& dimensions, const DeviceMemory<float>& raw_data,
     const DeviceMemory<float>& normalized_data,
     const DeviceMemory<float>& normalized_variable_gradient,
-    DeviceMemory<float>* raw_variable_gradient) {
+    DeviceMemory<float>* raw_variable_gradient,
+    ScratchAllocator* workspace_allocator) {
   // Check for unsupported modes.
   if (normalize_descriptor.wrap_around()) {
     LOG(ERROR) << "CL LRN does not support wrap-around mode";
@@ -3658,9 +3797,9 @@ bool CldnnSupport::DoNormalizeBackwardWithDimensions(
 
   ScopedTensorDescriptor dims{parent_, dimensions, CUDNN_DATA_FLOAT};
   ScopedNormalizeDescriptor normalize{parent_, normalize_descriptor};
-
-  float alpha = 1.0f;
-  float beta = 0.0f;
+//
+//  float alpha = 1.0f;
+//  float beta = 0.0f;
 
 //   status = dynload::cudnnLRNCrossChannelBackward(
 //       parent_, ToHandle(dnn_handle_), normalize.handle(),
@@ -3813,17 +3952,17 @@ bool CldnnSupport::DeriveOutputBatchDescriptor(
 
 }  // namespace CL
 
-namespace gpu = ::perftools::gputools;
+namespace se = ::stream_executor;
 
 void initialize_cudnn() {
-  gpu::port::Status status =
-      gpu::PluginRegistry::Instance()
-          ->RegisterFactory<gpu::PluginRegistry::DnnFactory>(
-              gpu::cl::kClPlatformId, gpu::cl::kClDnnPlugin, "cuDNN",
-              [](gpu::internal::StreamExecutorInterface*
-                     parent) -> gpu::dnn::DnnSupport* {
-                gpu::cl::CLExecutor* cl_executor =
-                    dynamic_cast<gpu::cl::CLExecutor*>(parent);
+  se::port::Status status =
+      se::PluginRegistry::Instance()
+          ->RegisterFactory<se::PluginRegistry::DnnFactory>(
+              se::cl::kClPlatformId, se::cl::kClDnnPlugin, "cuDNN",
+              [](se::internal::StreamExecutorInterface*
+                     parent) -> se::dnn::DnnSupport* {
+                se::cl::CLExecutor* cl_executor =
+                    dynamic_cast<se::cl::CLExecutor*>(parent);
                 if (cl_executor == nullptr) {
                   LOG(ERROR)
                       << "Attempting to initialize an instance of the cuBLAS "
@@ -3831,8 +3970,8 @@ void initialize_cudnn() {
                   return nullptr;
                 }
 
-                gpu::cl::CldnnSupport* dnn =
-                    new gpu::cl::CldnnSupport(cl_executor);
+                se::cl::CldnnSupport* dnn =
+                    new se::cl::CldnnSupport(cl_executor);
                 if (!dnn->Init().ok()) {
                   // Note: Init() will log a more specific error.
                   delete dnn;
@@ -3847,14 +3986,14 @@ void initialize_cudnn() {
   }
 
   // Prime the cuDNN DSO. The loader will log more information.
-//   auto statusor = gpu::internal::CachedDsoLoader::GetCudnnDsoHandle();
+//   auto statusor = se::internal::CachedDsoLoader::GetCudnnDsoHandle();
 //   if (!statusor.ok()) {
 //     LOG(INFO) << "Unable to load cuDNN DSO";
 //   }
 
-  gpu::PluginRegistry::Instance()->SetDefaultFactory(gpu::cl::kClPlatformId,
-                                                     gpu::PluginKind::kDnn,
-                                                     gpu::cl::kClDnnPlugin);
+  se::PluginRegistry::Instance()->SetDefaultFactory(se::cl::kClPlatformId,
+                                                     se::PluginKind::kDnn,
+                                                     se::cl::kClDnnPlugin);
 }
 
 }  // namespace stream_executor

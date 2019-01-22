@@ -1249,7 +1249,7 @@ CLDriver::ContextGetSharedMemConfig(ClContext* context) {
   return false;
 }
 
-/* static */ bool CLDriver::SynchronousMemcpyD2H(ClContext* context,
+/* static */ port::Status CLDriver::SynchronousMemcpyD2H(ClContext* context,
                                                    void *host_dst,
                                                    CUdeviceptr gpu_src,
                                                    uint64 size) {
@@ -1267,19 +1267,18 @@ CLDriver::ContextGetSharedMemConfig(ClContext* context) {
 //          << host_dst;
 //  return true;
 
-  ScopedActivateContext activation(context);
-  CUresult res = cuMemcpyDtoHAsync(host_dst, gpu_src, size, stream);
-  if (res != CUDA_SUCCESS) {
-    LOG(ERROR) << port::Printf(
-        "failed to enqueue async memcpy from device to host: %s; host dst: %p; "
-        "GPU src: %p; size: %llu=0x%llx",
-        ToString(res).c_str(), host_dst, port::bit_cast<void *>(gpu_src), size, size);
-    return false;
-  }
-  VLOG(2) << "successfully enqueued async memcpy d2h of " << size
-          << " bytes from " << port::bit_cast<void *>(gpu_src) << " to " << host_dst
-          << " on stream " << stream;
-  return true;
+	  ScopedActivateContext activation(context);
+	  CUresult res = cuMemcpyDtoH_v2(host_dst, gpu_src, size);
+	  if (res != CUDA_SUCCESS) {
+	    return port::InternalError(
+	        port::Printf("failed to synchronous memcpy from device to host: %s; "
+	                     "host dst: %p; GPU src: %p; size: %llu=0x%llx",
+	                     ToString(res).c_str(), host_dst,
+	                     port::bit_cast<void *>(gpu_src), size, size));
+	  }
+	  VLOG(2) << "successfully sync memcpy'd d2h of " << size << " bytes to "
+	          << host_dst;
+	  return port::Status::OK();
 }
 
 /* static */ port::Status CLDriver::SynchronousMemcpyH2D(ClContext* context,
@@ -1332,7 +1331,7 @@ CLDriver::ContextGetSharedMemConfig(ClContext* context) {
 
 }
 
-/* static */ port::Status CLDriver::AsynchronousMemcpyD2H(ClContext* context,
+/* static */ bool CLDriver::AsynchronousMemcpyD2H(ClContext* context,
                                                     void *host_dst,
                                                     CUdeviceptr gpu_src,
                                                     uint64 size,

@@ -897,7 +897,7 @@ bool CLExecutor::DeviceMemoryUsage(int64 *free, int64 *total) const {
   return CLDriver::GetDeviceMemoryInfo(context_, free, total);
 }
 
-bool CLExecutor::GetSymbol(const string& symbol_name, void **mem, ModuleHandle module_handle,
+bool CLExecutor::GetSymbol(const string& symbol_name,  ModuleHandle module_handle, void **mem,
                              size_t *bytes) {
   std::cout << "CLExecutor::GetSymbol" << std::endl;
   return false;
