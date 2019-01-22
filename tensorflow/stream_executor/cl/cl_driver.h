@@ -304,7 +304,7 @@ class CLDriver {
   // amount of time?
   //
   // http://docs.nvidia.com/cl/cl-driver-api/group__CL__STREAM.html#group__CL__STREAM_1g15e49dd91ec15991eb7c0a741beb7dad
-  static bool SynchronizeStream(ClContext* context, CUstream stream);
+  static port::Status SynchronizeStream(ClContext* context, CUstream stream);
 
   // Blocks the calling thread until the operations associated with the context
   // have been completed, via cuCtxSynchronize.

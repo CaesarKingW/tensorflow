@@ -158,7 +158,7 @@ port::StatusOr<std::unique_ptr<StreamExecutor>> ClPlatform::GetUncachedExecutor(
 //  return std::move(executor);
 
   auto executor = MakeUnique<StreamExecutor>(
-      this, MakeUnique<CUDAExecutor>(config.plugin_config));
+      this, MakeUnique<CLExecutor>(config.plugin_config));
   auto init_status = executor->Init(config.ordinal, config.device_options);
   if (!init_status.ok()) {
 	 std::cout << "cl_platform.cc GetUncachedExecutor() CUDAExecutor->init() failed" << std::endl;

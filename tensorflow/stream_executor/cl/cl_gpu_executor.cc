@@ -755,10 +755,10 @@ bool CLExecutor::StopTimer(Stream *stream, Timer *timer) {
   // return AsCLTimer(timer)->Stop(AsCLStream(stream));
 }
 
-bool CLExecutor::BlockHostUntilDone(Stream *stream) {
+port::Status CLExecutor::BlockHostUntilDone(Stream *stream) {
   std::cout << "cl_gpu_executor::BlockHostUntilDone()" << std::endl;
-  return false;
-  // return CLDriver::SynchronizeStream(context_, AsCLStreamValue(stream));
+  return port::InternalError("NOT implemented on OpenCL stream: ");
+//  return CLDriver::SynchronizeStream(context_, AsCLStreamValue(stream));
 }
 
 blas::BlasSupport *CLExecutor::CreateBlas() {
@@ -897,7 +897,7 @@ bool CLExecutor::DeviceMemoryUsage(int64 *free, int64 *total) const {
   return CLDriver::GetDeviceMemoryInfo(context_, free, total);
 }
 
-bool CLExecutor::GetSymbol(const string& symbol_name, void **mem,
+bool CLExecutor::GetSymbol(const string& symbol_name, void **mem, ModuleHandle module_handle,
                              size_t *bytes) {
   std::cout << "CLExecutor::GetSymbol" << std::endl;
   return false;
@@ -1158,7 +1158,7 @@ DeviceDescription *CLExecutor::PopulateDeviceDescription() const {
     builder.set_name(device_name);
   }
 
-  for (size_t i = 0; i < ARRAYSIZE(kAllUnqueryableDeviceParams); i++) {
+  for (size_t i = 0; i < TF_ARRAYSIZE(kAllUnqueryableDeviceParams); i++) {
     const auto &params = kAllUnqueryableDeviceParams[i];
     if (params.cc_major == cc_major_ && params.cc_minor == cc_minor_) {
       builder.set_blocks_per_core_limit(params.blocks_per_core_limit);
@@ -1221,7 +1221,7 @@ void initialize_cl_gpu_executor() {
 
   // // TODO(b/22689637): Temporary until users are migrated off of PlatformKind.
    gpu::PluginRegistry::Instance()->MapPlatformKindToId(
-       gpu::PlatformKind::kCl, gpu::cl::kClPlatformId);
+       gpu::PlatformKind::kOpenCL, gpu::cl::kClPlatformId);
 
    *gpu::internal::MakeCLExecutorImplementation() = [](
        const gpu::PluginConfig &config) {

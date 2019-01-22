@@ -2248,7 +2248,7 @@ bool CldnnSupport::DoConvolveImpl(
       timer->Destroy();
       return false;
     }
-    output_profile_result->set_is_valid(true);
+//    output_profile_result->set_is_valid(true);
     output_profile_result->set_algorithm(algo);
     output_profile_result->set_elapsed_time_in_ms(
         timer->GetElapsedMilliseconds());
@@ -2747,7 +2747,7 @@ bool CldnnSupport::DoConvolveBackwardDataImpl(
       /*gradData=*/(float *)backward_input_data->opaque());
   if (is_profiling) {
     timer->Stop((CLStream*) AsCLStream(stream));
-    output_profile_result->set_is_valid(true);
+//    output_profile_result->set_is_valid(true);
     output_profile_result->set_algorithm(algo);
     output_profile_result->set_elapsed_time_in_ms(
         timer->GetElapsedMilliseconds());
@@ -3005,7 +3005,7 @@ bool CldnnSupport::DoConvolveBackwardFilterImpl(
       /*gradData=*/(T *)backward_filter_data->opaque());
   if (is_profiling) {
     timer->Stop((CLStream*)AsCLStream(stream));
-    output_profile_result->set_is_valid(true);
+//    output_profile_result->set_is_valid(true);
     output_profile_result->set_algorithm(algo);
     output_profile_result->set_elapsed_time_in_ms(
         timer->GetElapsedMilliseconds());
@@ -3708,8 +3708,14 @@ bool CldnnSupport::DoDepthConcatenate(
   for (size_t i = 0; i < input_data.size(); ++i) {
     const auto& dimensions = input_dimensions[i];
     tmp.resize(dimensions.ElementCount());
-    stream->ThenMemcpyD2H<float>(*input_data[i], &tmp).BlockHostUntilDone();
+//    stream->ThenMemcpyD2H<float>(*input_data[i], &tmp).BlockHostUntilDone();
+    stream->ThenMemcpyD2H<float>(*input_data[i], absl::MakeSpan(tmp)).BlockHostUntilDone();
 
+    port::Status block_status = stream->BlockHostUntilDone();
+    if (!block_status.ok()) {
+      LOG(ERROR) << "BlockHostUntilDone failed: " << block_status;
+      return false;
+    }
     for (int64 batch = 0; batch < output_dimensions.count(); ++batch) {
       for (int64 yx = 0; yx < area; ++yx) {
         for (int64 depth = 0; depth < dimensions.feature_map_count(); ++depth) {

@@ -1203,20 +1203,34 @@ CLDriver::ContextGetSharedMemConfig(ClContext* context) {
   return true;
 }
 
-/* static */ bool CLDriver::SynchronizeStream(ClContext* context,
+/* static */ port::Status  CLDriver::SynchronizeStream(ClContext* context,
                                                 CUstream stream) {
-  ScopedActivateContext activated{context};
-  CHECK(stream != nullptr);
-  CUresult res = CUDA_ERROR_UNKNOWN;
-  res = cuStreamSynchronize((char*)stream);
-  if (res != CUDA_SUCCESS) {
-    LOG(ERROR) << "could not synchronize on CUDA stream: " << ToString(res)
-               << " :: " << port::CurrentStackTrace();
-    return false;
-  }
-  VLOG(2) << "successfully synchronized stream " << stream << " on context "
-          << context;
-  return true;
+//  ScopedActivateContext activated{context};
+//  CHECK(stream != nullptr);
+//  CUresult res = CUDA_ERROR_UNKNOWN;
+//  res = cuStreamSynchronize((char*)stream);
+//  if (res != CUDA_SUCCESS) {
+//    LOG(ERROR) << "could not synchronize on CUDA stream: " << ToString(res)
+//               << " :: " << port::CurrentStackTrace();
+//    return false;
+//  }
+//  VLOG(2) << "successfully synchronized stream " << stream << " on context "
+//          << context;
+//  return true;
+  std::cout << "CLDriver::SynchronizeStream()" << std::endl;
+  return port::InternalError("NOT implemented on OpenCL stream: ");
+//  ScopedActivateContext activated{context};
+//  CHECK(stream != nullptr);
+//  CUresult res = cuStreamSynchronize(stream);
+//  if (res != CUDA_SUCCESS) {
+//    port::Status status = port::InternalError(
+//        port::StrCat("could not synchronize on CUDA stream: ", ToString(res)));
+//    LOG(ERROR) << status << " :: " << port::CurrentStackTrace();
+//    return status;
+//  }
+//  VLOG(2) << "successfully synchronized stream " << stream << " on context "
+//          << context;
+//  return port::Status::OK();
 }
 
 /* static */ bool CLDriver::IsStreamIdle(ClContext *context,
@@ -1302,31 +1316,19 @@ CLDriver::ContextGetSharedMemConfig(ClContext* context) {
                                                    CUdeviceptr gpu_dst,
                                                    CUdeviceptr gpu_src,
                                                    uint64 size) {
-//  ScopedActivateContext activation{context};
-//  CUresult res = CUDA_ERROR_UNKNOWN;
-//  // CUresult res = cuMemcpyDtoD_v2(gpu_dst, gpu_src, size);
+  std::cout << "CLDriver::SynchronousMemcpyD2D()" << std::endl;
+  return port::InternalError("NOT implemented on OpenCL stream: ");
+//  ScopedActivateContext activation(context);
+////  CUresult res = cuMemcpyDtoD(gpu_dst, gpu_src, size);
 //  if (res != CUDA_SUCCESS) {
-//    LOG(ERROR) << port::Printf(
+//    return port::InternalError(port::Printf(
 //        "failed to synchronous memcpy from host to device: %s; GPU dst: %p; "
 //        "GPU src: %p; size: %llu=0x%llx",
 //        ToString(res).c_str(), port::bit_cast<void *>(gpu_dst),
-//        port::bit_cast<void *>(gpu_src), size, size);
-//    return false;
+//        port::bit_cast<void *>(gpu_src), size, size));
 //  }
 //  VLOG(2) << "successfully sync memcpy'd d2d of " << size << " bytes";
-//  return true;
-
-  ScopedActivateContext activation(context);
-//  CUresult res = cuMemcpyDtoD(gpu_dst, gpu_src, size);
-  if (res != CUDA_SUCCESS) {
-    return port::InternalError(port::Printf(
-        "failed to synchronous memcpy from host to device: %s; GPU dst: %p; "
-        "GPU src: %p; size: %llu=0x%llx",
-        ToString(res).c_str(), port::bit_cast<void *>(gpu_dst),
-        port::bit_cast<void *>(gpu_src), size, size));
-  }
-  VLOG(2) << "successfully sync memcpy'd d2d of " << size << " bytes";
-  return port::Status::OK();
+//  return port::Status::OK();
 
 }
 
