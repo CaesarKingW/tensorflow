@@ -1495,13 +1495,13 @@ def main():
   set_build_var(environ_cp, 'TF_NEED_JEMALLOC', 'jemalloc as malloc',
                 'with_jemalloc', True)
   set_build_var(environ_cp, 'TF_NEED_GCP', 'Google Cloud Platform',
-                'with_gcp_support', True, 'gcp')
+                'with_gcp_support', False, 'gcp')
   set_build_var(environ_cp, 'TF_NEED_HDFS', 'Hadoop File System',
-                'with_hdfs_support', True, 'hdfs')
+                'with_hdfs_support', False, 'hdfs')
   set_build_var(environ_cp, 'TF_NEED_AWS', 'Amazon AWS Platform',
-                'with_aws_support', True, 'aws')
+                'with_aws_support', False, 'aws')
   set_build_var(environ_cp, 'TF_NEED_KAFKA', 'Apache Kafka Platform',
-                'with_kafka_support', True, 'kafka')
+                'with_kafka_support', False, 'kafka')
   set_build_var(environ_cp, 'TF_ENABLE_XLA', 'XLA JIT', 'with_xla_support',
                 False, 'xla')
   set_build_var(environ_cp, 'TF_NEED_GDR', 'GDR', 'with_gdr_support',

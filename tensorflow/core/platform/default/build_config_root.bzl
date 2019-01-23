@@ -55,7 +55,7 @@ def tf_additional_gdr_deps():
 
 def if_static(extra_deps, otherwise=[]):
   return select({
-      str(Label("//tensorflow:framework_shared_object")): otherwise,
+#      str(Label("//tensorflow:framework_shared_object")): otherwise,
       "//conditions:default": extra_deps,
   })
 
