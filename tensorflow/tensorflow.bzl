@@ -1192,26 +1192,32 @@ def tf_kernel_library(
     cuda_deps = [clean_dep("//tensorflow/core:gpu_lib")]
     if prefix:
         if native.glob([prefix + "*.cu.cc"], exclude = ["*test*"]):
-          if not gpu_srcs:
-            gpu_srcs = []
-          gpu_srcs = gpu_srcs + native.glob([prefix + "*.cu.cc", prefix + "*.h"],
-                                        exclude = ["*test*"])    
-    if gpu_srcs:
-        for gpu_src in gpu_srcs:
-            if gpu_src.endswith(".cc") and not gpu_src.endswith(".cu.cc"):
-                fail("{} not allowed in gpu_srcs. .cc sources must end with .cu.cc"
-                    .format(gpu_src))
-        tf_gpu_kernel_library(
-            name = name + "_gpu",
-            srcs = gpu_srcs,
-            deps = deps,
-            **kwargs
+            if not gpu_srcs:
+                gpu_srcs = []
+            gpu_srcs = gpu_srcs + native.glob(
+                [prefix + "*.cu.cc", prefix + "*.h"],
+                exclude = [prefix + "*test*"],
+            )
+        srcs = srcs + native.glob(
+            [prefix + "*.cc"],
+            exclude = [prefix + "*test*", prefix + "*.cu.cc"],
         )
-        cuda_deps.extend([":" + name + "_gpu"])
-    kwargs["tags"] = kwargs.get("tags", []) + [
-        "req_dep=%s" % clean_dep("//tensorflow/core:gpu_lib"),
-        "req_dep=@local_config_cuda//cuda:cuda_headers",
-    ]
+        hdrs = hdrs + native.glob(
+            [prefix + "*.h"],
+            exclude = [prefix + "*test*", prefix + "*.cu.h", prefix + "*impl.h"],
+        )
+        textual_hdrs = native.glob(
+            [prefix + "*impl.h"],
+            exclude = [prefix + "*test*", prefix + "*.cu.h"],
+        )    
+    if gpu_srcs:
+       tf_gpu_kernel_library(
+          name = name + "_gpu",
+          srcs = gpu_srcs,
+          deps = deps,
+          **kwargs)
+       deps += [":" + name + "_gpu"]
+        
     copts += [
        '-Iexternal/eigen_archive',
        '-Ithird_party/coriander/include/cocl',

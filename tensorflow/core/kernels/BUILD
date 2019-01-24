@@ -3746,6 +3746,7 @@ tf_kernel_library(
         ":conv_ops",
         ":eigen_helpers",
         ":ops_util",
+        ":conv_ops_gpu_hdrs",
         "//tensorflow/core:core_cpu",
         "//tensorflow/core:framework",
         "//tensorflow/core:lib",
@@ -5542,6 +5543,8 @@ tf_kernel_library(
     hdrs = [
         "meta_support.h",
         "reference_gemm.h",
+        "cwise_ops.h",
+        "conv_ops.h",
     ],
     deps = [
         ":concat_lib_hdrs",
