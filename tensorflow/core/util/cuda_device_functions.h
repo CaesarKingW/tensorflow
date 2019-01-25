@@ -24,7 +24,7 @@ limitations under the License.
  * Provides atomic operations on types that aren't natively supported.
  */
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #include <algorithm>
 #include <complex>
@@ -631,5 +631,5 @@ __device__ detail::ToTypeIfConvertible<U, T> CudaAtomicDiv(T* ptr, U value) {
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 #endif  // TENSORFLOW_CORE_UTIL_CUDA_KERNEL_HELPER_H_
