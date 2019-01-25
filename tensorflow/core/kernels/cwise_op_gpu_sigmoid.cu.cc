@@ -20,8 +20,8 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
-DEFINE_UNARY3(sigmoid, Eigen::half, float, double);
-DEFINE_SIMPLE_BINARY3(sigmoid_grad, Eigen::half, float, double);
+DEFINE_UNARY3(sigmoid,  float);
+DEFINE_SIMPLE_BINARY3(sigmoid_grad, float);
 }  // namespace functor
 }  // namespace tensorflow
 

@@ -33,9 +33,9 @@ typedef Eigen::GpuDevice GPUDevice;
 #define DEFINE_GPU_KERNELS(T) \
   template struct functor::SpatialAvgPooling<GPUDevice, T>;
 
-DEFINE_GPU_KERNELS(Eigen::half)
+//DEFINE_GPU_KERNELS(Eigen::half)
 DEFINE_GPU_KERNELS(float)
-DEFINE_GPU_KERNELS(double)
+//DEFINE_GPU_KERNELS(double)
 
 #undef DEFINE_GPU_KERNELS
 
@@ -100,24 +100,24 @@ bool RunAvePoolBackwardNHWC(const T* const top_diff, const int num,
   return d.ok();
 }
 
-template bool RunAvePoolBackwardNHWC(
-    const double* const top_diff, const int num, const int height,
-    const int width, const int channels, const int pooled_height,
-    const int pooled_width, const int kernel_h, const int kernel_w,
-    const int stride_h, const int stride_w, const int pad_t, const int pad_l,
-    double* const bottom_diff, const GPUDevice& d);
+//template bool RunAvePoolBackwardNHWC(
+//    const double* const top_diff, const int num, const int height,
+//    const int width, const int channels, const int pooled_height,
+//    const int pooled_width, const int kernel_h, const int kernel_w,
+//    const int stride_h, const int stride_w, const int pad_t, const int pad_l,
+//    double* const bottom_diff, const GPUDevice& d);
 template bool RunAvePoolBackwardNHWC(
     const float* const top_diff, const int num, const int height,
     const int width, const int channels, const int pooled_height,
     const int pooled_width, const int kernel_h, const int kernel_w,
     const int stride_h, const int stride_w, const int pad_t, const int pad_l,
     float* const bottom_diff, const GPUDevice& d);
-template bool RunAvePoolBackwardNHWC(
-    const Eigen::half* const top_diff, const int num, const int height,
-    const int width, const int channels, const int pooled_height,
-    const int pooled_width, const int kernel_h, const int kernel_w,
-    const int stride_h, const int stride_w, const int pad_t, const int pad_l,
-    Eigen::half* const bottom_diff, const GPUDevice& d);
+//template bool RunAvePoolBackwardNHWC(
+//    const Eigen::half* const top_diff, const int num, const int height,
+//    const int width, const int channels, const int pooled_height,
+//    const int pooled_width, const int kernel_h, const int kernel_w,
+//    const int stride_h, const int stride_w, const int pad_t, const int pad_l,
+//    Eigen::half* const bottom_diff, const GPUDevice& d);
 
 }  // end namespace tensorflow
 

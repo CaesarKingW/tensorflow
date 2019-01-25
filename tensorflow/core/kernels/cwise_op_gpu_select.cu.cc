@@ -94,13 +94,13 @@ struct BatchSelectFunctor<GPUDevice, T> {
   template struct SelectScalarFunctor<GPUDevice, T>; \
   template struct BatchSelectFunctor<GPUDevice, T>;
 
-SELECT_FUNCTOR(Eigen::half);
+//SELECT_FUNCTOR(Eigen::half);
 SELECT_FUNCTOR(float);
-SELECT_FUNCTOR(double);
-SELECT_FUNCTOR(int32);
-SELECT_FUNCTOR(int64);
-SELECT_FUNCTOR(complex64);
-SELECT_FUNCTOR(complex128);
+//SELECT_FUNCTOR(double);
+//SELECT_FUNCTOR(int32);
+//SELECT_FUNCTOR(int64);
+//SELECT_FUNCTOR(complex64);
+//SELECT_FUNCTOR(complex128);
 
 #undef SELECT_FUNCTOR
 
