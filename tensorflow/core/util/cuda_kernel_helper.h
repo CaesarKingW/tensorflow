@@ -21,7 +21,7 @@ limitations under the License.
 #include "tensorflow/core/util/cuda_device_functions.h"
 #include "tensorflow/core/util/cuda_launch_config.h"
 
-#include "cuda/include/cuda_fp16.h"
+//#include "cuda/include/cuda_fp16.h"
 
 // Deprecated, use 'for(int i : CudaGridRangeX(n))' instead.
 #define CUDA_1D_KERNEL_LOOP(i, n) \
@@ -31,12 +31,12 @@ limitations under the License.
   for (int i : ::tensorflow::CudaGridRange##axis<int>(n))
 
 namespace tensorflow {
-__host__ __device__ inline tensorflow::bfloat16 CudaLdg(
-    const tensorflow::bfloat16* address) {
-  tensorflow::bfloat16 return_value;
-  return_value.value = CudaLdg(reinterpret_cast<const uint16_t*>(address));
-  return return_value;
-}
+//__host__ __device__ inline tensorflow::bfloat16 CudaLdg(
+//    const tensorflow::bfloat16* address) {
+//  tensorflow::bfloat16 return_value;
+//  return_value.value = CudaLdg(reinterpret_cast<const uint16_t*>(address));
+//  return return_value;
+//}
 
 template <typename T>
 __host__ __device__ inline T ldg(const T* ptr) {
@@ -67,30 +67,30 @@ __host__ __device__ inline double tf_max(double x, double y) {
   return fmax(x, y);
 }
 
-__device__ inline Eigen::half CudaShuffleSync(unsigned mask, Eigen::half value,
-                                              int src_lane,
-                                              int width = warpSize) {
-  return Eigen::half(
-      CudaShuffleSync(mask, static_cast<uint16>(value), src_lane, width));
-}
-
-__device__ EIGEN_ALWAYS_INLINE Eigen::half CudaShuffleUpSync(
-    unsigned mask, Eigen::half value, int delta, int width = warpSize) {
-  return Eigen::half(
-      CudaShuffleUpSync(mask, static_cast<uint16>(value), delta, width));
-}
-
-__device__ EIGEN_ALWAYS_INLINE Eigen::half CudaShuffleDownSync(
-    unsigned mask, Eigen::half value, int delta, int width = warpSize) {
-  return Eigen::half(
-      CudaShuffleDownSync(mask, static_cast<uint16>(value), delta, width));
-}
-
-__device__ EIGEN_ALWAYS_INLINE Eigen::half CudaShuffleXorSync(
-    unsigned mask, Eigen::half value, int lane_mask, int width = warpSize) {
-  return Eigen::half(
-      CudaShuffleXorSync(mask, static_cast<uint16>(value), lane_mask, width));
-}
+//__device__ inline Eigen::half CudaShuffleSync(unsigned mask, Eigen::half value,
+//                                              int src_lane,
+//                                              int width = warpSize) {
+//  return Eigen::half(
+//      CudaShuffleSync(mask, static_cast<uint16>(value), src_lane, width));
+//}
+//
+//__device__ EIGEN_ALWAYS_INLINE Eigen::half CudaShuffleUpSync(
+//    unsigned mask, Eigen::half value, int delta, int width = warpSize) {
+//  return Eigen::half(
+//      CudaShuffleUpSync(mask, static_cast<uint16>(value), delta, width));
+//}
+//
+//__device__ EIGEN_ALWAYS_INLINE Eigen::half CudaShuffleDownSync(
+//    unsigned mask, Eigen::half value, int delta, int width = warpSize) {
+//  return Eigen::half(
+//      CudaShuffleDownSync(mask, static_cast<uint16>(value), delta, width));
+//}
+//
+//__device__ EIGEN_ALWAYS_INLINE Eigen::half CudaShuffleXorSync(
+//    unsigned mask, Eigen::half value, int lane_mask, int width = warpSize) {
+//  return Eigen::half(
+//      CudaShuffleXorSync(mask, static_cast<uint16>(value), lane_mask, width));
+//}
 
 namespace cuda_helper {
 template <typename IntType>

@@ -20,8 +20,8 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
-DEFINE_UNARY4(inverse, Eigen::half, float, double, int64);
-DEFINE_SIMPLE_BINARY3(inverse_grad, Eigen::half, float, double);
+DEFINE_UNARY1(inverse, float);
+DEFINE_SIMPLE_BINARY1(inverse_grad,  float);
 }  // namespace functor
 }  // namespace tensorflow
 

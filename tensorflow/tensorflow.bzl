@@ -1061,27 +1061,45 @@ def _cuda_copts():
 # When this target is built using --config=cuda, a cc_library is built
 # that passes -DGOOGLE_CUDA=1 and '-x cuda', linking in additional
 # libraries needed by GPU kernels.
-def tf_gpu_kernel_library(
-        srcs,
-        copts = [],
-        cuda_copts = [],
-        deps = [],
-        hdrs = [],
-        **kwargs):
-    copts = copts + _cuda_copts() + if_cuda(cuda_copts) + tf_copts()
-    kwargs["features"] = kwargs.get("features", []) + ["-use_header_modules"]
+#def tf_gpu_kernel_library(
+#        srcs,
+#        copts = [],
+#        cuda_copts = [],
+#        deps = [],
+#        hdrs = [],
+#        **kwargs):
+#    copts = copts + _cuda_copts() + if_cuda(cuda_copts) + tf_copts()
+#    kwargs["features"] = kwargs.get("features", []) + ["-use_header_modules"]
 
-    native.cc_library(
-        srcs = srcs,
-        hdrs = hdrs,
-        copts = copts,
-        deps = deps + if_cuda([
-            clean_dep("//tensorflow/core:cuda"),
-            clean_dep("//tensorflow/core:gpu_lib"),
-        ]),
-        alwayslink = 1,
-        **kwargs
-    )
+#    native.cc_library(
+#        srcs = srcs,
+#        hdrs = hdrs,
+#        copts = copts,
+#        deps = deps + if_cuda([
+#            clean_dep("//tensorflow/core:cuda"),
+#            clean_dep("//tensorflow/core:gpu_lib"),
+#        ]),
+#        alwayslink = 1,
+#        **kwargs
+#    )
+
+def tf_gpu_kernel_library(srcs, copts=[], cuda_copts=[], deps=[], hdrs=[],
+                          **kwargs):
+  copts = copts + _cuda_copts() + if_cuda(cuda_copts)
+  if copts == None:
+    copts = []
+  copts = copts + ['-Iexternal/protobuf_archive/src']
+  copts += ['-x', 'cuda']
+  native.cc_library(
+      srcs = srcs,
+      hdrs = hdrs,
+      copts = copts,
+      deps = deps + if_cuda([
+          "//tensorflow/core:cuda",
+          "//tensorflow/core:gpu_lib",
+      ]),
+      alwayslink=1,
+      **kwargs)
 
 register_extension_info(
     extension_name = "tf_gpu_kernel_library",
@@ -1170,6 +1188,8 @@ def tf_kernel_library(
         copts = []
     textual_hdrs = []
     copts = copts + tf_copts(is_external = is_external)
+
+    cuda_deps = [clean_dep("//tensorflow/core:gpu_lib")]
     if prefix:
         if native.glob([prefix + "*.cu.cc"], exclude = ["*test*"]):
             if not gpu_srcs:
@@ -1189,24 +1209,15 @@ def tf_kernel_library(
         textual_hdrs = native.glob(
             [prefix + "*impl.h"],
             exclude = [prefix + "*test*", prefix + "*.cu.h"],
-        )
-    cuda_deps = [clean_dep("//tensorflow/core:gpu_lib")]
+        )    
     if gpu_srcs:
-        for gpu_src in gpu_srcs:
-            if gpu_src.endswith(".cc") and not gpu_src.endswith(".cu.cc"):
-                fail("{} not allowed in gpu_srcs. .cc sources must end with .cu.cc"
-                    .format(gpu_src))
-        tf_gpu_kernel_library(
-            name = name + "_gpu",
-            srcs = gpu_srcs,
-            deps = deps,
-            **kwargs
-        )
-        cuda_deps.extend([":" + name + "_gpu"])
-    kwargs["tags"] = kwargs.get("tags", []) + [
-        "req_dep=%s" % clean_dep("//tensorflow/core:gpu_lib"),
-        "req_dep=@local_config_cuda//cuda:cuda_headers",
-    ]
+       tf_gpu_kernel_library(
+          name = name + "_gpu",
+          srcs = gpu_srcs,
+          deps = deps,
+          **kwargs)
+       deps += [":" + name + "_gpu"]
+        
     copts += [
        '-Iexternal/eigen_archive',
        '-Ithird_party/coriander/include/cocl',

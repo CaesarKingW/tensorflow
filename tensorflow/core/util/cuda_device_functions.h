@@ -24,12 +24,12 @@ limitations under the License.
  * Provides atomic operations on types that aren't natively supported.
  */
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #include <algorithm>
 #include <complex>
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
-#include "cuda/include/cuda.h"
+//#include "cuda/include/cuda.h"
 #include "tensorflow/core/platform/types.h"
 
 namespace tensorflow {
@@ -116,7 +116,7 @@ __device__ inline unsigned CudaLaneId() {
   asm("mov.u32 %0, %%laneid;" : "=r"(lane_id));
   return lane_id;
 }
-
+#if GOOGLE_CUDA
 namespace detail {
 // Returns true if mask is a valid parameter for __shfl*sync to return a well
 // defined value, assuming the calling lane will read from src_lane as part of
@@ -628,8 +628,8 @@ template <typename T, typename U>
 __device__ detail::ToTypeIfConvertible<U, T> CudaAtomicDiv(T* ptr, U value) {
   return detail::CudaAtomicCasHelper(ptr, [value](T a) { return a / value; });
 }
-
+//#endif  // GOOGLE_CUDA
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+
 #endif  // TENSORFLOW_CORE_UTIL_CUDA_KERNEL_HELPER_H_

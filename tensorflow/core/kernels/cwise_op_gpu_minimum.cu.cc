@@ -19,7 +19,7 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
-DEFINE_BINARY4(minimum, Eigen::half, float, double, int64);
+DEFINE_BINARY1(minimum, float);
 }  // namespace functor
 }  // namespace tensorflow
 

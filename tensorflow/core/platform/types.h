@@ -60,7 +60,7 @@ typedef uint64 Fprint;
 
 }  // namespace tensorflow
 
-// Alias namespace ::stream_executor as ::tensorflow::se.
+//// Alias namespace ::stream_executor as ::tensorflow::se.
 namespace stream_executor {}
 namespace tensorflow {
 namespace se = ::stream_executor;

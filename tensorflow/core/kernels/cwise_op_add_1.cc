@@ -22,8 +22,9 @@ REGISTER6(BinaryOp, CPU, "AddV2", functor::add, float, Eigen::half, double,
           int32, int64, bfloat16);
 
 //#if GOOGLE_CUDA
-REGISTER3(BinaryOp, GPU, "Add", functor::add, float, Eigen::half, double);
-REGISTER3(BinaryOp, GPU, "AddV2", functor::add, float, Eigen::half, double);
+//REGISTER3(BinaryOp, GPU, "Add", functor::add, float, Eigen::half, double);
+REGISTER(BinaryOp, GPU, "Add", functor::add, float);
+//REGISTER3(BinaryOp, GPU, "AddV2", functor::add, float, Eigen::half, double);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel

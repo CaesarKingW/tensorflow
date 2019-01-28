@@ -19,7 +19,7 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
-DEFINE_UNARY2(acos, float, double);
+DEFINE_UNARY2(acos, float);
 }  // namespace functor
 }  // namespace tensorflow
 

@@ -16,12 +16,12 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_UTIL_CUDA_LAUNCH_CONFIG_H_
 #define TENSORFLOW_CORE_UTIL_CUDA_LAUNCH_CONFIG_H_
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #include <algorithm>
 
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
-#include "cuda/include/cuda.h"
+//#include "cuda/include/cuda.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/stream_executor.h"
@@ -301,6 +301,6 @@ inline const cudaStream_t& GetCudaStream(OpKernelContext* context) {
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #endif  // TENSORFLOW_CORE_UTIL_CUDA_KERNEL_HELPER_H_
