@@ -22,6 +22,7 @@ namespace tensorflow {
 namespace functor {
 DEFINE_UNARY1(sigmoid,  float);
 DEFINE_SIMPLE_BINARY1(sigmoid_grad, float);
+
 }  // namespace functor
 }  // namespace tensorflow
 

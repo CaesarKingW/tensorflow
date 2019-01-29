@@ -1036,31 +1036,31 @@ namespace functor {
   extern template struct PadInput<GPUDevice, T, int, 4>;
 
 DECLARE_GPU_SPEC(float);
-DECLARE_GPU_SPEC(Eigen::half);
-DECLARE_GPU_SPEC(double);
+//DECLARE_GPU_SPEC(Eigen::half);
+//DECLARE_GPU_SPEC(double);
 #undef DECLARE_GPU_SPEC
 }  // namespace functor
 
-REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropFilter")
-                            .Device(DEVICE_GPU)
-                            .TypeConstraint<double>("T")
-                            .HostMemory("filter_sizes"),
-                        Conv2DSlowBackpropFilterOp<GPUDevice, double>);
+//REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropFilter")
+//                            .Device(DEVICE_GPU)
+//                            .TypeConstraint<double>("T")
+//                            .HostMemory("filter_sizes"),
+//                        Conv2DSlowBackpropFilterOp<GPUDevice, double>);
 REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropFilter")
                             .Device(DEVICE_GPU)
                             .TypeConstraint<float>("T")
                             .HostMemory("filter_sizes"),
                         Conv2DSlowBackpropFilterOp<GPUDevice, float>);
-REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropFilter")
-                            .Device(DEVICE_GPU)
-                            .TypeConstraint<Eigen::half>("T")
-                            .HostMemory("filter_sizes"),
-                        Conv2DSlowBackpropFilterOp<GPUDevice, Eigen::half>);
+//REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropFilter")
+//                            .Device(DEVICE_GPU)
+//                            .TypeConstraint<Eigen::half>("T")
+//                            .HostMemory("filter_sizes"),
+//                        Conv2DSlowBackpropFilterOp<GPUDevice, Eigen::half>);
 
 // To be used inside depthwise_conv_grad_op.cc.
 template struct LaunchConv2DBackpropFilterOp<GPUDevice, float>;
-template struct LaunchConv2DBackpropFilterOp<GPUDevice, Eigen::half>;
-template struct LaunchConv2DBackpropFilterOp<GPUDevice, double>;
+//template struct LaunchConv2DBackpropFilterOp<GPUDevice, Eigen::half>;
+//template struct LaunchConv2DBackpropFilterOp<GPUDevice, double>;
 
 //#endif  // GOOGLE_CUDA
 

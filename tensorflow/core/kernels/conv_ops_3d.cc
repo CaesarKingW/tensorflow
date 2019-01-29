@@ -527,16 +527,16 @@ namespace functor {
       const std::array<int, 3>& padding_right,                        \
       typename TTypes<T, 5, int>::Tensor out, TensorFormat format);
 
-DECLARE_GPU_SPEC(Eigen::half);
+//DECLARE_GPU_SPEC(Eigen::half);
 DECLARE_GPU_SPEC(float);
 #undef DECLARE_GPU_SPEC
 
 }  // namespace functor
 
 // Registration of the GPU implementations.
-REGISTER_KERNEL_BUILDER(
-    Name("Conv3D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-    Conv3DOp<GPUDevice, Eigen::half>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Conv3D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+//    Conv3DOp<GPUDevice, Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("Conv3D").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     Conv3DOp<GPUDevice, float>);

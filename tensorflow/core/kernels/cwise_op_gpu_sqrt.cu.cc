@@ -22,7 +22,7 @@ namespace tensorflow {
 namespace functor {
 DEFINE_UNARY3(sqrt, float);
 //DEFINE_SIMPLE_BINARY3(sqrt_grad, Eigen::half, float, double);
-DEFINE_SIMPLE_BINARY3(sqrt_grad, float);
+DEFINE_SIMPLE_BINARY1(sqrt_grad, float);
 }  // namespace functor
 }  // namespace tensorflow
 

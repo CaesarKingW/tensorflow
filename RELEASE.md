@@ -1,4 +1,12 @@
-# Release 1.11.0
+# Release 1.11.0 (OCL)
+
+## Major Features and Improvements
+
+* Integrate OpenCL(1.2) support based on coriander () engine.
+* Integrate coriander-dnn
+
+
+# Release 1.11.0 
 
 ## Major Features and Improvements
 
@@ -11,7 +19,6 @@
   * Add multi-GPU DistributionStrategy support in tf.keras. Users can now use `fit`, `evaluate` and `predict` to distribute their model on multiple GPUs.
   * Add multi-worker DistributionStrategy and standalone client support in Estimator. See [README] (https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/distribute) for more details.
 * Add C, C++, and Python functions for querying kernels
-
 ## Breaking Changes
 
 * Keras:

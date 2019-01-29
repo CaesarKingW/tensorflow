@@ -19,7 +19,7 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
-DEFINE_BINARY4(squared_difference, float, Eigen::half, double, int64);
+DEFINE_BINARY1(squared_difference, float);
 }  // namespace functor
 }  // namespace tensorflow
 

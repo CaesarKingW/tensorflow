@@ -71,40 +71,68 @@ struct is_simple_type {
       is_quantized<T>::value || std::is_same<T, bfloat16>::value;
 };
 
+//template <>
+//class std::numeric_limits<qint8>
+//    : public std::numeric_limits<int8> {};
+//template <>
+//class std::numeric_limits<tensorflow::quint8>
+//    : public std::numeric_limits<uint8> {};
+//template <>
+//class std::numeric_limits<qint16>
+//    : public std::numeric_limits<int16> {};
+//template <>
+//class std::numeric_limits<quint16>
+//    : public std::numeric_limits<uint16> {};
+//template <>
+//class std::numeric_limits<qint32>
+//    : public std::numeric_limits<int32> {};
+//
+//// Specialize is_signed for quantized types.
+//template <>
+//struct std::is_signed<qint8> : public std::is_signed<int8> {};
+//template <>
+//struct std::is_signed<quint8> : public std::is_signed<uint8> {};
+//template <>
+//struct std::is_signed<qint16> : public std::is_signed<int16> {};
+//template <>
+//struct std::is_signed<quint16> : public std::is_signed<uint16> {};
+//template <>
+//struct std::is_signed<qint32> : public std::is_signed<int32> {};
 }  // namespace tensorflow
 
 // Define numeric limits for our quantized as subclasses of the
 // standard types.
-namespace std{
 //using namespace tensorflow;
+namespace std{
+
 //using namespace std;
 template <>
 class numeric_limits<tensorflow::qint8>
-    : public std::numeric_limits<tensorflow::int8> {};
+    : public numeric_limits<tensorflow::int8> {};
 template <>
 class numeric_limits<tensorflow::quint8>
-    : public std::numeric_limits<tensorflow::uint8> {};
+    : public numeric_limits<tensorflow::uint8> {};
 template <>
 class numeric_limits<tensorflow::qint16>
-    : public std::numeric_limits<tensorflow::int16> {};
+    : public numeric_limits<tensorflow::int16> {};
 template <>
 class numeric_limits<tensorflow::quint16>
-    : public std::numeric_limits<tensorflow::uint16> {};
+    : public numeric_limits<tensorflow::uint16> {};
 template <>
 class numeric_limits<tensorflow::qint32>
-    : public std::numeric_limits<tensorflow::int32> {};
+    : public numeric_limits<tensorflow::int32> {};
 
 // Specialize is_signed for quantized types.
 template <>
-struct is_signed<tensorflow::qint8> : public std::is_signed<tensorflow::int8> {};
+struct is_signed<tensorflow::qint8> : public is_signed<tensorflow::int8> {};
 template <>
-struct is_signed<tensorflow::quint8> : public std::is_signed<tensorflow::uint8> {};
+struct is_signed<tensorflow::quint8> : public is_signed<tensorflow::uint8> {};
 template <>
-struct is_signed<tensorflow::qint16> : public std::is_signed<tensorflow::int16> {};
+struct is_signed<tensorflow::qint16> : public is_signed<tensorflow::int16> {};
 template <>
-struct is_signed<tensorflow::quint16> : public std::is_signed<tensorflow::uint16> {};
+struct is_signed<tensorflow::quint16> : public is_signed<tensorflow::uint16> {};
 template <>
-struct is_signed<tensorflow::qint32> : public std::is_signed<tensorflow::int32> {};
+struct is_signed<tensorflow::qint32> : public is_signed<tensorflow::int32> {};
 
 }  // namespace std
 

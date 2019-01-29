@@ -1108,31 +1108,31 @@ namespace functor {
   extern template struct PadInput<GPUDevice, T, int, 4>;
 
 DECLARE_GPU_SPEC(float);
-DECLARE_GPU_SPEC(Eigen::half);
-DECLARE_GPU_SPEC(double);
+//DECLARE_GPU_SPEC(Eigen::half);
+//DECLARE_GPU_SPEC(double);
 #undef DECLARE_GPU_SPEC
 }  // namespace functor
 
-REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropInput")
-                            .Device(DEVICE_GPU)
-                            .TypeConstraint<double>("T")
-                            .HostMemory("input_sizes"),
-                        Conv2DSlowBackpropInputOp<GPUDevice, double>);
+//REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropInput")
+//                            .Device(DEVICE_GPU)
+//                            .TypeConstraint<double>("T")
+//                            .HostMemory("input_sizes"),
+//                        Conv2DSlowBackpropInputOp<GPUDevice, double>);
 REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropInput")
                             .Device(DEVICE_GPU)
                             .TypeConstraint<float>("T")
                             .HostMemory("input_sizes"),
                         Conv2DSlowBackpropInputOp<GPUDevice, float>);
-REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropInput")
-                            .Device(DEVICE_GPU)
-                            .TypeConstraint<Eigen::half>("T")
-                            .HostMemory("input_sizes"),
-                        Conv2DSlowBackpropInputOp<GPUDevice, Eigen::half>);
+//REGISTER_KERNEL_BUILDER(Name("Conv2DBackpropInput")
+//                            .Device(DEVICE_GPU)
+//                            .TypeConstraint<Eigen::half>("T")
+//                            .HostMemory("input_sizes"),
+//                        Conv2DSlowBackpropInputOp<GPUDevice, Eigen::half>);
 
 // To be used inside depthwise_conv_grad_op.cc.
 template struct LaunchConv2DBackpropInputOp<GPUDevice, float>;
-template struct LaunchConv2DBackpropInputOp<GPUDevice, Eigen::half>;
-template struct LaunchConv2DBackpropInputOp<GPUDevice, double>;
+//template struct LaunchConv2DBackpropInputOp<GPUDevice, Eigen::half>;
+//template struct LaunchConv2DBackpropInputOp<GPUDevice, double>;
 
 //#endif  // GOOGLE_CUDA
 

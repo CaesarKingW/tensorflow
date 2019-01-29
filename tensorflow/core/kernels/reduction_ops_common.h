@@ -21,7 +21,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_REDUCTION_OPS_COMMON_H_
 #define TENSORFLOW_CORE_KERNELS_REDUCTION_OPS_COMMON_H_
 
-//#define EIGEN_USE_THREADS
+#define EIGEN_USE_THREADS
 //using namespace std;
 
 #include "third_party/eigen3/Eigen/Core"

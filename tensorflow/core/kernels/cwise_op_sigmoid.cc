@@ -20,8 +20,7 @@ namespace tensorflow {
 REGISTER5(UnaryOp, CPU, "Sigmoid", functor::sigmoid, float, Eigen::half, double,
           complex64, complex128);
 //#if GOOGLE_CUDA
-REGISTER3(UnaryOp, GPU, "Sigmoid", functor::sigmoid, float, Eigen::half,
-          double);
+REGISTER(UnaryOp, GPU, "Sigmoid", functor::sigmoid, float);
 //#endif
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER(UnaryOp, SYCL, "Sigmoid", functor::sigmoid, float);

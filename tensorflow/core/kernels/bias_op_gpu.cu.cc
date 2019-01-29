@@ -16,7 +16,6 @@ limitations under the License.
 //#if GOOGLE_CUDA
 
 #define EIGEN_USE_GPU
-//#include <stddef.h>
 
 
 #include <algorithm>

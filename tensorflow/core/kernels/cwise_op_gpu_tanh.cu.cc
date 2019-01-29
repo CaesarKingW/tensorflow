@@ -20,8 +20,8 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
-DEFINE_UNARY3(tanh,  float);
-DEFINE_SIMPLE_BINARY3(tanh_grad, float);
+DEFINE_UNARY1(tanh,  float);
+DEFINE_SIMPLE_BINARY1(tanh_grad, float);
 }  // namespace functor
 }  // namespace tensorflow
 

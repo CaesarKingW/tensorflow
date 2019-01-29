@@ -30,8 +30,7 @@ REGISTER_KERNEL_BUILDER(Name("Neg")
 #endif  // TENSORFLOW_USE_SYCL
 
 //#if GOOGLE_CUDA
-REGISTER6(UnaryOp, GPU, "Neg", functor::neg, float, Eigen::half, double, int64,
-          complex64, complex128);
+REGISTER(UnaryOp, GPU, "Neg", functor::neg, float);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel

@@ -20,7 +20,11 @@ limitations under the License.
 namespace tensorflow {
 namespace functor {
 //DEFINE_BINARY4(maximum, Eigen::half, float, double, int64);
+<<<<<<< HEAD
 DEFINE_BINARY1(maximum, float);
+=======
+DEFINE_BINARY4(maximum, float);
+>>>>>>> branch 'r1.11' of https://github.com/pint1022/tensorflow.git
 }  // namespace functor
 }  // namespace tensorflow
 

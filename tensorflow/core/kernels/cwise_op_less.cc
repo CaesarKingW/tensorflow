@@ -22,8 +22,7 @@ REGISTER5(BinaryOp, CPU, "Less", functor::less, int64, uint8, int8, int16,
           bfloat16);
 
 //#if GOOGLE_CUDA
-REGISTER7(BinaryOp, GPU, "Less", functor::less, float, Eigen::half, double,
-          int64, uint8, int8, int16);
+REGISTER(BinaryOp, GPU, "Less", functor::less, float);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel

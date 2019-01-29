@@ -21,6 +21,7 @@ namespace tensorflow {
 namespace functor {
 //DEFINE_UNARY3(isnan, Eigen::half, float, double);
 DEFINE_UNARY1(isnan, float);
+
 }  // namespace functor
 }  // namespace tensorflow
 

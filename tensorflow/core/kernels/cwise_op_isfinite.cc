@@ -20,8 +20,7 @@ REGISTER3(UnaryOp, CPU, "IsFinite", functor::isfinite, float, Eigen::half,
           double);
 
 //#if GOOGLE_CUDA
-REGISTER3(UnaryOp, GPU, "IsFinite", functor::isfinite, float, Eigen::half,
-          double);
+REGISTER(UnaryOp, GPU, "IsFinite", functor::isfinite, float);
 //#endif
 
 #ifdef TENSORFLOW_USE_SYCL

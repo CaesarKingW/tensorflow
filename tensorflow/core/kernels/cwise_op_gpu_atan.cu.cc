@@ -20,7 +20,11 @@ limitations under the License.
 namespace tensorflow {
 namespace functor {
 //DEFINE_UNARY2(atan, float, double);
+<<<<<<< HEAD
 DEFINE_UNARY1(atan, float);
+=======
+DEFINE_UNARY2(atan, float);
+>>>>>>> branch 'r1.11' of https://github.com/pint1022/tensorflow.git
 }  // namespace functor
 }  // namespace tensorflow
 

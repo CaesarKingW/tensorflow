@@ -20,7 +20,7 @@ limitations under the License.
 namespace tensorflow {
 namespace functor {
 DEFINE_BINARY1(greater_equal,  float);
-}  // namespace functor
+
 }  // namespace tensorflow
 
 //#endif  // GOOGLE_CUDA

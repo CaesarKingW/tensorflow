@@ -20,7 +20,7 @@ REGISTER4(UnaryOp, CPU, "IsNan", functor::isnan, float, Eigen::half, double,
           bfloat16);
 
 //#if GOOGLE_CUDA
-REGISTER3(UnaryOp, GPU, "IsNan", functor::isnan, float, Eigen::half, double);
+REGISTER(UnaryOp, GPU, "IsNan", functor::isnan, float);
 //#endif
 
 #ifdef TENSORFLOW_USE_SYCL

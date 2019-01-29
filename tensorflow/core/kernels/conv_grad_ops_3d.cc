@@ -1227,7 +1227,7 @@ class Conv3DBackpropFilterOp<GPUDevice, T> : public OpKernel {
                               .TypeConstraint<T>("T")                         \
                               .HostMemory("filter_sizes"),                    \
                           Conv3DBackpropFilterOp<GPUDevice, T>);
-TF_CALL_half(REGISTER_GPU_KERNEL);
+//TF_CALL_half(REGISTER_GPU_KERNEL);
 TF_CALL_float(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 
