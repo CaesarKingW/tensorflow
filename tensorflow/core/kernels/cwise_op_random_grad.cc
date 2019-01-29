@@ -19,7 +19,6 @@ namespace tensorflow {
 REGISTER2(BinaryOp, CPU, "RandomGammaGrad", functor::random_gamma_grad, float,
           double);
 #if GOOGLE_CUDA
-REGISTER2(BinaryOp, GPU, "RandomGammaGrad", functor::random_gamma_grad, float,
-          double);
+REGISTER(BinaryOp, GPU, "RandomGammaGrad", functor::random_gamma_grad, float);
 #endif
 }  // namespace tensorflow
