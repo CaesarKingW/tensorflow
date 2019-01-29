@@ -20,18 +20,17 @@ REGISTER8(UnaryOp, CPU, "Square", functor::square, float, Eigen::half, double,
           int32, int64, complex64, complex128, bfloat16);
 
 //#if GOOGLE_CUDA
-REGISTER4(UnaryOp, GPU, "Square", functor::square, float, Eigen::half, double,
-          int64);
+REGISTER(UnaryOp, GPU, "Square", functor::square, float);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
-REGISTER_KERNEL_BUILDER(Name("Square")
-                            .Device(DEVICE_GPU)
-                            .HostMemory("x")
-                            .HostMemory("y")
-                            .TypeConstraint<int32>("T"),
-                        UnaryOp<CPUDevice, functor::square<int32>>);
+//REGISTER_KERNEL_BUILDER(Name("Square")
+//                            .Device(DEVICE_GPU)
+//                            .HostMemory("x")
+//                            .HostMemory("y")
+//                            .TypeConstraint<int32>("T"),
+//                        UnaryOp<CPUDevice, functor::square<int32>>);
 //#endif
 
 #ifdef TENSORFLOW_USE_SYCL

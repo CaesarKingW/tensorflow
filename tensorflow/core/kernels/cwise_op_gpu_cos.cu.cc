@@ -19,6 +19,7 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
+
 DEFINE_UNARY1(cos, float);
 }  // namespace functor
 }  // namespace tensorflow

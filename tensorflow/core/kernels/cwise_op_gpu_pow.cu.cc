@@ -19,6 +19,7 @@ limitations under the License.
 
 namespace tensorflow {
 namespace functor {
+
 DEFINE_BINARY1(pow, float);
 
 }  // namespace functor
