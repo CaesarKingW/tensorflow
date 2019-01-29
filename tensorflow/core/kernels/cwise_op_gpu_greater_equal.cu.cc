@@ -22,5 +22,5 @@ namespace functor {
 DEFINE_BINARY1(greater_equal,  float);
 
 }  // namespace tensorflow
-
+}
 //#endif  // GOOGLE_CUDA

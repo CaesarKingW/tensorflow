@@ -15,7 +15,7 @@ limitations under the License.
 
 // See docs in ../ops/nn_ops.cc.
 
-//#define EIGEN_USE_THREADS
+#define EIGEN_USE_THREADS
 
 #include "tensorflow/core/kernels/bias_op.h"
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
