@@ -19,7 +19,7 @@ namespace tensorflow {
 REGISTER2(UnaryOp, CPU, "Asin", functor::asin, float, double);
 
 //#if GOOGLE_CUDA
-REGISTER2(UnaryOp, GPU, "Asin", functor::asin, float, double);
+REGISTER(UnaryOp, GPU, "Asin", functor::asin, float);
 //#endif
 
 #if TENSORFLOW_USE_SYCL

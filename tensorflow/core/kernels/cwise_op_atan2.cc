@@ -18,6 +18,6 @@ limitations under the License.
 namespace tensorflow {
 REGISTER2(BinaryOp, CPU, "Atan2", functor::atan2, float, double);
 //#if GOOGLE_CUDA
-REGISTER2(BinaryOp, GPU, "Atan2", functor::atan2, float, double);
+REGISTER(BinaryOp, GPU, "Atan2", functor::atan2, float);
 //#endif
 }  // namespace tensorflow

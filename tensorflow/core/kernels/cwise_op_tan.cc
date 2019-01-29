@@ -20,7 +20,7 @@ REGISTER4(UnaryOp, CPU, "Tan", functor::tan, float, double, complex64,
           complex128);
 
 //#if GOOGLE_CUDA
-REGISTER2(UnaryOp, GPU, "Tan", functor::tan, float, double);
+REGISTER(UnaryOp, GPU, "Tan", functor::tan, float);
 //#endif
 
 #ifdef TENSORFLOW_USE_SYCL

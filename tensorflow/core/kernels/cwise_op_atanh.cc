@@ -25,6 +25,6 @@ REGISTER2(UnaryOp, SYCL, "Atanh", functor::atanh, float, double);
 #endif  // TENSORFLOW_USE_SYCL
 
 //#if GOOGLE_CUDA
-REGISTER2(UnaryOp, GPU, "Atanh", functor::atanh, float, double);
+REGISTER(UnaryOp, GPU, "Atanh", functor::atanh, float);
 //#endif
 }  // namespace tensorflow

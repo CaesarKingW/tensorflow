@@ -36,11 +36,11 @@ limitations under the License.
 #include "tensorflow/core/util/padding.h"
 #include "tensorflow/core/util/tensor_format.h"
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 #include "tensorflow/core/kernels/maxpooling_op_gpu.h"
 #include "tensorflow/core/kernels/pooling_ops_common_gpu.h"
 #include "tensorflow/core/util/use_cudnn.h"
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 namespace tensorflow {
 
@@ -113,7 +113,7 @@ REGISTER_KERNEL_BUILDER(
     Name("AvgPool").Device(DEVICE_CPU).TypeConstraint<Eigen::half>("T"),
     AvgPoolingOp<CPUDevice, Eigen::half>);
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 template <typename T>
 class AvgPoolingOp<GPUDevice, T> : public UnaryOp<T> {
  public:
@@ -197,16 +197,16 @@ DECLARE_GPU_SPEC(double);
 #undef DECLARE_GPU_SPEC
 }  // namespace functor
 
-REGISTER_KERNEL_BUILDER(
-    Name("AvgPool").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-    AvgPoolingOp<GPUDevice, Eigen::half>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("AvgPool").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+//    AvgPoolingOp<GPUDevice, Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("AvgPool").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     AvgPoolingOp<GPUDevice, float>);
-REGISTER_KERNEL_BUILDER(
-    Name("AvgPool").Device(DEVICE_GPU).TypeConstraint<double>("T"),
-    AvgPoolingOp<GPUDevice, double>);
-//#endif  // GOOGLE_CUDA
+//REGISTER_KERNEL_BUILDER(
+//    Name("AvgPool").Device(DEVICE_GPU).TypeConstraint<double>("T"),
+//    AvgPoolingOp<GPUDevice, double>);
+#endif  // GOOGLE_CUDA
 
 // The operation to compute AvgPool gradients.
 // It takes two inputs:
@@ -369,7 +369,7 @@ TF_CALL_float(REGISTER_CPU_KERNEL);
 TF_CALL_double(REGISTER_CPU_KERNEL);
 TF_CALL_half(REGISTER_CPU_KERNEL);
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 
 // A CUDNN based AvgPoolingGrad implementation. It includes the padding as the
 // candidates for the pooling operation.
@@ -578,6 +578,6 @@ REGISTER_KERNEL_BUILDER(Name("AvgPoolGrad")
 //                            .HostMemory("orig_input_shape"),
 //                        AvgPoolingGradOpCustomGPUKernel<Eigen::half>);
 
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

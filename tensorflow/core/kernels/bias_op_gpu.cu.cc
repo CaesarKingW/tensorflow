@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 
 #define EIGEN_USE_GPU
 
@@ -30,8 +30,8 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/platform/types.h"
 
-#include "tensorflow/core/kernels/reduction_gpu_kernels.cu.h"
-#include "tensorflow/core/kernels/reduction_ops_common.h"
+//#include "tensorflow/core/kernels/reduction_gpu_kernels.cu.h"
+//#include "tensorflow/core/kernels/reduction_ops_common.h"
 
 namespace tensorflow {
 
@@ -276,4 +276,4 @@ TF_CALL_GPU_NUMBER_TYPES(DEFINE_GPU_SPECS);
 
 }  // end namespace tensorflow
 
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA

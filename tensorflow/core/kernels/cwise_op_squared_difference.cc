@@ -19,8 +19,8 @@ namespace tensorflow {
 REGISTER5(BinaryOp, CPU, "SquaredDifference", functor::squared_difference,
           float, Eigen::half, double, int32, int64);
 //#if GOOGLE_CUDA
-REGISTER4(BinaryOp, GPU, "SquaredDifference", functor::squared_difference,
-          float, Eigen::half, double, int64);
+REGISTER(BinaryOp, GPU, "SquaredDifference", functor::squared_difference,
+          float);
 //#endif
 
 // A special GPU kernel for int32.

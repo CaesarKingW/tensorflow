@@ -99,7 +99,7 @@ struct hash<StringPiece> {
     return static_cast<size_t>(Hash64(sp.data(), sp.size()));
   }
 };
-using StringPieceHasher = ::tensorflow::hash<StringPiece>;
+using StringPieceHasher = tensorflow::hash<StringPiece>;
 
 template <typename T, typename U>
 struct hash<std::pair<T, U>> {

@@ -29,8 +29,8 @@ typedef Eigen::GpuDevice GPUDevice;
 //template struct functor::InflatePadAndShuffle<GPUDevice, double, 4,
 //                                              Eigen::DenseIndex>;
 template struct functor::InflatePadAndShuffle<GPUDevice, float, 4, int>;
-template struct functor::InflatePadAndShuffle<GPUDevice, float, 4,
-                                              Eigen::DenseIndex>;
+//template struct functor::InflatePadAndShuffle<GPUDevice, float, 4,
+//                                              Eigen::DenseIndex>;
 //template struct functor::InflatePadAndShuffle<GPUDevice, Eigen::half, 4, int>;
 //template struct functor::InflatePadAndShuffle<GPUDevice, Eigen::half, 4,
 //                                              Eigen::DenseIndex>;

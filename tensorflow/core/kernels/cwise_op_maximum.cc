@@ -18,7 +18,7 @@ limitations under the License.
 namespace tensorflow {
 REGISTER6(BinaryOp, CPU, "Maximum", functor::maximum, float, Eigen::half,
           bfloat16, double, int32, int64);
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 //REGISTER4(BinaryOp, GPU, "Maximum", functor::maximum, float, Eigen::half,
 //          double, int64);
 REGISTER(BinaryOp, GPU, "Maximum", functor::maximum, float);
@@ -32,7 +32,7 @@ REGISTER_KERNEL_BUILDER(Name("Maximum")
                             .HostMemory("z")
                             .TypeConstraint<int32>("T"),
                         BinaryOp<CPUDevice, functor::maximum<int32>>);
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER3(BinaryOp, SYCL, "Maximum", functor::maximum, float, double, int64);
