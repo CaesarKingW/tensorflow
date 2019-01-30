@@ -223,9 +223,9 @@ struct BroadcastTo {
 
  private:
   template <int NDIMS>
-  Eigen::DSizes<Eigen::DenseIndex, NDIMS> AsEigenDSizesWithPrefix(
+  Eigen::DSizes<Eigen::Index, NDIMS> AsEigenDSizesWithPrefix(
       const TensorShape &shape) const {
-    Eigen::DSizes<Eigen::DenseIndex, NDIMS> dsizes;
+    Eigen::DSizes<Eigen::Index, NDIMS> dsizes;
     for (int d = 0; d < NDIMS - shape.dims(); d++) {
       dsizes[d] = 1;
     }

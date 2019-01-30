@@ -31,10 +31,10 @@ EIGEN_STRONG_INLINE void argmax_float_1d_xla_impl(void* out, void** data) {
   float* input = static_cast<float*>(data[0]);
   int64 input_size = *static_cast<int64*>(data[1]);
 
-  Eigen::DSizes<Eigen::DenseIndex, 1> in_eig_sizes(input_size);
+  Eigen::DSizes<Eigen::Index, 1> in_eig_sizes(input_size);
   TTypes<float, 1>::ConstTensor in_eig(input, in_eig_sizes);
 
-  Eigen::DSizes<Eigen::DenseIndex, 0> out_eig_sizes;
+  Eigen::DSizes<Eigen::Index, 0> out_eig_sizes;
   int64* out_t = static_cast<int64*>(out);
   TTypes<int64, 0>::Tensor out_eig(out_t, out_eig_sizes);
 

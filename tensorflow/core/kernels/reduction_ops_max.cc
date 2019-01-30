@@ -33,7 +33,7 @@ namespace tensorflow {
 TF_CALL_REAL_NUMBER_TYPES(REGISTER_CPU_KERNELS);
 #undef REGISTER_CPU_KERNELS
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #define REGISTER_GPU_KERNELS(type)                                             \
   REGISTER_KERNEL_BUILDER(                                                     \
@@ -51,34 +51,34 @@ TF_CALL_REAL_NUMBER_TYPES(REGISTER_CPU_KERNELS);
           .HostMemory("reduction_indices"),                                    \
       ReductionOp<GPUDevice, type, int64, Eigen::internal::MaxReducer<type>>);
 REGISTER_GPU_KERNELS(float);
-REGISTER_GPU_KERNELS(double);
-REGISTER_GPU_KERNELS(int64);
+//REGISTER_GPU_KERNELS(double);
+//REGISTER_GPU_KERNELS(int64);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
-REGISTER_KERNEL_BUILDER(
-    Name("Max")
-        .Device(DEVICE_GPU)
-        .HostMemory("reduction_indices")
-        .HostMemory("input")
-        .HostMemory("output")
-        .TypeConstraint<int32>("T")
-        .TypeConstraint<int32>("Tidx"),
-    ReductionOp<CPUDevice, int32, int32, Eigen::internal::MaxReducer<int32>>);
-REGISTER_KERNEL_BUILDER(
-    Name("Max")
-        .Device(DEVICE_GPU)
-        .HostMemory("reduction_indices")
-        .HostMemory("input")
-        .HostMemory("output")
-        .TypeConstraint<int32>("T")
-        .TypeConstraint<int64>("Tidx"),
-    ReductionOp<CPUDevice, int32, int64, Eigen::internal::MaxReducer<int32>>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Max")
+//        .Device(DEVICE_GPU)
+//        .HostMemory("reduction_indices")
+//        .HostMemory("input")
+//        .HostMemory("output")
+//        .TypeConstraint<int32>("T")
+//        .TypeConstraint<int32>("Tidx"),
+//    ReductionOp<CPUDevice, int32, int32, Eigen::internal::MaxReducer<int32>>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Max")
+//        .Device(DEVICE_GPU)
+//        .HostMemory("reduction_indices")
+//        .HostMemory("input")
+//        .HostMemory("output")
+//        .TypeConstraint<int32>("T")
+//        .TypeConstraint<int64>("Tidx"),
+//    ReductionOp<CPUDevice, int32, int64, Eigen::internal::MaxReducer<int32>>);
 
 #undef REGISTER_GPU_KERNELS
 
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 #define REGISTER_SYCL_KERNELS(type)                                        \

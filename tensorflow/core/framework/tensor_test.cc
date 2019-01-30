@@ -844,8 +844,8 @@ TEST(Tensor_Float, Reshape_And_Slice_Assignment) {
     Eigen::Tensor<float, 2, Eigen::RowMajor> m(1, 4 * 3 * 2);
     m.setConstant(i * 2.0);
 
-    Eigen::DSizes<Eigen::DenseIndex, 2> indices(i, 0);
-    Eigen::DSizes<Eigen::DenseIndex, 2> sizes(1, 4 * 3 * 2);
+    Eigen::DSizes<Eigen::Index, 2> indices(i, 0);
+    Eigen::DSizes<Eigen::Index, 2> sizes(1, 4 * 3 * 2);
     e_2d.slice(indices, sizes) = m;
   }
   for (int i = 0; i < 10; i++) {

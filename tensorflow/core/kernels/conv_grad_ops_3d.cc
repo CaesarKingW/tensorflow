@@ -201,7 +201,7 @@ class Conv3DBackpropInputOp : public OpKernel {
       input_shape = context->input(0).shape();
     }
     EXTRACT_AND_VERIFY_DIMENSIONS("Conv3DBackpropInput");
-    Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 5> pad_dims{
+    Eigen::array<Eigen::IndexPair<Eigen::Index>, 5> pad_dims{
         {0, 0},
         {top_pad_planes, bottom_pad_planes},
         {top_pad_rows, bottom_pad_rows},
@@ -218,10 +218,10 @@ class Conv3DBackpropInputOp : public OpKernel {
     OP_REQUIRES_OK(context,
                    context->allocate_temp(DataTypeToEnum<T>::v(),
                                           padded_out_shape, &padded_output));
-    Eigen::DSizes<Eigen::DenseIndex, 5> no_op_shuffle{0, 1, 2, 3, 4};
-    Eigen::DSizes<Eigen::DenseIndex, 5> eigen_strides{1, strides[0], strides[1],
+    Eigen::DSizes<Eigen::Index, 5> no_op_shuffle{0, 1, 2, 3, 4};
+    Eigen::DSizes<Eigen::Index, 5> eigen_strides{1, strides[0], strides[1],
                                                       strides[2], 1};
-    functor::InflatePadAndShuffle<Device, T, 5, Eigen::DenseIndex>()(
+    functor::InflatePadAndShuffle<Device, T, 5, Eigen::Index>()(
         context->eigen_device<Device>(), out_backprop.tensor<T, 5>(),
         eigen_strides, pad_dims, no_op_shuffle, padded_output.tensor<T, 5>());
     const Tensor& padded_output_cref = padded_output;
@@ -233,9 +233,9 @@ class Conv3DBackpropInputOp : public OpKernel {
     Tensor r_filter;
     OP_REQUIRES_OK(context, context->allocate_temp(DataTypeToEnum<T>::v(),
                                                    r_filter_shape, &r_filter));
-    Eigen::DSizes<Eigen::DenseIndex, 5> filter_order{0, 1, 2, 4, 3};
+    Eigen::DSizes<Eigen::Index, 5> filter_order{0, 1, 2, 4, 3};
     Eigen::array<bool, 5> filter_rev_dims{true, true, true, false, false};
-    functor::ShuffleAndReverse<Device, T, 5, Eigen::DenseIndex>()(
+    functor::ShuffleAndReverse<Device, T, 5, Eigen::Index>()(
         context->eigen_device<Device>(), filter.tensor<T, 5>(), filter_order,
         filter_rev_dims, r_filter.tensor<T, 5>());
     const Tensor& r_filter_cref = r_filter;
@@ -334,7 +334,7 @@ class Conv3DBackpropFilterOp : public OpKernel {
     }
 
     EXTRACT_AND_VERIFY_DIMENSIONS("Conv3DBackpropFilter");
-    Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 5> pad_dims{
+    Eigen::array<Eigen::IndexPair<Eigen::Index>, 5> pad_dims{
         {0, 0},
         {top_pad_planes, bottom_pad_planes},
         {top_pad_rows, bottom_pad_rows},
@@ -355,16 +355,16 @@ class Conv3DBackpropFilterOp : public OpKernel {
     //   [batch, out_z, out_y, out_x, out_depth]
     // And we need to change it to
     //   [out_depth, out_x, out_y, out_z, batch]
-    Eigen::DSizes<Eigen::DenseIndex, 5> out_order{4, 1, 2, 3, 0};
+    Eigen::DSizes<Eigen::Index, 5> out_order{4, 1, 2, 3, 0};
     TensorShape padded_out_shape({out_depth, padded_out_planes, padded_out_rows,
                                   padded_out_cols, batch});
     Tensor padded_output;
     OP_REQUIRES_OK(context,
                    context->allocate_temp(DataTypeToEnum<T>::v(),
                                           padded_out_shape, &padded_output));
-    Eigen::DSizes<Eigen::DenseIndex, 5> eigen_strides{1, strides[0], strides[1],
+    Eigen::DSizes<Eigen::Index, 5> eigen_strides{1, strides[0], strides[1],
                                                       strides[2], 1};
-    functor::InflatePadAndShuffle<Device, T, 5, Eigen::DenseIndex>()(
+    functor::InflatePadAndShuffle<Device, T, 5, Eigen::Index>()(
         context->eigen_device<Device>(), out_backprop.tensor<T, 5>(),
         eigen_strides, pad_dims, out_order, padded_output.tensor<T, 5>());
     const Tensor& padded_output_cref = padded_output;
@@ -374,7 +374,7 @@ class Conv3DBackpropFilterOp : public OpKernel {
     //   [batch, in_z, in_y, in_x, in_depth]
     // And we need to change it to
     //   [in_z, in_y, in_x, batch, in_depth]
-    Eigen::DSizes<Eigen::DenseIndex, 5> in_order{1, 2, 3, 0, 4};
+    Eigen::DSizes<Eigen::Index, 5> in_order{1, 2, 3, 0, 4};
     TensorShape in_shuffle_shape(
         {input_size[0], input_size[1], input_size[2], batch, in_depth});
     Tensor in_shuffle;
@@ -383,7 +383,7 @@ class Conv3DBackpropFilterOp : public OpKernel {
                                           in_shuffle_shape, &in_shuffle));
     // No need for reversing this time.
     Eigen::array<bool, 5> no_reverse{false, false, false, false, false};
-    functor::ShuffleAndReverse<Device, T, 5, Eigen::DenseIndex>()(
+    functor::ShuffleAndReverse<Device, T, 5, Eigen::Index>()(
         context->eigen_device<Device>(), input.tensor<T, 5>(), in_order,
         no_reverse, in_shuffle.tensor<T, 5>());
     const Tensor& in_shuffle_cref = in_shuffle;
@@ -407,10 +407,10 @@ class Conv3DBackpropFilterOp : public OpKernel {
         1, BrainPadding2EigenPadding(VALID));
 
     // Now copy the filter_backprop back to the destination.
-    Eigen::DSizes<Eigen::DenseIndex, 5> filter_order{1, 2, 3, 4, 0};
+    Eigen::DSizes<Eigen::Index, 5> filter_order{1, 2, 3, 4, 0};
     Eigen::array<bool, 5> filter_rev_dims{true, true, true, false, false};
     const Tensor& filter_shuffle_cref = filter_shuffle;
-    functor::ShuffleAndReverse<Device, T, 5, Eigen::DenseIndex>()(
+    functor::ShuffleAndReverse<Device, T, 5, Eigen::Index>()(
         context->eigen_device<Device>(), filter_shuffle_cref.tensor<T, 5>(),
         filter_order, filter_rev_dims, filter_backprop->tensor<T, 5>());
   }

@@ -291,12 +291,12 @@ class TensorShapeOld {
 
   /// Fill `*dsizes` from `*this`.
   template <int NDIMS>
-  Eigen::DSizes<Eigen::DenseIndex, NDIMS> AsEigenDSizes() const;
+  Eigen::DSizes<Eigen::Index, NDIMS> AsEigenDSizes() const;
 
   /// Same as `AsEigenDSizes()` but allows for `NDIMS > dims()` -- in
   /// which case we pad the rest of the sizes with 1.
   template <int NDIMS>
-  Eigen::DSizes<Eigen::DenseIndex, NDIMS> AsEigenDSizesWithPadding() const;
+  Eigen::DSizes<Eigen::Index, NDIMS> AsEigenDSizesWithPadding() const;
 
   /// For iterating through the dimensions.
   TensorShapeIterOld begin() const;

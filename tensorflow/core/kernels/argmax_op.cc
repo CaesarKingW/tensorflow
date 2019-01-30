@@ -17,9 +17,9 @@ limitations under the License.
 
 #define EIGEN_USE_THREADS
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 #define EIGEN_USE_GPU
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 #include "tensorflow/core/kernels/argmax_op.h"
 
@@ -126,18 +126,6 @@ class ArgMinOp
   REGISTER_KERNEL_BUILDER(Name("ArgMax")                            \
                               .Device(DEVICE_CPU)                   \
                               .TypeConstraint<type>("T")            \
-                              .TypeConstraint<int64>("output_type") \
-                              .HostMemory("dimension"),             \
-                          ArgMaxOp<CPUDevice, type, int64>);        \
-  REGISTER_KERNEL_BUILDER(Name("ArgMin")                            \
-                              .Device(DEVICE_CPU)                   \
-                              .TypeConstraint<type>("T")            \
-                              .TypeConstraint<int64>("output_type") \
-                              .HostMemory("dimension"),             \
-                          ArgMinOp<CPUDevice, type, int64>);        \
-  REGISTER_KERNEL_BUILDER(Name("ArgMax")                            \
-                              .Device(DEVICE_CPU)                   \
-                              .TypeConstraint<type>("T")            \
                               .TypeConstraint<int32>("output_type") \
                               .HostMemory("dimension"),             \
                           ArgMaxOp<CPUDevice, type, int32>);        \
@@ -150,7 +138,7 @@ class ArgMinOp
 
 TF_CALL_REAL_NUMBER_TYPES(REGISTER_ARGMAX);
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 
 // Forward declarations of the functor specializations for GPU.
 namespace functor {
@@ -165,12 +153,8 @@ namespace functor {
       const GPUDevice& d, typename TTypes<T, Dims>::ConstTensor input,        \
       const int32 dimension, typename TTypes<Tout, Dims - 1>::Tensor output);
 
+
 #define DECLARE_GPU_SPECS(T)     \
-  DECLARE_GPU_SPEC(T, int64, 1); \
-  DECLARE_GPU_SPEC(T, int64, 2); \
-  DECLARE_GPU_SPEC(T, int64, 3); \
-  DECLARE_GPU_SPEC(T, int64, 4); \
-  DECLARE_GPU_SPEC(T, int64, 5); \
   DECLARE_GPU_SPEC(T, int32, 1); \
   DECLARE_GPU_SPEC(T, int32, 2); \
   DECLARE_GPU_SPEC(T, int32, 3); \
@@ -178,8 +162,6 @@ namespace functor {
   DECLARE_GPU_SPEC(T, int32, 5);
 
 #define DECLARE_GPU_CLASS(T)                          \
-  extern template struct ArgMax<GPUDevice, T, int64>; \
-  extern template struct ArgMin<GPUDevice, T, int64>; \
   extern template struct ArgMax<GPUDevice, T, int32>; \
   extern template struct ArgMin<GPUDevice, T, int32>;
 
@@ -193,20 +175,6 @@ TF_CALL_GPU_NUMBER_TYPES(DECLARE_GPU_CLASS);
 
 // Registration of the GPU implementations.
 #define REGISTER_ARGMAX_GPU(type)                                   \
-  REGISTER_KERNEL_BUILDER(Name("ArgMax")                            \
-                              .Device(DEVICE_GPU)                   \
-                              .TypeConstraint<type>("T")            \
-                              .TypeConstraint<int64>("output_type") \
-                              .TypeConstraint<int32>("Tidx")        \
-                              .HostMemory("dimension"),             \
-                          ArgMaxOp<GPUDevice, type, int64>);        \
-  REGISTER_KERNEL_BUILDER(Name("ArgMin")                            \
-                              .Device(DEVICE_GPU)                   \
-                              .TypeConstraint<type>("T")            \
-                              .TypeConstraint<int64>("output_type") \
-                              .TypeConstraint<int32>("Tidx")        \
-                              .HostMemory("dimension"),             \
-                          ArgMinOp<GPUDevice, type, int64>);        \
   REGISTER_KERNEL_BUILDER(Name("ArgMax")                            \
                               .Device(DEVICE_GPU)                   \
                               .TypeConstraint<type>("T")            \
@@ -226,6 +194,6 @@ TF_CALL_GPU_NUMBER_TYPES(REGISTER_ARGMAX_GPU);
 
 #undef REGISTER_ARGMAX_GPU
 
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

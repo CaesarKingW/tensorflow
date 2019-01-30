@@ -135,11 +135,11 @@ namespace functor {
   template <>                                                        \
   void Betainc<GPUDevice, T, NDIM>::BCast(                           \
       const GPUDevice& d, typename TTypes<T, NDIM>::ConstTensor a,   \
-      const typename Eigen::array<Eigen::DenseIndex, NDIM>& bcast_a, \
+      const typename Eigen::array<Eigen::Index, NDIM>& bcast_a, \
       typename TTypes<T, NDIM>::ConstTensor b,                       \
-      const typename Eigen::array<Eigen::DenseIndex, NDIM>& bcast_b, \
+      const typename Eigen::array<Eigen::Index, NDIM>& bcast_b, \
       typename TTypes<T, NDIM>::ConstTensor x,                       \
-      const typename Eigen::array<Eigen::DenseIndex, NDIM>& bcast_x, \
+      const typename Eigen::array<Eigen::Index, NDIM>& bcast_x, \
       typename TTypes<T, NDIM>::Tensor output);                      \
   extern template struct Betainc<GPUDevice, T, NDIM>;
 

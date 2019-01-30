@@ -78,9 +78,9 @@ struct BinaryFunctor<GPUDevice, Functor, NDIMS, has_errors> {
   void BCast(const GPUDevice& d,
              typename TTypes<typename Functor::out_type, NDIMS>::Tensor out,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in0,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast0,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast0,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in1,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast1,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast1,
              bool* error) {
     typedef typename Functor::in_type T;
     typename Functor::func func;

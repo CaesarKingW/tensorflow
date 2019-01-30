@@ -27,13 +27,11 @@ REGISTER6(BinaryOp, CPU, "RealDiv", functor::div, float, Eigen::half, double,
 REGISTER2(BinaryOp, CPU, "DivNoNan", functor::div_no_nan, float, double);
 
 //#if GOOGLE_CUDA
-REGISTER9(BinaryOp, GPU, "Div", functor::div, float, Eigen::half, double, uint8,
-          uint16, int16, int64, complex64, complex128);
-REGISTER4(BinaryOp, GPU, "TruncateDiv", functor::div, uint8, uint16, int16,
-          int64);
-REGISTER5(BinaryOp, GPU, "RealDiv", functor::div, float, Eigen::half, double,
-          complex64, complex128);
-REGISTER2(BinaryOp, GPU, "DivNoNan", functor::div_no_nan, float, double);
+REGISTER(BinaryOp, GPU, "Div", functor::div, float);
+//REGISTER(BinaryOp, GPU, "TruncateDiv", functor::div, uint8, uint16, int16,
+//          int64);
+REGISTER(BinaryOp, GPU, "RealDiv", functor::div, float);
+REGISTER(BinaryOp, GPU, "DivNoNan", functor::div_no_nan, float);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel

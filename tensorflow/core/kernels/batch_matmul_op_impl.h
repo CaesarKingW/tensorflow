@@ -48,18 +48,18 @@ typedef Eigen::SyclDevice SYCLDevice;
 
 namespace {
 
-Eigen::IndexPair<Eigen::DenseIndex> ContractionDims(bool adj_x, bool adj_y) {
+Eigen::IndexPair<Eigen::Index> ContractionDims(bool adj_x, bool adj_y) {
   if (!adj_x) {
     if (!adj_y) {
-      return Eigen::IndexPair<Eigen::DenseIndex>(1, 0);
+      return Eigen::IndexPair<Eigen::Index>(1, 0);
     } else {
-      return Eigen::IndexPair<Eigen::DenseIndex>(1, 1);
+      return Eigen::IndexPair<Eigen::Index>(1, 1);
     }
   } else {
     if (!adj_y) {
-      return Eigen::IndexPair<Eigen::DenseIndex>(0, 0);
+      return Eigen::IndexPair<Eigen::Index>(0, 0);
     } else {
-      return Eigen::IndexPair<Eigen::DenseIndex>(0, 1);
+      return Eigen::IndexPair<Eigen::Index>(0, 1);
     }
   }
 }
@@ -86,7 +86,7 @@ struct ParallelMatMulKernel {
     //   conj(a) * b = conj(a * conj(b))
     // to halve the number of cases. The final conjugation of the result is
     // done at the end of LaunchBatchMatMul<CPUDevice, Scalar>::Launch().
-    Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1> contract_pairs;
+    Eigen::array<Eigen::IndexPair<Eigen::Index>, 1> contract_pairs;
     contract_pairs[0] = ContractionDims(adj_x, adj_y);
     const Eigen::ThreadPoolDevice d = context->eigen_cpu_device();
     for (int i = start; i < limit; ++i) {
@@ -116,7 +116,7 @@ struct ParallelMatMulKernel<Scalar, false> {
     auto Tx = in_x.tensor<Scalar, 3>();
     auto Ty = in_y.tensor<Scalar, 3>();
     auto Tz = out->tensor<Scalar, 3>();
-    Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1> contract_pairs;
+    Eigen::array<Eigen::IndexPair<Eigen::Index>, 1> contract_pairs;
     contract_pairs[0] = ContractionDims(adj_x, adj_y);
     const Eigen::ThreadPoolDevice d = context->eigen_cpu_device();
     for (int i = start; i < limit; ++i) {
@@ -506,7 +506,7 @@ struct ParallelMatMulKernelSYCL {
     auto Tx = in_x.tensor<Scalar, 3>();
     auto Ty = in_y.tensor<Scalar, 3>();
     auto Tz = out->tensor<Scalar, 3>();
-    Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1> contract_pairs;
+    Eigen::array<Eigen::IndexPair<Eigen::Index>, 1> contract_pairs;
     contract_pairs[0] = ContractionDims(adj_x, adj_y);
     auto d = context->eigen_sycl_device();
     for (int i = start; i < limit; ++i) {

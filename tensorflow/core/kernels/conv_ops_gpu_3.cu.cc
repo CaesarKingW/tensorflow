@@ -1018,9 +1018,9 @@ template struct functor::ShuffleAndReverse<GPUDevice, float, 4, int>;
 //template struct functor::ShuffleAndReverse<GPUDevice, Eigen::half, 4, int>;
 
 template struct functor::ShuffleAndReverse<GPUDevice, float, 4,
-                                           Eigen::DenseIndex>;
+                                           Eigen::Index>;
 //template struct functor::ShuffleAndReverse<GPUDevice, Eigen::half, 4,
-//                                           Eigen::DenseIndex>;
+//                                           Eigen::Index>;
 
 template struct functor::TransformDepth<GPUDevice, float, int>;
 //template struct functor::TransformDepth<GPUDevice, Eigen::half, int>;
