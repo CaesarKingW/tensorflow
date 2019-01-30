@@ -25,25 +25,24 @@ REGISTER_KERNEL_BUILDER(
     Name("ApproximateEqual").Device(DEVICE_CPU).TypeConstraint<double>("T"),
     ApproximateEqualOp<CPUDevice, double>);
 //#if GOOGLE_CUDA
-REGISTER4(BinaryOp, GPU, "Equal", functor::equal_to, float, Eigen::half, double,
-          uint8);
+REGISTER(BinaryOp, GPU, "Equal", functor::equal_to, float);
 REGISTER_KERNEL_BUILDER(
     Name("ApproximateEqual").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     ApproximateEqualOp<GPUDevice, float>);
-REGISTER_KERNEL_BUILDER(
-    Name("ApproximateEqual").Device(DEVICE_GPU).TypeConstraint<double>("T"),
-    ApproximateEqualOp<GPUDevice, double>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("ApproximateEqual").Device(DEVICE_GPU).TypeConstraint<double>("T"),
+//    ApproximateEqualOp<GPUDevice, double>);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
-REGISTER_KERNEL_BUILDER(Name("Equal")
-                            .Device(DEVICE_GPU)
-                            .HostMemory("x")
-                            .HostMemory("y")
-                            .HostMemory("z")
-                            .TypeConstraint<int32>("T"),
-                        BinaryOp<CPUDevice, functor::equal_to<int32>>);
+//REGISTER_KERNEL_BUILDER(Name("Equal")
+//                            .Device(DEVICE_GPU)
+//                            .HostMemory("x")
+//                            .HostMemory("y")
+//                            .HostMemory("z")
+//                            .TypeConstraint<int32>("T"),
+//                        BinaryOp<CPUDevice, functor::equal_to<int32>>);
 //#endif
 
 #ifdef TENSORFLOW_USE_SYCL
