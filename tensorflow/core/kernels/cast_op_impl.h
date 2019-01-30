@@ -90,7 +90,7 @@ CastFunctorType GetCpuCastFromInt64(DataType dst_dtype);
 CastFunctorType GetCpuCastFromHalf(DataType dst_dtype);
 
 CastFunctorType GetCpuCastFromFloat(DataType dst_dtype);
-
+//
 CastFunctorType GetCpuCastFromDouble(DataType dst_dtype);
 
 CastFunctorType GetCpuCastFromComplex64(DataType dst_dtype);
@@ -99,39 +99,40 @@ CastFunctorType GetCpuCastFromComplex128(DataType dst_dtype);
 
 CastFunctorType GetCpuCastFromBfloat(DataType dst_dtype);
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
+
 // Same, for GPU.
 CastFunctorType GetGpuCastFromBool(DataType dst_dtype);
 
-CastFunctorType GetGpuCastFromUint8(DataType dst_dtype);
+//CastFunctorType GetGpuCastFromUint8(DataType dst_dtype);
 
-CastFunctorType GetGpuCastFromUint16(DataType dst_dtype);
-
-CastFunctorType GetGpuCastFromInt8(DataType dst_dtype);
-
-CastFunctorType GetGpuCastFromUint32(DataType dst_dtype);
-
-CastFunctorType GetGpuCastFromUint64(DataType dst_dtype);
-
-CastFunctorType GetGpuCastFromInt16(DataType dst_dtype);
-
+//CastFunctorType GetGpuCastFromUint16(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromInt8(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromUint32(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromUint64(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromInt16(DataType dst_dtype);
+//
 CastFunctorType GetGpuCastFromInt32(DataType dst_dtype);
 
-CastFunctorType GetGpuCastFromInt64(DataType dst_dtype);
-
-CastFunctorType GetGpuCastFromHalf(DataType dst_dtype);
+//CastFunctorType GetGpuCastFromInt64(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromHalf(DataType dst_dtype);
 
 CastFunctorType GetGpuCastFromFloat(DataType dst_dtype);
 
-CastFunctorType GetGpuCastFromDouble(DataType dst_dtype);
+//CastFunctorType GetGpuCastFromDouble(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromComplex64(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromComplex128(DataType dst_dtype);
+//
+//CastFunctorType GetGpuCastFromBfloat(DataType dst_dtype);
 
-CastFunctorType GetGpuCastFromComplex64(DataType dst_dtype);
-
-CastFunctorType GetGpuCastFromComplex128(DataType dst_dtype);
-
-CastFunctorType GetGpuCastFromBfloat(DataType dst_dtype);
-
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 #ifdef TENSORFLOW_USE_SYCL
 CastFunctorType GetSyclCastFromBool(DataType dst_dtype);

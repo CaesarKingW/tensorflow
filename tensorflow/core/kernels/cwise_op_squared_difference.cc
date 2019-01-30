@@ -18,22 +18,22 @@ limitations under the License.
 namespace tensorflow {
 REGISTER5(BinaryOp, CPU, "SquaredDifference", functor::squared_difference,
           float, Eigen::half, double, int32, int64);
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 REGISTER(BinaryOp, GPU, "SquaredDifference", functor::squared_difference,
           float);
-//#endif
+#endif
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
-REGISTER_KERNEL_BUILDER(
-    Name("SquaredDifference")
-        .Device(DEVICE_GPU)
-        .HostMemory("x")
-        .HostMemory("y")
-        .HostMemory("z")
-        .TypeConstraint<int32>("T"),
-    BinaryOp<CPUDevice, functor::squared_difference<int32>>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("SquaredDifference")
+//        .Device(DEVICE_GPU)
+//        .HostMemory("x")
+//        .HostMemory("y")
+//        .HostMemory("z")
+//        .TypeConstraint<int32>("T"),
+//    BinaryOp<CPUDevice, functor::squared_difference<int32>>);
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER3(BinaryOp, SYCL, "SquaredDifference", functor::squared_difference,
