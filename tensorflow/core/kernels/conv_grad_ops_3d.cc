@@ -33,10 +33,10 @@ limitations under the License.
 #include "tensorflow/core/util/tensor_format.h"
 #include "tensorflow/core/util/use_cudnn.h"
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 #include "tensorflow/core/platform/stream_executor.h"
 using stream_executor::dnn::DimIndex;
-//#endif
+#endif
 
 namespace tensorflow {
 
@@ -437,7 +437,7 @@ TF_CALL_double(REGISTER_CPU_KERNEL);
 #undef REGISTER_CPU_KERNEL
 
 // GPU definitions of both ops.
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 // Forward declarations of the functor specializations for GPU.
 // This ensures that the custom implementation is used instead of the default
 // Eigen one (which is used for CPU).
@@ -1231,6 +1231,6 @@ class Conv3DBackpropFilterOp<GPUDevice, T> : public OpKernel {
 TF_CALL_float(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

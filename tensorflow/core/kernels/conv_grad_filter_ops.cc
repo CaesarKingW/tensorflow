@@ -531,7 +531,7 @@ template struct LaunchConv2DBackpropFilterOp<CPUDevice, float>;
 template struct LaunchConv2DBackpropFilterOp<CPUDevice, double>;
 
 // GPU definitions.
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 // The slow version (but compiles for GPU)
 
 // A dummy type to group forward backward filter autotune results together.
@@ -1062,6 +1062,6 @@ template struct LaunchConv2DBackpropFilterOp<GPUDevice, float>;
 //template struct LaunchConv2DBackpropFilterOp<GPUDevice, Eigen::half>;
 //template struct LaunchConv2DBackpropFilterOp<GPUDevice, double>;
 
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

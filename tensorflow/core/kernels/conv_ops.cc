@@ -841,15 +841,15 @@ DECLARE_GPU_SPEC(float);
 }  // namespace functor
 
 // Registration of the GPU implementations.
-REGISTER_KERNEL_BUILDER(
-    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-    Conv2DOp<GPUDevice, Eigen::half>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+//    Conv2DOp<GPUDevice, Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     Conv2DOp<GPUDevice, float>);
-REGISTER_KERNEL_BUILDER(
-    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<double>("T"),
-    Conv2DOp<GPUDevice, double>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<double>("T"),
+//    Conv2DOp<GPUDevice, double>);
 
 // To be used inside depthwise_conv_op.cc.
 template struct LaunchConv2DOp<GPUDevice, float>;
