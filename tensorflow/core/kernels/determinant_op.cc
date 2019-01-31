@@ -17,11 +17,11 @@ limitations under the License.
 
 #include <cmath>
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 #define EIGEN_USE_GPU
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/kernels/determinant_op.h"
-//#endif
+#endif
 
 #include "third_party/eigen3/Eigen/LU"
 #include "tensorflow/core/framework/kernel_def_builder.h"
@@ -33,10 +33,10 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/types.h"
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 #include "tensorflow/core/kernels/cuda_solvers.h"
 #include "tensorflow/core/kernels/fill_functor.h"
-//#endif
+#endif
 
 namespace tensorflow {
 
@@ -120,7 +120,7 @@ class DeterminantOp : public LinearAlgebraOp<Scalar> {
   }
 };
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 
 typedef Eigen::GpuDevice GPUDevice;
 
@@ -412,21 +412,21 @@ class LogDeterminantOpGpu : public AsyncOpKernel {
 };
 
 REGISTER_LINALG_OP_GPU("MatrixDeterminant", (DeterminantOpGpu<float>), float);
-REGISTER_LINALG_OP_GPU("MatrixDeterminant", (DeterminantOpGpu<double>), double);
-REGISTER_LINALG_OP_GPU("MatrixDeterminant", (DeterminantOpGpu<complex64>),
-                       complex64);
-REGISTER_LINALG_OP_GPU("MatrixDeterminant", (DeterminantOpGpu<complex128>),
-                       complex128);
+//REGISTER_LINALG_OP_GPU("MatrixDeterminant", (DeterminantOpGpu<double>), double);
+//REGISTER_LINALG_OP_GPU("MatrixDeterminant", (DeterminantOpGpu<complex64>),
+//                       complex64);
+//REGISTER_LINALG_OP_GPU("MatrixDeterminant", (DeterminantOpGpu<complex128>),
+//                       complex128);
 
 REGISTER_LINALG_OP_GPU("LogMatrixDeterminant", (LogDeterminantOpGpu<float>),
                        float);
-REGISTER_LINALG_OP_GPU("LogMatrixDeterminant", (LogDeterminantOpGpu<double>),
-                       double);
-REGISTER_LINALG_OP_GPU("LogMatrixDeterminant", (LogDeterminantOpGpu<complex64>),
-                       complex64);
-REGISTER_LINALG_OP_GPU("LogMatrixDeterminant",
-                       (LogDeterminantOpGpu<complex128>), complex128);
-//#endif  // GOOGLE_CUDA
+//REGISTER_LINALG_OP_GPU("LogMatrixDeterminant", (LogDeterminantOpGpu<double>),
+//                       double);
+//REGISTER_LINALG_OP_GPU("LogMatrixDeterminant", (LogDeterminantOpGpu<complex64>),
+//                       complex64);
+//REGISTER_LINALG_OP_GPU("LogMatrixDeterminant",
+//                       (LogDeterminantOpGpu<complex128>), complex128);
+#endif  // GOOGLE_CUDA
 
 REGISTER_LINALG_OP("MatrixDeterminant", (DeterminantOp<float>), float);
 REGISTER_LINALG_OP("MatrixDeterminant", (DeterminantOp<double>), double);

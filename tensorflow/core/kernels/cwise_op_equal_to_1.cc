@@ -24,7 +24,7 @@ REGISTER_KERNEL_BUILDER(
 REGISTER_KERNEL_BUILDER(
     Name("ApproximateEqual").Device(DEVICE_CPU).TypeConstraint<double>("T"),
     ApproximateEqualOp<CPUDevice, double>);
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 REGISTER(BinaryOp, GPU, "Equal", functor::equal_to, float);
 REGISTER_KERNEL_BUILDER(
     Name("ApproximateEqual").Device(DEVICE_GPU).TypeConstraint<float>("T"),
@@ -43,7 +43,7 @@ REGISTER_KERNEL_BUILDER(
 //                            .HostMemory("z")
 //                            .TypeConstraint<int32>("T"),
 //                        BinaryOp<CPUDevice, functor::equal_to<int32>>);
-//#endif
+#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER5(BinaryOp, SYCL, "Equal", functor::equal_to, float, double, uint8,

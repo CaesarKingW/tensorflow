@@ -28,20 +28,20 @@ REGISTER4(BinaryOp, CPU, "Sub", functor::sub, int8, uint8, int16, uint16);
 REGISTER(BinaryOp, CPU, "Sub", functor::sub, int32);
 #endif  // __ANDROID_TYPES_SLIM__
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 REGISTER(BinaryOp, GPU, "Sub", functor::sub, float);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
-//REGISTER_KERNEL_BUILDER(Name("Sub")
-//                            .Device(DEVICE_GPU)
-//                            .HostMemory("x")
-//                            .HostMemory("y")
-//                            .HostMemory("z")
-//                            .TypeConstraint<int32>("T"),
-//                        BinaryOp<CPUDevice, functor::sub<int32>>);
-//#endif
+REGISTER_KERNEL_BUILDER(Name("Sub")
+                            .Device(DEVICE_GPU)
+                            .HostMemory("x")
+                            .HostMemory("y")
+                            .HostMemory("z")
+                            .TypeConstraint<int32>("T"),
+                        BinaryOp<CPUDevice, functor::sub<int32>>);
+#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER3(BinaryOp, SYCL, "Sub", functor::sub, float, double, int64);
