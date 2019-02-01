@@ -281,8 +281,8 @@ def main():
         # if args.cuda_log:
         #     Log('-x cuda')
         leftover = [pipes.quote(s) for s in leftover]
-        # if args.cuda_log:
-        #     Log('using cocl')
+        if args.cuda_log:
+             Log('using cocl')
         return InvokeNvcc(leftover, log=args.cuda_log)
 
     # Strip our flags before passing through to the CPU compiler for files which
@@ -298,8 +298,8 @@ def main():
     # )
     # cpu_compiler_flags = [option for option in cpu_compiler_flags if option != '-pie']
     cpu_compiler_call = [CPU_COMPILER] + cpu_compiler_flags
-    # print('cpu_compiler_call', cpu_compiler_call)
-    # print('cpu_compiler_call joined', ' '.join(cpu_compiler_call))
+    #print('cpu_compiler_call', cpu_compiler_call)
+    #print('cpu_compiler_call joined', ' '.join(cpu_compiler_call))
     return subprocess.call(cpu_compiler_call)
 
 if __name__ == '__main__':

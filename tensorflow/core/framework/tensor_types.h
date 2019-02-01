@@ -21,7 +21,7 @@ limitations under the License.
 namespace tensorflow {
 
 // Helper to define Tensor types given that the scalar is of type T.
-template <typename T, int NDIMS = 1, typename IndexType = Eigen::Index>
+template <typename T, int NDIMS = 1, typename IndexType = Eigen::DenseIndex>
 struct TTypes {
   // Rank-<NDIMS> tensor of scalar type T.
   typedef Eigen::TensorMap<Eigen::Tensor<T, NDIMS, Eigen::RowMajor, IndexType>,
