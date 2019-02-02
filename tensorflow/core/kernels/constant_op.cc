@@ -17,9 +17,9 @@ limitations under the License.
 
 #define EIGEN_USE_THREADS
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define EIGEN_USE_GPU
-#endif
+//#endif
 
 #include "tensorflow/core/kernels/constant_op.h"
 
@@ -91,32 +91,32 @@ ConstantOp::~ConstantOp() {}
 
 REGISTER_KERNEL_BUILDER(Name("Const").Device(DEVICE_CPU), ConstantOp);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define REGISTER_KERNEL(D, TYPE)                                      \
   REGISTER_KERNEL_BUILDER(                                            \
       Name("Const").Device(DEVICE_##D).TypeConstraint<TYPE>("dtype"), \
       ConstantOp);
-REGISTER_KERNEL(GPU, Eigen::half);
-REGISTER_KERNEL(GPU, bfloat16);
+//REGISTER_KERNEL(GPU, Eigen::half);
+//REGISTER_KERNEL(GPU, bfloat16);
 REGISTER_KERNEL(GPU, float);
-REGISTER_KERNEL(GPU, double);
-REGISTER_KERNEL(GPU, uint8);
-REGISTER_KERNEL(GPU, int8);
-REGISTER_KERNEL(GPU, qint8);
-REGISTER_KERNEL(GPU, uint16);
-REGISTER_KERNEL(GPU, int16);
-REGISTER_KERNEL(GPU, qint16);
-REGISTER_KERNEL(GPU, quint16);
-REGISTER_KERNEL(GPU, uint32);
-REGISTER_KERNEL(GPU, qint32);
-REGISTER_KERNEL(GPU, int64);
-REGISTER_KERNEL(GPU, uint64);
-REGISTER_KERNEL(GPU, complex64);
-REGISTER_KERNEL(GPU, complex128);
-REGISTER_KERNEL(GPU, bool);
-REGISTER_KERNEL(GPU, Variant);
+//REGISTER_KERNEL(GPU, double);
+//REGISTER_KERNEL(GPU, uint8);
+//REGISTER_KERNEL(GPU, int8);
+//REGISTER_KERNEL(GPU, qint8);
+//REGISTER_KERNEL(GPU, uint16);
+//REGISTER_KERNEL(GPU, int16);
+//REGISTER_KERNEL(GPU, qint16);
+//REGISTER_KERNEL(GPU, quint16);
+//REGISTER_KERNEL(GPU, uint32);
+//REGISTER_KERNEL(GPU, qint32);
+//REGISTER_KERNEL(GPU, int64);
+//REGISTER_KERNEL(GPU, uint64);
+//REGISTER_KERNEL(GPU, complex64);
+//REGISTER_KERNEL(GPU, complex128);
+//REGISTER_KERNEL(GPU, bool);
+//REGISTER_KERNEL(GPU, Variant);
 #undef REGISTER_KERNEL
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 #define REGISTER_SYCL_KERNEL(D, TYPE)                                 \
@@ -215,19 +215,19 @@ REGISTER_KERNEL_BUILDER(Name("Fill")
 #undef REGISTER_KERNEL_SYCL
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
-REGISTER_KERNEL(GPU, Eigen::half);
-REGISTER_KERNEL(GPU, bfloat16);
+//#if GOOGLE_CUDA
+//REGISTER_KERNEL(GPU, Eigen::half);
+//REGISTER_KERNEL(GPU, bfloat16);
 REGISTER_KERNEL(GPU, float);
-REGISTER_KERNEL(GPU, double);
-REGISTER_KERNEL(GPU, complex64);
-REGISTER_KERNEL(GPU, complex128);
-REGISTER_KERNEL(GPU, uint8);
-REGISTER_KERNEL(GPU, int8);
-REGISTER_KERNEL(GPU, uint16);
-REGISTER_KERNEL(GPU, int16);
-REGISTER_KERNEL(GPU, int64);
-REGISTER_KERNEL(GPU, bool);
+//REGISTER_KERNEL(GPU, double);
+//REGISTER_KERNEL(GPU, complex64);
+//REGISTER_KERNEL(GPU, complex128);
+//REGISTER_KERNEL(GPU, uint8);
+//REGISTER_KERNEL(GPU, int8);
+//REGISTER_KERNEL(GPU, uint16);
+//REGISTER_KERNEL(GPU, int16);
+//REGISTER_KERNEL(GPU, int64);
+//REGISTER_KERNEL(GPU, bool);
 // Currently we do not support filling strings on GPU
 
 // A special GPU kernel for int32.
@@ -241,7 +241,7 @@ REGISTER_KERNEL_BUILDER(Name("Fill")
                             .HostMemory("value")
                             .HostMemory("output"),
                         FillOp<CPUDevice, int32, int32>);
-#endif
+//#endif
 
 #undef REGISTER_KERNEL
 
@@ -298,22 +298,22 @@ REGISTER_KERNEL_BUILDER(Name("ZerosLike")
                         ZerosLikeOp<CPUDevice, int32>);
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
-REGISTER_KERNEL(bool, GPU);
-REGISTER_KERNEL(Eigen::half, GPU);
-REGISTER_KERNEL(bfloat16, GPU);
+//#if GOOGLE_CUDA
+//REGISTER_KERNEL(bool, GPU);
+//REGISTER_KERNEL(Eigen::half, GPU);
+//REGISTER_KERNEL(bfloat16, GPU);
 REGISTER_KERNEL(float, GPU);
-REGISTER_KERNEL(double, GPU);
-REGISTER_KERNEL(complex64, GPU);
-REGISTER_KERNEL(complex128, GPU);
-REGISTER_KERNEL(int64, GPU);
-REGISTER_KERNEL(Variant, GPU);
+//REGISTER_KERNEL(double, GPU);
+//REGISTER_KERNEL(complex64, GPU);
+//REGISTER_KERNEL(complex128, GPU);
+//REGISTER_KERNEL(int64, GPU);
+//REGISTER_KERNEL(Variant, GPU);
 REGISTER_KERNEL_BUILDER(Name("ZerosLike")
                             .Device(DEVICE_GPU)
                             .TypeConstraint<int32>("T")
                             .HostMemory("y"),
                         ZerosLikeOp<CPUDevice, int32>);
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #undef REGISTER_KERNEL
 
@@ -351,21 +351,21 @@ REGISTER_KERNEL_BUILDER(Name("OnesLike")
                         OnesLikeOp<CPUDevice, int32>);
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
-REGISTER_KERNEL(bool, GPU);
-REGISTER_KERNEL(Eigen::half, GPU);
-REGISTER_KERNEL(bfloat16, GPU);
+//#if GOOGLE_CUDA
+//REGISTER_KERNEL(bool, GPU);
+//REGISTER_KERNEL(Eigen::half, GPU);
+//REGISTER_KERNEL(bfloat16, GPU);
 REGISTER_KERNEL(float, GPU);
-REGISTER_KERNEL(double, GPU);
-REGISTER_KERNEL(complex64, GPU);
-REGISTER_KERNEL(complex128, GPU);
-REGISTER_KERNEL(int64, GPU);
+//REGISTER_KERNEL(double, GPU);
+//REGISTER_KERNEL(complex64, GPU);
+//REGISTER_KERNEL(complex128, GPU);
+//REGISTER_KERNEL(int64, GPU);
 REGISTER_KERNEL_BUILDER(Name("OnesLike")
                             .Device(DEVICE_GPU)
                             .TypeConstraint<int32>("T")
                             .HostMemory("y"),
                         OnesLikeOp<CPUDevice, int32>);
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #undef REGISTER_KERNEL
 

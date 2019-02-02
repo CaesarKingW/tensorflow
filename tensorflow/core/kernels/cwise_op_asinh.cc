@@ -24,7 +24,7 @@ REGISTER4(UnaryOp, CPU, "Asinh", functor::asinh, float, double, complex64,
 REGISTER2(UnaryOp, SYCL, "Asinh", functor::asinh, float, double);
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER2(UnaryOp, GPU, "Asinh", functor::asinh, float, double);
-#endif
+//#endif
 }  // namespace tensorflow
