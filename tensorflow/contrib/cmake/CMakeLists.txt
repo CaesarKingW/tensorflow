@@ -143,7 +143,7 @@ if(WIN32)
   elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
       # 32 bits
       # temporary fix for #18241
-      add_definitions(-DEIGEN_DEFAULT_DENSE_INDEX_TYPE=std::int32_t)
+      add_definitions(-DEIGEN_DEFAULT_DENSE_INDEX_TYPE=int)
   endif()
   add_definitions(-DNOMINMAX -D_WIN32_WINNT=0x0A00)
   add_definitions(-DWIN32_LEAN_AND_MEAN -DNOGDI -DPLATFORM_WINDOWS)
@@ -182,6 +182,8 @@ if(WIN32)
 
   # Try to avoid flaky failures due to failed generation of generate.stamp files.
   set(CMAKE_SUPPRESS_REGENERATION ON)
+else()
+  add_definitions(-DEIGEN_DEFAULT_DENSE_INDEX_TYPE=int)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
