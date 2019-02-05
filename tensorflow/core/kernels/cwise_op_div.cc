@@ -26,7 +26,7 @@ REGISTER6(BinaryOp, CPU, "RealDiv", functor::div, float, Eigen::half, double,
           bfloat16, complex64, complex128);
 REGISTER2(BinaryOp, CPU, "DivNoNan", functor::div_no_nan, float, double);
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 REGISTER(BinaryOp, GPU, "Div", functor::div, float);
 //REGISTER(BinaryOp, GPU, "TruncateDiv", functor::div, uint8, uint16, int16,
 //          int64);

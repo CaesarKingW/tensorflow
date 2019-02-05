@@ -20,7 +20,7 @@ limitations under the License.
 namespace tensorflow {
 namespace functor {
 DEFINE_BINARY1(equal_to, float);
-DEFINE_APPROXIMATE_EQUAL1(float);
+//DEFINE_APPROXIMATE_EQUAL1(float);
 }  // namespace functor
 }  // namespace tensorflow
 

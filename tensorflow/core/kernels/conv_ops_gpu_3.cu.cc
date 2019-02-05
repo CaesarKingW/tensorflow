@@ -22,7 +22,7 @@ limitations under the License.
 #include <limits>
 #include <utility>
 
-//#include "cuda/include/cuda.h"
+#include "cocl/cuda.h"
 //#include "cuda.h"
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/kernels/conv_2d.h"

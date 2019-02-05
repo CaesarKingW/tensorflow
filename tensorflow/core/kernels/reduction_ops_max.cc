@@ -33,7 +33,7 @@ namespace tensorflow {
 TF_CALL_REAL_NUMBER_TYPES(REGISTER_CPU_KERNELS);
 #undef REGISTER_CPU_KERNELS
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #define REGISTER_GPU_KERNELS(type)                                             \
   REGISTER_KERNEL_BUILDER(                                                     \
@@ -78,7 +78,7 @@ REGISTER_GPU_KERNELS(float);
 
 #undef REGISTER_GPU_KERNELS
 
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 #define REGISTER_SYCL_KERNELS(type)                                        \
