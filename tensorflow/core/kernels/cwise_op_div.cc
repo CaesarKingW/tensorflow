@@ -43,7 +43,7 @@ REGISTER_KERNEL_BUILDER(Name("Div")
                             .HostMemory("z")
                             .TypeConstraint<int32>("T"),
                         BinaryOp<CPUDevice, functor::safe_div<int32>>);
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER2(BinaryOp, SYCL, "Div", functor::div, float, double);
