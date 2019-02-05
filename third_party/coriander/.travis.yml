@@ -1,0 +1,67 @@
+language: objective-c
+matrix:
+  include:
+    - env: OSX=10.11
+      os: osx
+      osx_image: osx10.11
+      rvm: system
+
+before_install:
+  - if [ -f ".git/shallow" ]; then travis_retry git fetch --unshallow; fi
+  - BASEDIR=$(pwd)
+  - echo BASEDIR ${BASEDIR}
+  - mkdir soft
+  - cd soft
+  - CLANG_VERSION=3.8.0
+  - wget http://llvm.org/releases/${CLANG_VERSION}/clang+llvm-${CLANG_VERSION}-x86_64-apple-darwin.tar.xz
+  - tar -xf clang+llvm-${CLANG_VERSION}-x86_64-apple-darwin.tar.xz
+  - ls
+  - export CLANG_HOME=${PWD}/clang+llvm-${CLANG_VERSION}-x86_64-apple-darwin
+  - ${CLANG_HOME}/bin/clang++ -### -c ${BASEDIR}/test//cocl/cuda_sample.cu
+  - cd ${BASEDIR}
+  - mkdir build
+  - cd build
+  - echo CLANG_HOME ${CLANG_HOME}
+  - cmake .. -DCLANG_HOME=${CLANG_HOME} -DBUILD_TESTS=ON -DTESTS_DUMP_CL=ON
+  - make -j 8
+  - make install
+  - echo ====== python, for running python-based unit tests ==============
+  - echo -------- virtualenv ----------
+  - cd ${BASEDIR}
+  - wget https://pypi.python.org/packages/source/v/virtualenv/virtualenv-14.0.6.tar.gz
+  - tar -xf virtualenv-14.0.6.tar.gz
+  - echo -------- python 3.5 ----------
+  - cd ${BASEDIR}
+  - wget https://www.python.org/ftp/python/3.5.2/python-3.5.2-macosx10.6.pkg
+  - sudo installer -pkg python-3.5.2-macosx10.6.pkg -target /
+  - python3 -V
+  - ${BASEDIR}/virtualenv-14.0.6/virtualenv.py -p python3 ~/env35
+  - source ~/env35/bin/activate
+  - pip install -U pip
+  - pip install -U setuptools
+  - pip install wheel
+  - pip install numpy
+  - pip install -r ${BASEDIR}/test/requirements.txt
+  - python -c 'import numpy'
+
+script:
+  - cd ${BASEDIR}/build
+  - COCL_DEVICES_ALL=1 ./cocl_unittests tests=-test_dnn*
+  - export COCL_DEVICES_ALL=1
+  - OFFSET_32BIT=1 make run-tests-travis
+  - mkdir ${BASEDIR}/foo
+  - cd ${BASEDIR}/foo
+  - cp ${BASEDIR}/test/cocl/cuda_sample.cu .
+  - CLANG_HOME=${CLANG_HOME} cocl cuda_sample.cu
+  - COCL_DEVICES_ALL=1 ./cuda_sample
+  - pwd
+  - ls -lh
+  - echo ======== py.test tests ==============
+  - cd ${BASEDIR}
+  - source ~/env35/bin/activate
+  - COCL_DEVICES_ALL=1 CLANG_HOME=${CLANG_HOME} OFFSET_32BIT=1 py.test -v
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always

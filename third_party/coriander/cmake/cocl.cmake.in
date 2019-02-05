@@ -1,0 +1,6 @@
+set(CLANG_HOME @CLANG_HOME@)
+# set(COCL_HOME @THIS_COCL_HOME@)
+set(COCL_PATH @THIS_COCL_PATH@)
+set(COCL_CMAKE_DIR @THIS_CMAKE_DIR@)
+
+include(${COCL_CMAKE_DIR}/cocl_impl.cmake)

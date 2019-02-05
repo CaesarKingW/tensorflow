@@ -1,0 +1,134 @@
+# Older News
+
+- May 28:
+  - revamped how we choose the type of buffer offsets passed into the kernels:
+    - it's always done at runtime now, never at compile time
+    - when you run an already built app, simply set the environment variable `COCL_OFFSETS_32BIT` to the string `1` to use 32-bit offsets
+    - otherwise it will default to 64-bit offsets (means, can access more memory)
+    - basically, unless you're using beignet, you can ignore this, and stop having to think about the 32-bit offsets variables any more :-)
+  - if you build with `BUILD_TESTS` set to `OFF`, you can still build the tests, eg by doing `make cocl_unittests`, and you can still run them eg by doing `make run-tests`: just, no longer builds them by default, when you do `make`
+- May 27:
+  - updated to LLVM 4.0. Thank you to @iame6162013 for inspiring me to do this
+  - Tensorflow `random_op_gpu.cc` compiles and runs ok now :-). There were a few hoops to jump through, https://github.com/hughperkins/coriander/issues/24
+- May 20:
+  - renamed to Coriander
+- May 18:
+  - Presented Coriander at this year's [IWOCL](http://iwocl.org) :-)  Full IWOCL program [here](http://www.iwocl.org/iwocl-2017/conference-program/), and there is a link to my own slides
+- May 5:
+  - Eigen unit tests at https://bitbucket.org/hughperkins/eigen/src/75842846799e15f1c26ef6885565d64c3d0a67b2/unsupported/test/Coriander/?at=eigen-cl pass on Mac Pro 4th Generation with both:
+    - Intel HD Graphics 530, and
+    - Radeon Pro 450 (using env var `CL_GPUOFFSET=1` to select)
+  - I suspect this may have broken some other stuff, since one of the unit tests fails now, but I think it's a gentle step forward
+- May 1:
+  - dnn tests pass on Radeon Pro 450, on Mac Sierra now
+  - fix crash bugs in pooling forward/backward, on Mac Sierra
+  - thanks to my employer [ASAPP](http://www.asapp.com/) giving me use of a nice Mac Book Pro 4th Generation, with Radeon Pro 450, unit tests now pass on said hardware :-)
+- April 29:
+  - Updated to latest EasyCL. This lets you use environment variable `CL_GPUOFFSET` to choose different gpus, eg set to `1` to use second gpu, to `2` to use third gpu, etc
+- April 15:
+  - added max pooling
+  - added ReLU, sigmoid and tanh activations
+  - added softmax forward
+  - now possible by and large to compile Tal Ben-Nun's [cudnn-training](https://github.com/tbennun/cudnn-training).  It needs some additions to the CMakeLists.txt, see my fork at https://github.com/hughperkins/cudnn-training , [differences here](https://github.com/tbennun/cudnn-training/compare/master...hughperkins:opencl)
+- April 14:
+  - added backwards implementation for convolution, including data, filters, and bias
+- April 13:
+  - added CLBlast wrappers for: sgemv, sscal, saxpy
+- April 4:
+  - merged in current `dnn` branch, which provides forward convolutional implementation for cudnn API, using `im2col` over Cedric Nugteren's [CLBlast](https://github.com/cnugteren/CLBlast)
+  - Coriander got accepted for a technical presentation at this year's [IWOCL](https://iwocl.org) conference :-)  Conference sessions here: [IWOCL 2017 Conference program](www.iwocl.org/iwocl-2017/conference-program/)
+- Nov 25:
+  - created release 4.0.4:
+    - all current Eigen tests, https://bitbucket.org/hughperkins/eigen/src/eigen-cl/unsupported/test/Coriander/?at=eigen-cl , pass for me currently, using this release, on both beignet 1.2.1, on hd5500, and on NVIDIA 940M, using driver 367.57
+    - fixes some issues with walk-dependency order during cl walk/generation
+    - fixed an issue with un-initialized pointers, in structs passed as kernel parameters, into GPU kernels
+- Nov 24:
+  - merge from branch clwriter:
+    - lots of refactorization under-the-hood
+    - can handle determining the address-space of functions returning pointers
+    - opencl generation is at runtime now => facilitates determining address-space; and counter-intuitively is actually faster, because less OpenCL to compile by the GPU driver
+- Nov 18:
+  - Mac build working :-)  https://travis-ci.org/hughperkins/Coriander/builds/176997220#L1356
+- Nov 17:
+  - merged `runtime-compile` branch into `master` branch.  This brings a few changes:
+    - opencl generation is now at runtime, rather than at compile time
+      - this lets us build only the one specific kernel we need
+      - means more information is available at generation time, facilitating the generation process
+    - build on Mac OS X is more or less working, eg https://travis-ci.org/hughperkins/Coriander/builds/176580716
+    - code radically refactorized underneath
+    - remove `--run_branch_transforms`, `--branches_as_switch`, for now
+- Nov 8:
+  - ~~exposed generation options as `cocl` options, eg `--run_branching_transforms`, `--branches_as_switch`, and the `--devicell-opt [opt]` options~~
+- Nov 6:
+  - created dockerfiles for Beignet and NVIDIA [docker](docker)
+- Nov 5:
+  - switched from `Makefile` to `CMakeLists.txt` => build/install instructions have changed, see above
+  - added a `cmake` file, so you can easily add `cocl` to your cmakelists file, eg see https://bitbucket.org/hughperkins/eigen/src/d84b9f44f924e36a8527e66a46a189395f046d21/unsupported/test/Coriander/CMakeLists.txt?at=eigen-cl&fileviewer=file-view-default for an example
+- Nov 4:
+  - merged in changes that remove `label`s and gotos, and replace them with `if`s, `while`s, `for`s.  This is a bit flaky/beta/duct-tape, but the unit tests do all pass...
+- Nov 1:
+  - turned on rpath, switched from static to shared compilation
+- Oct 29:
+  - negative infinity float constants handled correctly now (pre-requisite for `reduce_min` working in tensorflow)
+  - properties now return correct device name, total memory, and a few other device parameters
+  - added callbacks
+  - remember to cache the kernels between calls :-P  (this should make things run quite a lot faster now...)
+- Oct 28:
+  - denormalized generated OpenCL out of SSA form, to make it more human-readable
+  - added support to pass null pointers into kernels
+- Oct 26:
+  - fixed a bug where BLAS results were empty on HD5500, using beignet 1.2
+  - added `__shfl_down` shim
+  - moved Eigen tests into a new Eigen fork, https://bitbucket.org/hughperkins/eigen/commits/branch/eigen-cl
+- Oct 25:
+  - BLAS wrapper handles memory offsets correctly now
+- Oct 24:
+  - fixed `pow`, `min`, `max` (beta)
+- Oct 23:
+  - fixed `float4`s.  This is a critical bug-fix, without which Eigen componentwise works less well in Tensorflow :-P
+  - added BLAS, using Cedric Nugteren's [CLBlast](https://github.com/CNugteren/CLBlast))
+- Oct 22:
+  - arrays of structs can be passed to kernels again, as long as they contain no pointers
+    - (structs containing pointers can be passed only by-value)
+  - possible to call kernels with offsets added now, as in eg [test/cocl/offsetkernelargs.cu](test/cocl/offsetkernelargs.cu)
+- Oct 20:
+  - fix bug where `threadIdx.x` was being incorrectly written as `get_global_id` instead of `get_local_id` ...
+     - magically, the `test_cuda_elementwise` kernel works much better now :-)
+- Oct 18:
+  - installs to `/usr/local` now
+  - `libcocl.a` contains `libEasyCL.a` now, no need for `libEasyCL.so` at runtime
+  - fixed bug with linking multiple compiled `.cu` files causing error about 'multiple definitions of __opencl_source'
+- Oct 16:
+  - added streams, including kernel launch on non-default stream
+  - removed pinned memory: `cuMemHostAlloc` now just calls `malloc`, see [design.md](doc/design.md) for analysis and thoughts on this.  Let me know if you have any ideas (eg via an issue).
+  - added ability to copy to/from device memory, with an offset added
+- Oct 15:
+  - fixed critical bug where `return;` wasnt being written out.  Which didnt matter when that was at the end of a kernel.  But mattered more when that was the only exit condition for a kernel :-P
+  - added event handling
+  - ~~added pinned memory handling~~
+  - added a bunch of api call implementations for getting information about the driver (mostly stubbed out for now...)
+- Oct 10:
+  - [test/eigen/test_cuda_elementwise_small.cu](https://github.com/hughperkins/Coriander/blob/a8f6aa55eb678e534cc7d17a3db26c6b8762d683/test/eigen/test_cuda_elementwise_small.cu) builds and runs ok now
+- Oct 8:
+  - [https://github.com/tensorflow/tensorflow/blob/r0.10/tensorflow/core/kernels/cwise_op_gpu_add.cu.cc](https://github.com/tensorflow/tensorflow/blob/r0.10/tensorflow/core/kernels/cwise_op_gpu_add.cu.cc) compiles completely into compileable OpenCL now [https://github.com/hughperkins/Coriander/blob/d491aca1b5123781ac59486d38b09fbecd049f45/tensorflow/generated/cwise_op_gpu_add-deviceside.cl](https://github.com/hughperkins/Coriander/blob/d491aca1b5123781ac59486d38b09fbecd049f45/tensorflow/generated/cwise_op_gpu_add-deviceside.cl)
+  - implemented `cudaMalloc`, `cudaMemcpy`, `cudaFree` (using opencl)
+  - hostside object now contains generated OpenCL sourcecode
+- Oct 5
+  - fix float constants to correctly have `.0f` at the end
+  - added `extractvalue`
+  - conversion of [https://github.com/tensorflow/tensorflow/blob/r0.10/tensorflow/core/kernels/cwise_op_gpu_add.cu.cc](https://github.com/tensorflow/tensorflow/blob/r0.10/tensorflow/core/kernels/cwise_op_gpu_add.cu.cc) to OpenCL runs to completion now, though the OpenCL generated is not yet compileable
+- Oct 4:
+  - added `llvm.memcpy`
+  - added `insertvalue`
+  - added `dumpinttoptr`, `trunc`, `srem` (beta)
+- Oct 3
+  - added `float4` (beta)
+  - added `local` memory (beta)
+- Oct 2:
+  - added structs
+- Oct 1:
+  - first working end-to-end kernel launch, using both host-side and device-side code :-)
+- Sept 30:
+  - added initial unit tests, that use pyopencl to compile the generated OpenCL code, and run tests against it
+- Sept 27:
+  - first created
