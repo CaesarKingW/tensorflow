@@ -1,0 +1,5 @@
+numpy
+pytest
+pep8
+pytest-pep8
+wheel

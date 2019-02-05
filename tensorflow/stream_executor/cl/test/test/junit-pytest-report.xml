@@ -1,0 +1,1664 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skips="0" tests="4" time="2.701"><testcase classname="" file="tensorflow/stream_executor/cl/test/test_softmax.py" line="-1" name="tensorflow.stream_executor.cl.test.test_softmax" time="0.014150619506835938"></testcase><testcase classname="tensorflow.stream_executor.cl.test.test_softmax" file="tensorflow/stream_executor/cl/test/test_softmax.py" line="14" name="test_softmax[size0]" time="0.7954850196838379"><system-out>size (1, 3)
+OpenCL platform: NVIDIA CUDA
+OpenCL device: GeForce GTX 1050
+cl_driver DeviceAllocate 314310656
+a [[3.73177733 7.42474599 7.95833692]]
+expected [[0.00912033 0.36630815 0.62457152]]
+gpu [[0.00912033 0.36630815 0.6245715 ]]
+diff 1.7372258742653912e-08
+</system-out><system-err>I tensorflow/core/common_runtime/session_factory.cc:79] SessionFactory type GRPC_SESSION does not accept target: 
+I tensorflow/core/common_runtime/session_factory.cc:75] SessionFactory type DIRECT_SESSION accepts target: 
+I tensorflow/core/common_runtime/local_device.cc:41] Local device intra op parallelism threads: 8
+I tensorflow/stream_executor/cl/cl_driver.cc:612] created context 0x562e1033f0b8 for this thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:989] Found device 0 with properties: 
+name: GeForce GTX 1050
+major: -1 minor: -1 memoryClockRate (GHz) 1518
+pciBusID 0000.0000
+Total memory: 1.95GiB
+Free memory: 499.75MiB
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:877] cannot enable peer access from device ordinal 0 to device ordinal 0
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:1011] DMA: 0 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:1021] 0:   N 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:1083] Creating TensorFlow device (/gpu:0) -&gt; (device: 0, name: GeForce GTX 1050, pci bus id: 0000.0000)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:722] GPUDevice id 0 on bus 0 numa: 0 pci: 0000.0000
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 256B
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 512B
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 1.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 2.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 4.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 8.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 16.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 32.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 64.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 128.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 256.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 512.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 1.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 2.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 4.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 8.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 16.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 32.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 64.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 128.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 256.00MiB
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114ef850
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114ef850
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream ��N#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:283] Created stream[0] = 0x562e114ef850
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114f01d0
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114f01d0
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream �#x02O#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:287] Created host_to_device_stream[0] = 0x562e114f01d0
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114f0e00
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114f0e00
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream  #x0FO#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:292] Created device_to_host_stream[0] = 0x562e114f0e00
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114f1990
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114f1990
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream �#x1AO#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:297] Created device_to_device_stream[0] = 0x562e114f1990
+I tensorflow/stream_executor/cl/cl_driver.cc:1014] allocated 0x80 for context 0x562e10f3bd40 of 314310656 bytes
+I tensorflow/stream_executor/stream_executor_pimpl.cc:414] Called StreamExecutor::Allocate(size=314310656) returns 0x80
+I tensorflow/core/common_runtime/bfc_allocator.cc:133] Extending allocation by 299.75MiB bytes.
+I tensorflow/core/common_runtime/bfc_allocator.cc:137] Total allocated bytes: 299.75MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:140] Allocated memory at 0x80 to 0x12bc0080
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/stream_executor/stream_executor_pimpl.cc:470] Called StreamExecutor::SynchronousMemZero(location=0x7ffc6ce49750, size=1028)
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/direct_session.cc:78] Direct session inter op parallelism threads: 8
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping _SOURCE to 0
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping _SINK to 1
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping a to 2
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping out to 3
+I tensorflow/core/graph/costmodel.cc:372] Node 2: a type_string: Placeholder
+I tensorflow/core/graph/costmodel.cc:372] Node 3: out type_string: Softmax
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: -3 operation: &quot;TF_AllocateTensor&quot; num_bytes: 12 ptr: 94755833857888 allocation_id: 1 allocator_name: &quot;cpu&quot; }
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:289] BuildGraph
+I tensorflow/core/graph/subgraph.cc:185] Found fetch node for out:0
+I tensorflow/core/graph/subgraph.cc:216] Created fetch node: _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;out:0&quot;](out)
+I tensorflow/core/graph/algorithm.cc:119] Reverse reach init: _send_out_0
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : _send_out_0 from out
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : out from _recv_a_0
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : _recv_a_0 from _SOURCE
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/graph/graph_partition.cc:1146] Added send/recv: controls=0, data=2
+I tensorflow/core/common_runtime/direct_session.cc:1072] Created node {
+  name: &quot;_recv_a_0/_0&quot;
+  op: &quot;_Send&quot;
+  input: &quot;_recv_a_0&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_6__recv_a_0&quot;
+    }
+  }
+}
+node {
+  name: &quot;_recv_a_0&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 4265567332455477355
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;a:0&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;_send_out_0&quot;
+  op: &quot;_Send&quot;
+  input: &quot;out/_3&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 4265567332455477355
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;out:0&quot;
+    }
+  }
+}
+node {
+  name: &quot;out/_3&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_3_out&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+versions {
+  producer: 15
+}
+ for /job:localhost/replica:0/task:0/cpu:0
+I tensorflow/core/common_runtime/direct_session.cc:1072] Created node {
+  name: &quot;out&quot;
+  op: &quot;Softmax&quot;
+  input: &quot;_recv_a_0/_1&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;_recv_a_0/_1&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_6__recv_a_0&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;out/_2&quot;
+  op: &quot;_Send&quot;
+  input: &quot;out&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_3_out&quot;
+    }
+  }
+}
+versions {
+  producer: 15
+}
+ for /job:localhost/replica:0/task:0/gpu:0
+I tensorflow/core/common_runtime/function.cc:435] Graph Initial #nodes 5 #edges 5
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:648] Removing list array converter
+I tensorflow/core/common_runtime/function.cc:435] Graph Before #nodes 5 #edges 5
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/constant_folding.cc:265] No constant foldable nodes found
+I tensorflow/core/common_runtime/function.cc:435] Graph ReCopy #nodes 5 #edges 6
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 2 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 4 0 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 2:0 -&gt; 3:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 3:0 -&gt; 4:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 2 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 4 0 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 2:0 -&gt; 3:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 3:0 -&gt; 4:0: 0 -&gt; 0
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SOURCE = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SINK = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out = Softmax[T=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](_recv_a_0/_1)
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out/_2 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](out)
+I tensorflow/core/common_runtime/executor.cc:416] default alloc case local type GPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:442] default alloc case local type GPU remote type CPU
+I tensorflow/core/common_runtime/function.cc:435] Graph Initial #nodes 6 #edges 7
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:648] Removing list array converter
+I tensorflow/core/common_runtime/function.cc:435] Graph Before #nodes 6 #edges 7
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/constant_folding.cc:265] No constant foldable nodes found
+I tensorflow/core/common_runtime/function.cc:435] Graph ReCopy #nodes 6 #edges 8
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SOURCE = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SINK = NoOp[]()
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;out:0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](out/_3)
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0/_0 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](_recv_a_0)
+I tensorflow/core/common_runtime/executor.cc:414] node out/_3 is the sink of a gpu-&gt;cpu copy
+I tensorflow/core/common_runtime/executor.cc:442] default alloc case local type CPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:416] default alloc case local type CPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:440] node _recv_a_0 is the source of a cpu-&gt;gpu copy
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e1158f090 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11590990 13282078931989191257 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogStep { step_id: 1 handle: &quot;a:0-&gt;out:0//0;0&quot; }
+I tensorflow/core/common_runtime/executor.cc:912] Create frame: _root
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:345] FillContextMap
+I tensorflow/core/common_runtime/executor.cc:912] Create frame: _root
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 0 step 1 _SOURCE = NoOp[]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 0 step 1 _SOURCE = NoOp[]()
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/cpu:0 nt 0x7f225c000a00
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 4 step 1 _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 2 step 1 out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e1158f090 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e1158f090 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11590990 9069928423257839967 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute _SOURCE op NoOp on GPU0 stream[0]
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11590990 13282078931989191257 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274000a00
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e115918b0 Async kernel done: _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 2 step 1 _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:492] GpuDevice::ComputeAsync _recv_a_0/_1 op _Recv on GPU0 stream[0]
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e1158f090 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 1 kernel_name: &quot;_recv_a_0&quot; tensor { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 3 } } allocation_description { requested_bytes: 12 allocator_name: &quot;cpu&quot; } } }
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11590990 316195610059898222 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 5 step 1 _recv_a_0/_0 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](_recv_a_0)
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e1158f090 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11590990 316195610059898222 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: -6 kernel_name: &quot;Unknown&quot; tensor { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 3 } } allocation_description { requested_bytes: 12 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 2 has_single_reference: true ptr: 1408 } } }
+I tensorflow/core/common_runtime/copy_tensor.cc:56] Copy edge_6__recv_a_0
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:308] CopyCPUTensorToGPU
+I tensorflow/stream_executor/stream.cc:1331] Called Stream::ThenWaitFor(other=0x562e114ef850) stream=0x562e114f01d0
+I tensorflow/stream_executor/stream.cc:3783] Called Stream::ThenMemcpy(gpu_dst=0x580, host_src=0x562e0fd14760, size=12) stream=0x562e114f01d0
+I tensorflow/stream_executor/cl/cl_driver.cc:1329] successfully enqueued async memcpy h2d of 12 bytes on stream �#x02O#x11.V
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:174] QueueInUse  free_events_ 0 used_events_ 0
+I tensorflow/stream_executor/stream.cc:268] Called Stream::ThenRecordEvent(event=0x7f2258001a80) stream=0x562e114f01d0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 1
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e115914c0 Async kernel done: _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 1 kernel_name: &quot;_recv_a_0/_1&quot; tensor { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 3 } } allocation_description { requested_bytes: 12 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 2 ptr: 1408 } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 3 step 1 out = Softmax[T=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](_recv_a_0/_1)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute out op Softmax on GPU0 stream[0]
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: 1 kernel_name: &quot;out&quot; tensor { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 3 } } allocation_description { requested_bytes: 12 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 3 has_single_reference: true ptr: 1664 } } }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: 1 operation: &quot;out/EigenAllocator&quot; num_bytes: 4 ptr: 1920 allocation_id: 4 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 1 operation: &quot;out/EigenAllocator&quot; allocation_id: 4 allocator_name: &quot;gpu_bfc&quot; deferred: true }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: 1 operation: &quot;out/EigenAllocator&quot; num_bytes: 4 ptr: 2176 allocation_id: 5 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 1 operation: &quot;out/EigenAllocator&quot; allocation_id: 4 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 1 operation: &quot;out/EigenAllocator&quot; allocation_id: 5 allocator_name: &quot;gpu_bfc&quot; deferred: true }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 1 kernel_name: &quot;out&quot; tensor { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 3 } } allocation_description { requested_bytes: 12 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 3 has_single_reference: true ptr: 1664 } } }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 1 operation: &quot;out/EigenAllocator&quot; allocation_id: 5 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 2 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274000a00
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 4 step 1 out/_2 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](out)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute out/_2 op _Send on GPU0 stream[0]
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e1158f090 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11590990 9069928423257839967 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 256B
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 512B
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 1.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 2.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 4.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 8.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 16.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 32.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 64.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 128.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 256.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 512.0KiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 1.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 2.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 4.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 8.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 16.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 32.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 64.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 128.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:56] Creating bin of max chunk size 256.00MiB
+I tensorflow/stream_executor/stream_executor_pimpl.cc:428] Called StreamExecutor::HostMemoryAllocate(size=1048576) returns 0x7f22740c05b0
+I tensorflow/core/common_runtime/bfc_allocator.cc:133] Extending allocation by 1.00MiB bytes.
+I tensorflow/core/common_runtime/bfc_allocator.cc:137] Total allocated bytes: 1.00MiB
+I tensorflow/core/common_runtime/bfc_allocator.cc:140] Allocated memory at 0x7f22740c05b0 to 0x7f22741c05b0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: -6 kernel_name: &quot;Unknown&quot; tensor { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 3 } } allocation_description { requested_bytes: 12 allocated_bytes: 256 allocator_name: &quot;cuda_host_bfc&quot; allocation_id: 1 has_single_reference: true ptr: 139785952560560 } } }
+I tensorflow/core/common_runtime/copy_tensor.cc:56] Copy edge_3_out
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:263] CopyGPUTensorToCPU
+I tensorflow/stream_executor/stream.cc:1331] Called Stream::ThenWaitFor(other=0x562e114ef850) stream=0x562e114f0e00
+I tensorflow/stream_executor/stream.cc:3770] Called Stream::ThenMemcpy(host_dst=0x7f22740c05b0, gpu_src=0x680, size=12) stream=0x562e114f0e00
+I tensorflow/stream_executor/cl/cl_driver.cc:1308] successfully enqueued async memcpy d2h of 12 bytes from 0x680 to 0x7f22740c05b0 on stream  #x0FO#x11.V
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:174] QueueInUse  free_events_ 1 used_events_ 0
+I tensorflow/stream_executor/stream.cc:268] Called Stream::ThenRecordEvent(event=0x7f2258001a80) stream=0x562e114f0e00
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 1
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 1 step 1 _SINK = NoOp[]()
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute _SINK op NoOp on GPU0 stream[0]
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:363] GPUUtil::SyncAll
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 3 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/stream_executor/stream_executor_pimpl.cc:457] Called StreamExecutor::SynchronizeAllActivity()
+I tensorflow/core/common_runtime/executor.cc:1971] Delete iteration [_root, 0].
+I tensorflow/core/common_runtime/executor.cc:2029] Delete frame _root
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274000a00
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e115918b0 Async kernel done: out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 1 kernel_name: &quot;out/_3&quot; tensor { dtype: DT_FLOAT shape { dim { size: 1 } dim { size: 3 } } allocation_description { requested_bytes: 12 allocated_bytes: 256 allocator_name: &quot;cuda_host_bfc&quot; allocation_id: 1 ptr: 139785952560560 } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 3 step 1 _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=4265567332455477355, tensor_name=&quot;out:0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](out/_3)
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e1158f090 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11590990 537293226107914149 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 1 step 1 _SINK = NoOp[]()
+I tensorflow/core/common_runtime/executor.cc:1971] Delete iteration [_root, 0].
+I tensorflow/core/common_runtime/executor.cc:2029] Delete frame _root
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/cpu:0 nt 0x7f2274000a00
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e1158f090 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11590990 537293226107914149 /job:localhost/replica:0/task:0/cpu:0;3b3256e39084f06b;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: -3 operation: &quot;TensorFlow C Api&quot; allocation_id: 1 allocator_name: &quot;cpu&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 1 allocator_name: &quot;cuda_host_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114ef850
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream ��N#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114f01d0
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream �#x02O#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114f0e00
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream #x10#x0FO#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114f1990
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream �#x1AO#x11.V for context 0x562e10f3bd40
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+</system-err></testcase><testcase classname="tensorflow.stream_executor.cl.test.test_softmax" file="tensorflow/stream_executor/cl/test/test_softmax.py" line="14" name="test_softmax[size1]" time="0.02680349349975586"><system-out>size (2, 3)
+a [[3.73177733 7.42474599 7.95833692]
+ [5.03816708 3.52477927 6.19204186]]
+expected [[0.00912033 0.36630815 0.62457152]
+ [0.22775843 0.05014394 0.72209762]]
+gpu [[0.00912033 0.36630815 0.6245715 ]
+ [0.2277584  0.05014395 0.72209764]]
+diff 3.992061869961816e-08
+</system-out><system-err>I tensorflow/core/common_runtime/session_factory.cc:79] SessionFactory type GRPC_SESSION does not accept target: 
+I tensorflow/core/common_runtime/session_factory.cc:75] SessionFactory type DIRECT_SESSION accepts target: 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:1083] Creating TensorFlow device (/gpu:0) -&gt; (device: 0, name: GeForce GTX 1050, pci bus id: 0000.0000)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:722] GPUDevice id 0 on bus 0 numa: 0 pci: 0000.0000
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114f0de0
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114f0de0
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream #x10�X#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:283] Created stream[0] = 0x562e114f0de0
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114f1a90
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114f1a90
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream  �N#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:287] Created host_to_device_stream[0] = 0x562e114f1a90
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e1157c980
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e1157c980
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream P�W#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:292] Created device_to_host_stream[0] = 0x562e1157c980
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e1157db80
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e1157db80
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream  Ƿ#x10.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:297] Created device_to_device_stream[0] = 0x562e1157db80
+I tensorflow/stream_executor/stream_executor_pimpl.cc:470] Called StreamExecutor::SynchronousMemZero(location=0x7ffc6ce49750, size=1028)
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping _SOURCE to 0
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping _SINK to 1
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping a to 2
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping out to 3
+I tensorflow/core/graph/costmodel.cc:372] Node 2: a type_string: Placeholder
+I tensorflow/core/graph/costmodel.cc:372] Node 3: out type_string: Softmax
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: -3 operation: &quot;TF_AllocateTensor&quot; num_bytes: 24 ptr: 94755858871632 allocation_id: 2 allocator_name: &quot;cpu&quot; }
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:289] BuildGraph
+I tensorflow/core/graph/subgraph.cc:185] Found fetch node for out:0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/graph/subgraph.cc:216] Created fetch node: _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;out:0&quot;](out)
+I tensorflow/core/graph/algorithm.cc:119] Reverse reach init: _send_out_0
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : _send_out_0 from out
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : out from _recv_a_0
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : _recv_a_0 from _SOURCE
+I tensorflow/core/graph/graph_partition.cc:1146] Added send/recv: controls=0, data=2
+I tensorflow/core/common_runtime/direct_session.cc:1072] Created node {
+  name: &quot;_recv_a_0/_0&quot;
+  op: &quot;_Send&quot;
+  input: &quot;_recv_a_0&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_6__recv_a_0&quot;
+    }
+  }
+}
+node {
+  name: &quot;_recv_a_0&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 5077837610682184192
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;a:0&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;_send_out_0&quot;
+  op: &quot;_Send&quot;
+  input: &quot;out/_3&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 5077837610682184192
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;out:0&quot;
+    }
+  }
+}
+node {
+  name: &quot;out/_3&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_3_out&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+versions {
+  producer: 15
+}
+ for /job:localhost/replica:0/task:0/cpu:0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/direct_session.cc:1072] Created node {
+  name: &quot;out&quot;
+  op: &quot;Softmax&quot;
+  input: &quot;_recv_a_0/_1&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;_recv_a_0/_1&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_6__recv_a_0&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;out/_2&quot;
+  op: &quot;_Send&quot;
+  input: &quot;out&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_3_out&quot;
+    }
+  }
+}
+versions {
+  producer: 15
+}
+ for /job:localhost/replica:0/task:0/gpu:0
+I tensorflow/core/common_runtime/function.cc:435] Graph Initial #nodes 5 #edges 5
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:648] Removing list array converter
+I tensorflow/core/common_runtime/function.cc:435] Graph Before #nodes 5 #edges 5
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/constant_folding.cc:265] No constant foldable nodes found
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/function.cc:435] Graph ReCopy #nodes 5 #edges 6
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 2 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 4 0 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 2:0 -&gt; 3:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 3:0 -&gt; 4:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 2 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 4 0 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 2:0 -&gt; 3:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 3:0 -&gt; 4:0: 0 -&gt; 0
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SOURCE = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SINK = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out = Softmax[T=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](_recv_a_0/_1)
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out/_2 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](out)
+I tensorflow/core/common_runtime/executor.cc:416] default alloc case local type GPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:442] default alloc case local type GPU remote type CPU
+I tensorflow/core/common_runtime/function.cc:435] Graph Initial #nodes 6 #edges 7
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:648] Removing list array converter
+I tensorflow/core/common_runtime/function.cc:435] Graph Before #nodes 6 #edges 7
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/constant_folding.cc:265] No constant foldable nodes found
+I tensorflow/core/common_runtime/function.cc:435] Graph ReCopy #nodes 6 #edges 8
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SOURCE = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SINK = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;out:0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](out/_3)
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0/_0 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](_recv_a_0)
+I tensorflow/core/common_runtime/executor.cc:414] node out/_3 is the sink of a gpu-&gt;cpu copy
+I tensorflow/core/common_runtime/executor.cc:442] default alloc case local type CPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:416] default alloc case local type CPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:440] node _recv_a_0 is the source of a cpu-&gt;gpu copy
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579870 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11595cf0 7651962053855339640 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogStep { step_id: 2 handle: &quot;a:0-&gt;out:0//0;0&quot; }
+I tensorflow/core/common_runtime/executor.cc:912] Create frame: _root
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:345] FillContextMap
+I tensorflow/core/common_runtime/executor.cc:912] Create frame: _root
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 0 step 2 _SOURCE = NoOp[]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 0 step 2 _SOURCE = NoOp[]()
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute _SOURCE op NoOp on GPU0 stream[0]
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/cpu:0 nt 0x7f2258000a00
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274000a00
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 4 step 2 _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 2 step 2 _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 2 step 2 out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579870 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:492] GpuDevice::ComputeAsync _recv_a_0/_1 op _Recv on GPU0 stream[0]
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11595cf0 7651962053855339640 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579870 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579870 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11595cf0 9069928423257839967 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11595cf0 316195610059898222 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e11596400 Async kernel done: _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 2 kernel_name: &quot;_recv_a_0&quot; tensor { dtype: DT_FLOAT shape { dim { size: 2 } dim { size: 3 } } allocation_description { requested_bytes: 24 allocator_name: &quot;cpu&quot; } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 5 step 2 _recv_a_0/_0 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](_recv_a_0)
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579870 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11595cf0 316195610059898222 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: -6 kernel_name: &quot;Unknown&quot; tensor { dtype: DT_FLOAT shape { dim { size: 2 } dim { size: 3 } } allocation_description { requested_bytes: 24 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 7 has_single_reference: true ptr: 2688 } } }
+I tensorflow/core/common_runtime/copy_tensor.cc:56] Copy edge_6__recv_a_0
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:308] CopyCPUTensorToGPU
+I tensorflow/stream_executor/stream.cc:1331] Called Stream::ThenWaitFor(other=0x562e114f0de0) stream=0x562e114f1a90
+I tensorflow/stream_executor/stream.cc:3783] Called Stream::ThenMemcpy(gpu_dst=0xa80, host_src=0x562e114ef550, size=24) stream=0x562e114f1a90
+I tensorflow/stream_executor/cl/cl_driver.cc:1329] successfully enqueued async memcpy h2d of 24 bytes on stream  �N#x11.V
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:174] QueueInUse  free_events_ 0 used_events_ 0
+I tensorflow/stream_executor/stream.cc:268] Called Stream::ThenRecordEvent(event=0x7f225c001b60) stream=0x562e114f1a90
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 1
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e11595f40 Async kernel done: _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 2 kernel_name: &quot;_recv_a_0/_1&quot; tensor { dtype: DT_FLOAT shape { dim { size: 2 } dim { size: 3 } } allocation_description { requested_bytes: 24 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 7 ptr: 2688 } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 3 step 2 out = Softmax[T=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](_recv_a_0/_1)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute out op Softmax on GPU0 stream[0]
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: 2 kernel_name: &quot;out&quot; tensor { dtype: DT_FLOAT shape { dim { size: 2 } dim { size: 3 } } allocation_description { requested_bytes: 24 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 8 has_single_reference: true ptr: 2944 } } }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: 2 operation: &quot;out/EigenAllocator&quot; num_bytes: 8 ptr: 3200 allocation_id: 9 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 2 operation: &quot;out/EigenAllocator&quot; allocation_id: 9 allocator_name: &quot;gpu_bfc&quot; deferred: true }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: 2 operation: &quot;out/EigenAllocator&quot; num_bytes: 8 ptr: 3456 allocation_id: 10 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 2 operation: &quot;out/EigenAllocator&quot; allocation_id: 9 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 2 operation: &quot;out/EigenAllocator&quot; allocation_id: 10 allocator_name: &quot;gpu_bfc&quot; deferred: true }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 2 kernel_name: &quot;out&quot; tensor { dtype: DT_FLOAT shape { dim { size: 2 } dim { size: 3 } } allocation_description { requested_bytes: 24 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 8 has_single_reference: true ptr: 2944 } } }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 2 operation: &quot;out/EigenAllocator&quot; allocation_id: 10 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 7 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274001200
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 4 step 2 out/_2 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](out)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute out/_2 op _Send on GPU0 stream[0]
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579870 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11595cf0 9069928423257839967 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: -6 kernel_name: &quot;Unknown&quot; tensor { dtype: DT_FLOAT shape { dim { size: 2 } dim { size: 3 } } allocation_description { requested_bytes: 24 allocated_bytes: 256 allocator_name: &quot;cuda_host_bfc&quot; allocation_id: 2 has_single_reference: true ptr: 139785952560560 } } }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/copy_tensor.cc:56] Copy edge_3_out
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:263] CopyGPUTensorToCPU
+I tensorflow/stream_executor/stream.cc:1331] Called Stream::ThenWaitFor(other=0x562e114f0de0) stream=0x562e1157c980
+I tensorflow/stream_executor/stream.cc:3770] Called Stream::ThenMemcpy(host_dst=0x7f22740c05b0, gpu_src=0xb80, size=24) stream=0x562e1157c980
+I tensorflow/stream_executor/cl/cl_driver.cc:1308] successfully enqueued async memcpy d2h of 24 bytes from 0xb80 to 0x7f22740c05b0 on stream P�W#x11.V
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:174] QueueInUse  free_events_ 1 used_events_ 0
+I tensorflow/stream_executor/stream.cc:268] Called Stream::ThenRecordEvent(event=0x7f225c001b60) stream=0x562e1157c980
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 1
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 1 step 2 _SINK = NoOp[]()
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute _SINK op NoOp on GPU0 stream[0]
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 8 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:363] GPUUtil::SyncAll
+I tensorflow/stream_executor/stream_executor_pimpl.cc:457] Called StreamExecutor::SynchronizeAllActivity()
+I tensorflow/core/common_runtime/executor.cc:1971] Delete iteration [_root, 0].
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e11596400 Async kernel done: out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/common_runtime/executor.cc:2029] Delete frame _root
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274016220
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 2 kernel_name: &quot;out/_3&quot; tensor { dtype: DT_FLOAT shape { dim { size: 2 } dim { size: 3 } } allocation_description { requested_bytes: 24 allocated_bytes: 256 allocator_name: &quot;cuda_host_bfc&quot; allocation_id: 2 ptr: 139785952560560 } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 3 step 2 _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=5077837610682184192, tensor_name=&quot;out:0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](out/_3)
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579870 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e11595cf0 1463561269388724113 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 1 step 2 _SINK = NoOp[]()
+I tensorflow/core/common_runtime/executor.cc:1971] Delete iteration [_root, 0].
+I tensorflow/core/common_runtime/executor.cc:2029] Delete frame _root
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/cpu:0 nt 0x7f225c000a00
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579870 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e11595cf0 1463561269388724113 /job:localhost/replica:0/task:0/cpu:0;46781a6743d47200;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: -3 operation: &quot;TensorFlow C Api&quot; allocation_id: 2 allocator_name: &quot;cpu&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 2 allocator_name: &quot;cuda_host_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114f0de0
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream  for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114f1a90
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream P#x1BO#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e1157c980
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream @�W#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e1157db80
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream #x10Ƿ#x10.V for context 0x562e10f3bd40
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+</system-err></testcase><testcase classname="tensorflow.stream_executor.cl.test.test_softmax" file="tensorflow/stream_executor/cl/test/test_softmax.py" line="14" name="test_softmax[size2]" time="0.02747344970703125"><system-out>size (3, 10)
+a [[3.73177733 7.42474599 7.95833692 5.03816708 3.52477927 6.19204186
+  1.17312221 3.83653235 5.67161289 6.47094234]
+ [6.91139785 3.43855263 6.0528498  9.46289893 6.4176017  3.35804135
+  8.35757443 8.42093419 5.21603764 5.21355172]
+ [4.29039137 2.35511385 3.47990208 4.5007884  3.49800956 7.09336978
+  6.7439021  7.94563092 7.35657358 4.32121489]]
+expected [[6.68993041e-03 2.68693716e-01 4.58134615e-01 2.47046929e-02
+  5.43905545e-03 7.83250913e-02 5.17859327e-04 7.42875660e-03
+  4.65459050e-02 1.03520378e-01]
+ [4.15659202e-02 1.28973321e-03 1.76146783e-02 5.33138735e-01
+  2.53678964e-02 1.18996524e-03 1.76524058e-01 1.88070510e-01
+  7.62872239e-03 7.60978155e-03]
+ [1.08030252e-02 1.55978609e-03 4.80346202e-03 1.33327477e-02
+  4.89123287e-03 1.78181841e-01 1.25629479e-01 4.17826284e-01
+  2.31830944e-01 1.11411975e-02]]
+gpu [[6.6899299e-03 2.6869375e-01 4.5813462e-01 2.4704693e-02 5.4390561e-03
+  7.8325100e-02 5.1785947e-04 7.4287588e-03 4.6545904e-02 1.0352040e-01]
+ [4.1565921e-02 1.2897335e-03 1.7614678e-02 5.3313887e-01 2.5367893e-02
+  1.1899652e-03 1.7652406e-01 1.8807042e-01 7.6287230e-03 7.6097795e-03]
+ [1.0803024e-02 1.5597861e-03 4.8034624e-03 1.3332745e-02 4.8912326e-03
+  1.7818186e-01 1.2562948e-01 4.1782629e-01 2.3183091e-01 1.1141193e-02]]
+diff 1.3661724185265456e-07
+</system-out><system-err>I tensorflow/core/common_runtime/session_factory.cc:79] SessionFactory type GRPC_SESSION does not accept target: 
+I tensorflow/core/common_runtime/session_factory.cc:75] SessionFactory type DIRECT_SESSION accepts target: 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:1083] Creating TensorFlow device (/gpu:0) -&gt; (device: 0, name: GeForce GTX 1050, pci bus id: 0000.0000)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:722] GPUDevice id 0 on bus 0 numa: 0 pci: 0000.0000
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114f0de0
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114f0de0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream �TW#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:283] Created stream[0] = 0x562e114f0de0
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e114ef260
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e114ef260
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream  �W#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:287] Created host_to_device_stream[0] = 0x562e114ef260
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e1157e180
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e1157e180
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream @�&apos;#x10.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:292] Created device_to_host_stream[0] = 0x562e1157e180
+I tensorflow/stream_executor/stream.cc:208] Called Stream::Stream(parent=0x562e1033f360) stream=0x562e1157db80
+I tensorflow/stream_executor/stream.cc:232] Called Stream::Init() stream=0x562e1157db80
+I tensorflow/stream_executor/cl/cl_driver.cc:976] successfully created stream p�W#x11.V for context 0x562e10f3bd40 on thread
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:297] Created device_to_device_stream[0] = 0x562e1157db80
+I tensorflow/stream_executor/stream_executor_pimpl.cc:470] Called StreamExecutor::SynchronousMemZero(location=0x7ffc6ce49750, size=1028)
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping _SOURCE to 0
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping _SINK to 1
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping a to 2
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:235] Mapping out to 3
+I tensorflow/core/graph/costmodel.cc:372] Node 2: a type_string: Placeholder
+I tensorflow/core/graph/costmodel.cc:372] Node 3: out type_string: Softmax
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: -3 operation: &quot;TF_AllocateTensor&quot; num_bytes: 120 ptr: 94755859575792 allocation_id: 3 allocator_name: &quot;cpu&quot; }
+I tensorflow/core/common_runtime/simple_graph_execution_state.cc:289] BuildGraph
+I tensorflow/core/graph/subgraph.cc:185] Found fetch node for out:0
+I tensorflow/core/graph/subgraph.cc:216] Created fetch node: _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;out:0&quot;](out)
+I tensorflow/core/graph/algorithm.cc:119] Reverse reach init: _send_out_0
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : _send_out_0 from out
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : out from _recv_a_0
+I tensorflow/core/graph/algorithm.cc:128] Reverse reach : _recv_a_0 from _SOURCE
+I tensorflow/core/graph/graph_partition.cc:1146] Added send/recv: controls=0, data=2
+I tensorflow/core/common_runtime/direct_session.cc:1072] Created node {
+  name: &quot;_recv_a_0/_0&quot;
+  op: &quot;_Send&quot;
+  input: &quot;_recv_a_0&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_6__recv_a_0&quot;
+    }
+  }
+}
+node {
+  name: &quot;_recv_a_0&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: -4284024401704883009
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;a:0&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;_send_out_0&quot;
+  op: &quot;_Send&quot;
+  input: &quot;out/_3&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: -4284024401704883009
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;out:0&quot;
+    }
+  }
+}
+node {
+  name: &quot;out/_3&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_3_out&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+versions {
+  producer: 15
+}
+ for /job:localhost/replica:0/task:0/cpu:0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/direct_session.cc:1072] Created node {
+  name: &quot;out&quot;
+  op: &quot;Softmax&quot;
+  input: &quot;_recv_a_0/_1&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;_recv_a_0/_1&quot;
+  op: &quot;_Recv&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_6__recv_a_0&quot;
+    }
+  }
+  attr {
+    key: &quot;tensor_type&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: &quot;out/_2&quot;
+  op: &quot;_Send&quot;
+  input: &quot;out&quot;
+  device: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+  attr {
+    key: &quot;T&quot;
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: &quot;client_terminated&quot;
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: &quot;recv_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/cpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device&quot;
+    value {
+      s: &quot;/job:localhost/replica:0/task:0/gpu:0&quot;
+    }
+  }
+  attr {
+    key: &quot;send_device_incarnation&quot;
+    value {
+      i: 1
+    }
+  }
+  attr {
+    key: &quot;tensor_name&quot;
+    value {
+      s: &quot;edge_3_out&quot;
+    }
+  }
+}
+versions {
+  producer: 15
+}
+ for /job:localhost/replica:0/task:0/gpu:0
+I tensorflow/core/common_runtime/function.cc:435] Graph Initial #nodes 5 #edges 5
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:648] Removing list array converter
+I tensorflow/core/common_runtime/function.cc:435] Graph Before #nodes 5 #edges 5
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/constant_folding.cc:265] No constant foldable nodes found
+I tensorflow/core/common_runtime/function.cc:435] Graph ReCopy #nodes 5 #edges 6
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = Softmax[T=float](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;](n3)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 2 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 4 0 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 2:0 -&gt; 3:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 3:0 -&gt; 4:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 2 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:71] out mvec 3 0 0
+I tensorflow/core/common_runtime/memory_types.cc:67] inp mvec 4 0 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 2:0 -&gt; 3:0: 0 -&gt; 0
+I tensorflow/core/common_runtime/memory_types.cc:83] 3:0 -&gt; 4:0: 0 -&gt; 0
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SOURCE = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SINK = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out = Softmax[T=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](_recv_a_0/_1)
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out/_2 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](out)
+I tensorflow/core/common_runtime/executor.cc:416] default alloc case local type GPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:442] default alloc case local type GPU remote type CPU
+I tensorflow/core/common_runtime/function.cc:435] Graph Initial #nodes 6 #edges 7
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:648] Removing list array converter
+I tensorflow/core/common_runtime/function.cc:435] Graph Before #nodes 6 #edges 7
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/constant_folding.cc:265] No constant foldable nodes found
+I tensorflow/core/common_runtime/function.cc:435] Graph ReCopy #nodes 6 #edges 8
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/common_runtime/function.cc:439] || () -&gt; () {
+I tensorflow/core/common_runtime/function.cc:439] ||   n2 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n4 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;a:0&quot;, tensor_type=float]()
+I tensorflow/core/common_runtime/function.cc:439] ||   n3 = _Send[T=float, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;out:0&quot;](n2)
+I tensorflow/core/common_runtime/function.cc:439] ||   n5 = _Send[T=float, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;](n4)
+I tensorflow/core/common_runtime/function.cc:439] || }
+I tensorflow/core/common_runtime/function.cc:439] || 
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SOURCE = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _SINK = NoOp[]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;out:0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](out/_3)
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/op_kernel.cc:845] Instantiating kernel for node: _recv_a_0/_0 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](_recv_a_0)
+I tensorflow/core/common_runtime/executor.cc:414] node out/_3 is the sink of a gpu-&gt;cpu copy
+I tensorflow/core/common_runtime/executor.cc:442] default alloc case local type CPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:416] default alloc case local type CPU remote type CPU
+I tensorflow/core/common_runtime/executor.cc:440] node _recv_a_0 is the source of a cpu-&gt;gpu copy
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579620 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e115b5780 15351175967252610779 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogStep { step_id: 3 handle: &quot;a:0-&gt;out:0//0;0&quot; }
+I tensorflow/core/common_runtime/executor.cc:912] Create frame: _root
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:345] FillContextMap
+I tensorflow/core/common_runtime/executor.cc:912] Create frame: _root
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 0 step 3 _SOURCE = NoOp[]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 0 step 3 _SOURCE = NoOp[]()
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute _SOURCE op NoOp on GPU0 stream[0]
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/cpu:0 nt 0x7f2258000a00
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f225c001430
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 4 step 3 _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 2 step 3 _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:492] GpuDevice::ComputeAsync _recv_a_0/_1 op _Recv on GPU0 stream[0]
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579620 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e115b5780 15351175967252610779 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;a:0;0:0
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 2 step 3 out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579620 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e115b5780 316195610059898222 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/kernels/sendrecv_ops.cc:106] Recv /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579620 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e115b5780 9069928423257839967 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e1157a470 Async kernel done: _recv_a_0 = _Recv[client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;a:0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 3 kernel_name: &quot;_recv_a_0&quot; tensor { dtype: DT_FLOAT shape { dim { size: 3 } dim { size: 10 } } allocation_description { requested_bytes: 120 allocator_name: &quot;cpu&quot; } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 5 step 3 _recv_a_0/_0 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](_recv_a_0)
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579620 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e115b5780 316195610059898222 /job:localhost/replica:0/task:0/cpu:0;0000000000000001;/job:localhost/replica:0/task:0/gpu:0;edge_6__recv_a_0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: -6 kernel_name: &quot;Unknown&quot; tensor { dtype: DT_FLOAT shape { dim { size: 3 } dim { size: 10 } } allocation_description { requested_bytes: 120 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 12 has_single_reference: true ptr: 3968 } } }
+I tensorflow/core/common_runtime/copy_tensor.cc:56] Copy edge_6__recv_a_0
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:308] CopyCPUTensorToGPU
+I tensorflow/stream_executor/stream.cc:1331] Called Stream::ThenWaitFor(other=0x562e114f0de0) stream=0x562e114ef260
+I tensorflow/stream_executor/stream.cc:3783] Called Stream::ThenMemcpy(gpu_dst=0xf80, host_src=0x562e1159b3f0, size=120) stream=0x562e114ef260
+I tensorflow/stream_executor/cl/cl_driver.cc:1329] successfully enqueued async memcpy h2d of 120 bytes on stream  �W#x11.V
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:174] QueueInUse  free_events_ 0 used_events_ 0
+I tensorflow/stream_executor/stream.cc:268] Called Stream::ThenRecordEvent(event=0x7f225c001360) stream=0x562e114ef260
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 1
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e11579f60 Async kernel done: _recv_a_0/_1 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_6__recv_a_0&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;]()
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 3 kernel_name: &quot;_recv_a_0/_1&quot; tensor { dtype: DT_FLOAT shape { dim { size: 3 } dim { size: 10 } } allocation_description { requested_bytes: 120 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 12 ptr: 3968 } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 3 step 3 out = Softmax[T=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](_recv_a_0/_1)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute out op Softmax on GPU0 stream[0]
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: 3 kernel_name: &quot;out&quot; tensor { dtype: DT_FLOAT shape { dim { size: 3 } dim { size: 10 } } allocation_description { requested_bytes: 120 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 13 has_single_reference: true ptr: 4224 } } }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: 3 operation: &quot;out/EigenAllocator&quot; num_bytes: 12 ptr: 4480 allocation_id: 14 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 3 operation: &quot;out/EigenAllocator&quot; allocation_id: 14 allocator_name: &quot;gpu_bfc&quot; deferred: true }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawAllocation { step_id: 3 operation: &quot;out/EigenAllocator&quot; num_bytes: 12 ptr: 4736 allocation_id: 15 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 3 operation: &quot;out/EigenAllocator&quot; allocation_id: 14 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 3 operation: &quot;out/EigenAllocator&quot; allocation_id: 15 allocator_name: &quot;gpu_bfc&quot; deferred: true }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: 3 operation: &quot;out/EigenAllocator&quot; allocation_id: 15 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 3 kernel_name: &quot;out&quot; tensor { dtype: DT_FLOAT shape { dim { size: 3 } dim { size: 10 } } allocation_description { requested_bytes: 120 allocated_bytes: 256 allocator_name: &quot;gpu_bfc&quot; allocation_id: 13 has_single_reference: true ptr: 4224 } } }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 12 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274000c70
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 4 step 3 out/_2 = _Send[T=DT_FLOAT, client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, _device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;](out)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute out/_2 op _Send on GPU0 stream[0]
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579620 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e115b5780 9069928423257839967 /job:localhost/replica:0/task:0/gpu:0;0000000000000001;/job:localhost/replica:0/task:0/cpu:0;edge_3_out;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorAllocation { step_id: -6 kernel_name: &quot;Unknown&quot; tensor { dtype: DT_FLOAT shape { dim { size: 3 } dim { size: 10 } } allocation_description { requested_bytes: 120 allocated_bytes: 256 allocator_name: &quot;cuda_host_bfc&quot; allocation_id: 3 has_single_reference: true ptr: 139785952560560 } } }
+I tensorflow/core/common_runtime/copy_tensor.cc:56] Copy edge_3_out
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:263] CopyGPUTensorToCPU
+I tensorflow/stream_executor/stream.cc:1331] Called Stream::ThenWaitFor(other=0x562e114f0de0) stream=0x562e1157e180
+I tensorflow/stream_executor/stream.cc:3770] Called Stream::ThenMemcpy(host_dst=0x7f22740c05b0, gpu_src=0x1080, size=120) stream=0x562e1157e180
+I tensorflow/stream_executor/cl/cl_driver.cc:1308] successfully enqueued async memcpy d2h of 120 bytes from 0x1080 to 0x7f22740c05b0 on stream @�&apos;#x10.V
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:174] QueueInUse  free_events_ 1 used_events_ 0
+I tensorflow/stream_executor/stream.cc:268] Called Stream::ThenRecordEvent(event=0x7f225c001360) stream=0x562e1157e180
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 0 used_events_ 1
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/executor.cc:1164] 0x562e1157a470 Async kernel done: out/_3 = _Recv[client_terminated=false, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/gpu:0&quot;, send_device_incarnation=1, tensor_name=&quot;edge_3_out&quot;, tensor_type=DT_FLOAT, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;]()
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 13 allocator_name: &quot;gpu_bfc&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorOutput { step_id: 3 kernel_name: &quot;out/_3&quot; tensor { dtype: DT_FLOAT shape { dim { size: 3 } dim { size: 10 } } allocation_description { requested_bytes: 120 allocated_bytes: 256 allocator_name: &quot;cuda_host_bfc&quot; allocation_id: 3 ptr: 139785952560560 } } }
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 1 step 3 _SINK = NoOp[]()
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:398] GpuDevice::Compute _SINK op NoOp on GPU0 stream[0]
+I tensorflow/core/common_runtime/gpu/gpu_util.cc:363] GPUUtil::SyncAll
+I tensorflow/stream_executor/stream_executor_pimpl.cc:457] Called StreamExecutor::SynchronizeAllActivity()
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 3 step 3 _send_out_0 = _Send[T=DT_FLOAT, client_terminated=true, recv_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;, send_device_incarnation=-4284024401704883009, tensor_name=&quot;out:0&quot;, _device=&quot;/job:localhost/replica:0/task:0/cpu:0&quot;](out/_3)
+I tensorflow/core/common_runtime/executor.cc:1971] Delete iteration [_root, 0].
+I tensorflow/core/kernels/sendrecv_ops.cc:63] Send /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/common_runtime/executor.cc:2029] Delete frame _root
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:42] IntraProcessRendezvous Send 0x562e11579620 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/rendezvous.cc:142] Send 0x562e115b5780 4603131009841531354 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/gpu:0 nt 0x7f2274000c70
+I tensorflow/core/common_runtime/executor.cc:1103] Process node: 1 step 3 _SINK = NoOp[]()
+I tensorflow/core/common_runtime/executor.cc:1971] Delete iteration [_root, 0].
+I tensorflow/core/common_runtime/executor.cc:2029] Delete frame _root
+I tensorflow/core/common_runtime/step_stats_collector.cc:182] Save dev /job:localhost/replica:0/task:0/cpu:0 nt 0x7f225c0012c0
+I tensorflow/core/common_runtime/rendezvous_mgr.cc:115] IntraProcessRendezvous Recv 0x562e11579620 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/rendezvous.cc:210] Recv 0x562e115b5780 4603131009841531354 /job:localhost/replica:0/task:0/cpu:0;c48c16811f466cbf;/job:localhost/replica:0/task:0/cpu:0;out:0;0:0
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogRawDeallocation { step_id: -3 operation: &quot;TensorFlow C Api&quot; allocation_id: 3 allocator_name: &quot;cpu&quot; }
+I tensorflow/core/framework/log_memory.cc:35] __LOG_MEMORY__ MemoryLogTensorDeallocation { allocation_id: 3 allocator_name: &quot;cuda_host_bfc&quot; }
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114f0de0
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream �TW#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e114ef260
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream #x10�W#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e1157e180
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream `�W#x11.V for context 0x562e10f3bd40
+I tensorflow/stream_executor/stream.cc:222] Called Stream::~Stream() stream=0x562e1157db80
+I tensorflow/stream_executor/temporary_memory_manager.cc:30] force-deallocating 0 remaining records
+I tensorflow/stream_executor/cl/cl_driver.cc:994] successfully destroyed stream `�W#x11.V for context 0x562e10f3bd40
+I tensorflow/core/common_runtime/gpu/gpu_event_mgr.cc:224] PollEvents  free_events_ 1 used_events_ 0
+</system-err></testcase></testsuite>
