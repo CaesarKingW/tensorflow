@@ -452,7 +452,7 @@ class Conv2DCustomBackpropFilterOp : public OpKernel {
     C.setZero();
 
     // Initialize contraction dims (we need to transpose 'A' below).
-    Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1> contract_dims;
+    Eigen::array<Eigen::IndexPair<Eigen::Index>, 1> contract_dims;
     contract_dims[0].first = 0;
     contract_dims[0].second = 0;
 

@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #define EIGEN_USE_GPU
 
@@ -151,9 +151,9 @@ __global__ void BiasGradNCHW_SharedAtomics(const T* output_backprop,
                                            int group_size) {
   // Initialize the shared memory.
   typedef typename AccumulatorType<T>::type AccT;
-  const int32 kSDataSize = 32;
-  __shared__ AccT s_data[kSDataSize];
-  for (int32 index = threadIdx.x; index < kSDataSize; index += blockDim.x) {
+  __shared__ AccT s_data[32];
+  int32 s_data_size = sizeof(s_data) / sizeof(T);
+  for (int32 index = threadIdx.x; index < s_data_size; index += blockDim.x) {
     s_data[index] = AccT(0);
   }
   __syncthreads();
@@ -182,16 +182,66 @@ __global__ void BiasGradNCHW_SharedAtomics(const T* output_backprop,
   // Accumulate the results in the shared memory into the first element.
   // No syncthreads is needed since this is only in the same warp.
   int32 thread_index = threadIdx.x;
-  if (thread_index < 32) {
-    AccT data = s_data[thread_index];
-    for (int32 delta = warpSize / 2; delta > 0; delta /= 2) {
-      data += CudaShuffleXorSync(kCudaWarpAll, data, delta);
-    }
-    if (thread_index == 0) {
-      CudaAtomicAdd(bias_backprop + bias_index, T(data));
-    }
+  if (thread_index < 16) s_data[thread_index] += s_data[thread_index + 16];
+  if (thread_index < 8) s_data[thread_index] += s_data[thread_index + 8];
+  if (thread_index < 4) s_data[thread_index] += s_data[thread_index + 4];
+  if (thread_index < 2) s_data[thread_index] += s_data[thread_index + 2];
+  if (thread_index < 1) s_data[thread_index] += s_data[thread_index + 1];
+
+  // The first thread writes out the accumulated result to the global location.
+  if (thread_index == 0) {
+    CudaAtomicAdd(bias_backprop + bias_index, T(s_data[0]));
   }
 }
+
+//template <typename T>
+//__global__ void BiasGradNCHW_SharedAtomics(const T* output_backprop,
+//                                           T* bias_backprop, int32 batch,
+//                                           int32 bias_size, int32 image_size,
+//                                           int group_size) {
+//  // Initialize the shared memory.
+//  typedef typename AccumulatorType<T>::type AccT;
+//  const int32 kSDataSize = 32;
+//  __shared__ AccT s_data[kSDataSize];
+//  for (int32 index = threadIdx.x; index < kSDataSize; index += blockDim.x) {
+//    s_data[index] = AccT(0);
+//  }
+//  __syncthreads();
+//
+//  // Accumulate all the values within this thread. They all have the same bias
+//  // index.
+//  int32 bias_index = blockIdx.x % bias_size;
+//  int32 group_index = blockIdx.x / bias_size;
+//  int32 total_count = batch * image_size;
+//  AccT sum(0);
+//  for (int32 index = group_index * blockDim.x + threadIdx.x;
+//       index < total_count; index += blockDim.x * group_size) {
+//    int32 image_offset = index % image_size;
+//    int32 batch = index / image_size;
+//    T val = ldg(output_backprop +
+//                (batch * bias_size + bias_index) * image_size + image_offset);
+//    sum += AccT(val);
+//  }
+//
+//  // Write the accumulated sum in this thread to the shared memory. Each thread
+//  // shifts their write location to avoid bank conflict.
+//  int bias_offset = threadIdx.x % 32;
+//  CudaAtomicAdd(s_data + bias_offset, sum);
+//  __syncthreads();
+//
+//  // Accumulate the results in the shared memory into the first element.
+//  // No syncthreads is needed since this is only in the same warp.
+//  int32 thread_index = threadIdx.x;
+//  if (thread_index < 32) {
+//    AccT data = s_data[thread_index];
+//    for (int32 delta = warpSize / 2; delta > 0; delta /= 2) {
+//      data += CudaShuffleXorSync(kCudaWarpAll, data, delta);
+//    }
+//    if (thread_index == 0) {
+//      CudaAtomicAdd(bias_backprop + bias_index, T(data));
+//    }
+//  }
+//}
 
 template <typename T>
 void BiasGradGPU<T>::compute(const GPUDevice& d, const T* output_backprop,
@@ -248,25 +298,25 @@ void BiasGradGPU<T>::compute(const GPUDevice& d, const T* output_backprop,
   }
 }
 
-template <typename T>
-void BiasGradGPU<T>::DoRowReduction(OpKernelContext* context, T* output,
-                                    const T* input, int rows, int cols) {
-  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
-  Constants<GPUDevice> constants;
-  cub::Sum op;
-  functor::ReduceImpl<T, cub::Sum, T*, const T*, ReductionAxes>(
-      context, output, input, 2, rows, cols, 1, 1, constants.kOne, op);
-}
-
-template <typename T>
-void BiasGradGPU<T>::DoColReduction(OpKernelContext* context, T* output,
-                                    const T* input, int rows, int cols) {
-  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
-  Constants<GPUDevice> constants;
-  cub::Sum op;
-  functor::ReduceImpl<T, cub::Sum, T*, const T*, ReductionAxes>(
-      context, output, input, 2, rows, cols, 1, 1, constants.kZero, op);
-}
+//template <typename T>
+//void BiasGradGPU<T>::DoRowReduction(OpKernelContext* context, T* output,
+//                                    const T* input, int rows, int cols) {
+//  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
+//  Constants<GPUDevice> constants;
+//  cub::Sum op;
+//  functor::ReduceImpl<T, cub::Sum, T*, const T*, ReductionAxes>(
+//      context, output, input, 2, rows, cols, 1, 1, constants.kOne, op);
+//}
+//
+//template <typename T>
+//void BiasGradGPU<T>::DoColReduction(OpKernelContext* context, T* output,
+//                                    const T* input, int rows, int cols) {
+//  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
+//  Constants<GPUDevice> constants;
+//  cub::Sum op;
+//  functor::ReduceImpl<T, cub::Sum, T*, const T*, ReductionAxes>(
+//      context, output, input, 2, rows, cols, 1, 1, constants.kZero, op);
+//}
 
 #define DEFINE_GPU_SPECS(T)   \
   template struct BiasGPU<T>; \
@@ -276,4 +326,4 @@ TF_CALL_GPU_NUMBER_TYPES(DEFINE_GPU_SPECS);
 
 }  // end namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA

@@ -165,8 +165,8 @@ limitations under the License.
   TF_CALL_half(m) TF_CALL_bfloat16(m) TF_CALL_float(m) TF_CALL_double(m)
 
 #define TF_CALL_REAL_NUMBER_TYPES(m) \
-  TF_CALL_INTEGRAL_TYPES(m)          \
   TF_CALL_FLOAT_TYPES(m)
+//  TF_CALL_INTEGRAL_TYPES(m)          \
 
 #define TF_CALL_REAL_NUMBER_TYPES_NO_BFLOAT16(m) \
   TF_CALL_INTEGRAL_TYPES(m) TF_CALL_half(m) TF_CALL_float(m) TF_CALL_double(m)
@@ -178,7 +178,8 @@ limitations under the License.
 
 // Call "m" for all number types, including complex64 and complex128.
 #define TF_CALL_NUMBER_TYPES(m) \
-  TF_CALL_REAL_NUMBER_TYPES(m) TF_CALL_complex64(m) TF_CALL_complex128(m)
+  TF_CALL_REAL_NUMBER_TYPES(m)
+//TF_CALL_complex64(m) TF_CALL_complex128(m)
 
 #define TF_CALL_NUMBER_TYPES_NO_INT32(m) \
   TF_CALL_REAL_NUMBER_TYPES_NO_INT32(m)  \
@@ -200,8 +201,8 @@ limitations under the License.
 
 // Call "m" on all types supported on GPU.
 #define TF_CALL_GPU_ALL_TYPES(m) \
-  TF_CALL_GPU_NUMBER_TYPES(m)    \
-  TF_CALL_bool(m) TF_CALL_complex64(m) TF_CALL_complex128(m)
+  TF_CALL_GPU_NUMBER_TYPES(m)
+//  TF_CALL_bool(m) TF_CALL_complex64(m) TF_CALL_complex128(m)
 
 #define TF_CALL_GPU_NUMBER_TYPES_NO_HALF(m) TF_CALL_float(m) TF_CALL_double(m)
 

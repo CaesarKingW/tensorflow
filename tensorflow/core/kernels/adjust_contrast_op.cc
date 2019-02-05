@@ -239,7 +239,7 @@ class AdjustContrastOpv2<CPUDevice> : public AdjustContrastOpV2Base {
     TTypes<float, 1>::Tensor mean_flat(&mean(0, 0), mean.size());
     TTypes<float, 1>::Tensor summation_scratch(&scratch(0, 0, 0),
                                                scratch.size());
-    typedef Eigen::array<Eigen::DenseIndex, 1> Index;
+    typedef Eigen::array<Eigen::Index, 1> Index;
     const int64 plane_size = image_size * channels;
     // Since the number of channels in the early layers is often small, a
     // straightforward loop for summing cannot utilize vectorization.

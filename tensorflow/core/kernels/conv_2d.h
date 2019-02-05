@@ -132,7 +132,7 @@ struct MatMulConvFunctor {
       const Device& d, typename TTypes<T, 2>::Tensor out,
       typename TTypes<T, 2>::ConstTensor in0,
       typename TTypes<T, 2>::ConstTensor in1,
-      const Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1>& dim_pair) {
+      const Eigen::array<Eigen::IndexPair<Eigen::Index>, 1>& dim_pair) {
     out.device(d) = in0.contract(in1, dim_pair);
   }
 };

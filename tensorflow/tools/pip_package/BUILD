@@ -142,7 +142,7 @@ filegroup(
         "@com_googlesource_code_re2//:LICENSE",
         "@curl//:COPYING",
         "@double_conversion//:LICENSE",
-        "@eigen_archive//:COPYING.MPL2",
+#        "@eigen_archive//:COPYING.MPL2",
         "@farmhash_archive//:COPYING",
         "@fft2d//:fft/readme.txt",
         "@flatbuffers//:LICENSE.txt",

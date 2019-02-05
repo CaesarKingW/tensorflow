@@ -29,7 +29,7 @@ limitations under the License.
 #include <algorithm>
 #include <complex>
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
-//#include "cuda/include/cuda.h"
+#include "cocl.h"
 #include "tensorflow/core/platform/types.h"
 
 namespace tensorflow {
@@ -116,7 +116,7 @@ __device__ inline unsigned CudaLaneId() {
   asm("mov.u32 %0, %%laneid;" : "=r"(lane_id));
   return lane_id;
 }
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA  //temporarily added to disable the following function by Steven Wang
 namespace detail {
 // Returns true if mask is a valid parameter for __shfl*sync to return a well
 // defined value, assuming the calling lane will read from src_lane as part of
@@ -129,16 +129,16 @@ namespace detail {
 // On Volta, for some invalid masks, this function hangs or returns false
 // positives, because the implementation shuffles with the same mask that
 // we are validating. Run on Pascal if you suspect that the mask is incorrect.
-__device__ inline bool CudaValidateShuffleSyncMask(unsigned mask,
-                                                   unsigned src_lane) {
-  unsigned src_dst_mask = 1u << CudaLaneId() | 1u << src_lane;
-#if CUDA_VERSION >= 9000
-  unsigned src_lane_mask = __shfl_sync(mask, mask, src_lane);
-#else
-  unsigned src_lane_mask = __shfl(mask, src_lane);
-#endif
-  return (src_dst_mask & ~mask) == 0 && src_lane_mask == mask;
-}
+//__device__ inline bool CudaValidateShuffleSyncMask(unsigned mask,
+//                                                   unsigned src_lane) {
+//  unsigned src_dst_mask = 1u << CudaLaneId() | 1u << src_lane;
+//#if CUDA_VERSION >= 9000
+//  unsigned src_lane_mask = __shfl_sync(mask, mask, src_lane);
+//#else
+//  unsigned src_lane_mask = __shfl(mask, src_lane);
+//#endif
+//  return (src_dst_mask & ~mask) == 0 && src_lane_mask == mask;
+//}
 
 // Returns the actual source lane for shuffle.
 __device__ inline unsigned CudaShuffleGetSrcLane(int src_lane, int width) {
@@ -197,14 +197,14 @@ __device__ inline void CudaSyncWarp(unsigned mask = kCudaWarpAll) {
 
 // Wrapper for __ballot_sync. All threads in 'mask' must call this function in
 // convergence, see comment above for details.
-__device__ inline unsigned CudaBallotSync(unsigned mask, int pred) {
-  assert(mask & 1u << CudaLaneId());
-#if CUDA_VERSION >= 9000
-  return __ballot_sync(mask, pred);
-#else
-  return __ballot(pred) & mask;  // Apply mask to match __ballot_sync's spec.
-#endif
-}
+//__device__ inline unsigned CudaBallotSync(unsigned mask, int pred) {
+//  assert(mask & 1u << CudaLaneId());
+//#if CUDA_VERSION >= 9000
+//  return __ballot_sync(mask, pred);
+//#else
+//  return __ballot(pred) & mask;  // Apply mask to match __ballot_sync's spec.
+//#endif
+//}
 
 // Wrapper for __any_sync. All threads in 'mask' must call this function in
 // convergence, see comment above for details.
@@ -230,118 +230,118 @@ __device__ inline int CudaAllSync(unsigned mask, int pred) {
 
 // Wrapper for __shfl_sync. All threads in 'mask' must call this function in
 // convergence, see comment above for details.
-template <typename T>
-__device__ T CudaShuffleSync(unsigned mask, T value, int src_lane,
-                             int width = warpSize) {
-  assert(!(width & width - 1));
-  assert(detail::CudaValidateShuffleSyncMask(
-      mask, detail::CudaShuffleGetSrcLane(src_lane, width)));
-#if CUDA_VERSION >= 9000
-  return __shfl_sync(mask, value, src_lane, width);
-#else
-  return __shfl(value, src_lane, width);
-#endif
-}
+//template <typename T>
+//__device__ T CudaShuffleSync(unsigned mask, T value, int src_lane,
+//                             int width = warpSize) {
+//  assert(!(width & width - 1));
+//  assert(detail::CudaValidateShuffleSyncMask(
+//      mask, detail::CudaShuffleGetSrcLane(src_lane, width)));
+//#if CUDA_VERSION >= 9000
+//  return __shfl_sync(mask, value, src_lane, width);
+//#else
+//  return __shfl(value, src_lane, width);
+//#endif
+//}
 
 // Variant of the (undocumented) version from the CUDA SDK, but using unsigned
 // instead of float for lo and hi (which is incorrect with ftz, for example).
 // See b/69446944.
-__device__ inline double CudaShuffleSync(unsigned mask, double value,
-                                         int src_lane, int width = warpSize) {
-  unsigned lo, hi;
-  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
-  hi = CudaShuffleSync(mask, hi, src_lane, width);
-  lo = CudaShuffleSync(mask, lo, src_lane, width);
-  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
-  return value;
-}
+//__device__ inline double CudaShuffleSync(unsigned mask, double value,
+//                                         int src_lane, int width = warpSize) {
+//  unsigned lo, hi;
+//  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
+//  hi = CudaShuffleSync(mask, hi, src_lane, width);
+//  lo = CudaShuffleSync(mask, lo, src_lane, width);
+//  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
+//  return value;
+//}
 
 // Wrapper for __shfl_up_sync. All threads in 'mask' must call this function in
 // convergence, see comment above for details.
-template <typename T>
-__device__ inline T CudaShuffleUpSync(unsigned mask, T value, unsigned delta,
-                                      int width = warpSize) {
-  assert(!(width & width - 1));
-  assert(detail::CudaValidateShuffleSyncMask(
-      mask, detail::CudaShuffleUpGetSrcLane(delta, width)));
-#if CUDA_VERSION >= 9000
-  return __shfl_up_sync(mask, value, delta, width);
-#else
-  return __shfl_up(value, delta, width);
-#endif
-}
+//template <typename T>
+//__device__ inline T CudaShuffleUpSync(unsigned mask, T value, unsigned delta,
+//                                      int width = warpSize) {
+//  assert(!(width & width - 1));
+//  assert(detail::CudaValidateShuffleSyncMask(
+//      mask, detail::CudaShuffleUpGetSrcLane(delta, width)));
+//#if CUDA_VERSION >= 9000
+//  return __shfl_up_sync(mask, value, delta, width);
+//#else
+//  return __shfl_up(value, delta, width);
+//#endif
+//}
 
 // Variant of the (undocumented) version from the CUDA SDK, but using unsigned
 // instead of float for lo and hi (which is incorrect with ftz, for example).
 // See b/69446944.
-__device__ inline double CudaShuffleUpSync(unsigned mask, double value,
-                                           unsigned delta,
-                                           int width = warpSize) {
-  unsigned lo, hi;
-  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
-  hi = CudaShuffleUpSync(mask, hi, delta, width);
-  lo = CudaShuffleUpSync(mask, lo, delta, width);
-  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
-  return value;
-}
+//__device__ inline double CudaShuffleUpSync(unsigned mask, double value,
+//                                           unsigned delta,
+//                                           int width = warpSize) {
+//  unsigned lo, hi;
+//  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
+//  hi = CudaShuffleUpSync(mask, hi, delta, width);
+//  lo = CudaShuffleUpSync(mask, lo, delta, width);
+//  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
+//  return value;
+//}
 
 // Wrapper for __shfl_down_sync. All threads in 'mask' must call this function
 // in convergence, see comment above for details.
-template <typename T>
-__device__ inline T CudaShuffleDownSync(unsigned mask, T value, unsigned delta,
-                                        int width = warpSize) {
-  assert(!(width & width - 1));
-  assert(detail::CudaValidateShuffleSyncMask(
-      mask, detail::CudaShuffleDownGetSrcLane(delta, width)));
-#if CUDA_VERSION >= 9000
-  return __shfl_down_sync(mask, value, delta, width);
-#else
-  return __shfl_down(value, delta, width);
-#endif
-}
+//template <typename T>
+//__device__ inline T CudaShuffleDownSync(unsigned mask, T value, unsigned delta,
+//                                        int width = warpSize) {
+//  assert(!(width & width - 1));
+//  assert(detail::CudaValidateShuffleSyncMask(
+//      mask, detail::CudaShuffleDownGetSrcLane(delta, width)));
+//#if CUDA_VERSION >= 9000
+//  return __shfl_down_sync(mask, value, delta, width);
+//#else
+//  return __shfl_down(value, delta, width);
+//#endif
+//}
 
 // Variant of the (undocumented) version from the CUDA SDK, but using unsigned
 // instead of float for lo and hi (which is incorrect with ftz, for example).
 // See b/69446944.
-__device__ inline double CudaShuffleDownSync(unsigned mask, double value,
-                                             unsigned delta,
-                                             int width = warpSize) {
-  unsigned lo, hi;
-  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
-  hi = CudaShuffleDownSync(mask, hi, delta, width);
-  lo = CudaShuffleDownSync(mask, lo, delta, width);
-  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
-  return value;
-}
+//__device__ inline double CudaShuffleDownSync(unsigned mask, double value,
+//                                             unsigned delta,
+//                                             int width = warpSize) {
+//  unsigned lo, hi;
+//  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
+//  hi = CudaShuffleDownSync(mask, hi, delta, width);
+//  lo = CudaShuffleDownSync(mask, lo, delta, width);
+//  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
+//  return value;
+//}
 
 // Wrapper for __shfl_xor_sync. All threads in 'mask' must call this function in
 // convergence, see comment above for details.
-template <typename T>
-__device__ T CudaShuffleXorSync(unsigned mask, T value, int lane_mask,
-                                int width = warpSize) {
-  assert(!(width & width - 1));
-  assert(detail::CudaValidateShuffleSyncMask(
-      mask, detail::CudaShuffleXorGetSrcLane(lane_mask, width)));
-#if CUDA_VERSION >= 9000
-  return __shfl_xor_sync(mask, value, lane_mask, width);
-#else
-  return __shfl_xor(value, lane_mask, width);
-#endif
-}
+//template <typename T>
+//__device__ T CudaShuffleXorSync(unsigned mask, T value, int lane_mask,
+//                                int width = warpSize) {
+//  assert(!(width & width - 1));
+//  assert(detail::CudaValidateShuffleSyncMask(
+//      mask, detail::CudaShuffleXorGetSrcLane(lane_mask, width)));
+//#if CUDA_VERSION >= 9000
+//  return __shfl_xor_sync(mask, value, lane_mask, width);
+//#else
+//  return __shfl_xor(value, lane_mask, width);
+//#endif
+//}
 
 // Variant of the (undocumented) version from the CUDA SDK, but using unsigned
 // instead of float for lo and hi (which is incorrect with ftz, for example).
 // See b/69446944.
-__device__ inline double CudaShuffleXorSync(unsigned mask, double value,
-                                            int lane_mask,
-                                            int width = warpSize) {
-  unsigned lo, hi;
-  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
-  hi = CudaShuffleXorSync(mask, hi, lane_mask, width);
-  lo = CudaShuffleXorSync(mask, lo, lane_mask, width);
-  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
-  return value;
-}
+//__device__ inline double CudaShuffleXorSync(unsigned mask, double value,
+//                                            int lane_mask,
+//                                            int width = warpSize) {
+//  unsigned lo, hi;
+//  asm volatile("mov.b64 {%0,%1}, %2;" : "=r"(lo), "=r"(hi) : "d"(value));
+//  hi = CudaShuffleXorSync(mask, hi, lane_mask, width);
+//  lo = CudaShuffleXorSync(mask, lo, lane_mask, width);
+//  asm volatile("mov.b64 %0, {%1,%2};" : "=d"(value) : "r"(lo), "r"(hi));
+//  return value;
+//}
 
 // Wrapper for __ldg.
 template <typename T>
@@ -357,25 +357,25 @@ __host__ __device__ inline bool CudaLdg(const bool* address) {
   return CudaLdg(reinterpret_cast<const char*>(address)) != 0;
 }
 
-__host__ __device__ inline std::complex<float> CudaLdg(
-    const std::complex<float>* address) {
-#if __CUDA_ARCH__ >= 350
-  float2 mem = __ldg(reinterpret_cast<const float2*>(address));
-  return std::complex<float>(mem.x, mem.y);
-#else
-  return *address;
-#endif
-}
-
-__host__ __device__ inline std::complex<double> CudaLdg(
-    const std::complex<double>* address) {
-#if __CUDA_ARCH__ >= 350
-  double2 mem = __ldg(reinterpret_cast<const double2*>(address));
-  return std::complex<double>(mem.x, mem.y);
-#else
-  return *address;
-#endif
-}
+//__host__ __device__ inline std::complex<float> CudaLdg(
+//    const std::complex<float>* address) {
+//#if __CUDA_ARCH__ >= 350
+//  float2 mem = __ldg(reinterpret_cast<const float2*>(address));
+//  return std::complex<float>(mem.x, mem.y);
+//#else
+//  return *address;
+//#endif
+//}
+//
+//__host__ __device__ inline std::complex<double> CudaLdg(
+//    const std::complex<double>* address) {
+//#if __CUDA_ARCH__ >= 350
+//  double2 mem = __ldg(reinterpret_cast<const double2*>(address));
+//  return std::complex<double>(mem.x, mem.y);
+//#else
+//  return *address;
+//#endif
+//}
 
 // Zeroes count elements starting at ptr using all threads of a 1-D grid.
 // Note: this function does not synchronize, and therefore the memory range is
@@ -493,141 +493,167 @@ __device__ inline Eigen::half CudaAtomicAdd(Eigen::half* ptr,
       ptr, [value](Eigen::half a) { return a + value; });
 }
 
+//#endif  // GOOGLE_CUDA  //temporarily added by steven wang
 
-#if __CUDA_ARCH__ < 600
-__device__ inline double CudaAtomicAdd(double* ptr, double value) {
-  return detail::CudaAtomicCasHelper(ptr,
-                                     [value](double a) { return a + value; });
-}
-#elif __clang__
-// Clang cannot compile __nvvm_atom_add_gen_d builtin yet, use inline PTX.
-// see https://reviews.llvm.org/D39638
-__device__ inline double CudaAtomicAdd(double* ptr, double value) {
-  double result;
-  asm volatile("atom.add.f64 %0, [%1], %2;"
-               : "=d"(result)
-               : "l"(ptr), "d"(value)
-               : "memory");
-  return result;
-}
+//#if __CUDA_ARCH__ < 600
+//__device__ inline double CudaAtomicAdd(double* ptr, double value) {
+//  return detail::CudaAtomicCasHelper(ptr,
+//                                     [value](double a) { return a + value; });
+//}
+//#elif __clang__
+//// Clang cannot compile __nvvm_atom_add_gen_d builtin yet, use inline PTX.
+//// see https://reviews.llvm.org/D39638
+//__device__ inline double CudaAtomicAdd(double* ptr, double value) {
+//  double result;
+//  asm volatile("atom.add.f64 %0, [%1], %2;"
+//               : "=d"(result)
+//               : "l"(ptr), "d"(value)
+//               : "memory");
+//  return result;
+//}
+//#else
+// Reason of guarding: NVCC cannot compile the "::" in "cuda_builtin::atomicOp".
+#define CUDA_ATOMIC_WRAPPER(op, T) \
+  __device__ __forceinline__ T CudaAtomic##op(T* address, T val)
+
+#ifdef __GCUDACC__
+using cuda_builtin::__float_as_int;
+using cuda_builtin::__int_as_float;
+#define USE_CUDA_ATOMIC(op, T) \
+  CUDA_ATOMIC_WRAPPER(op, T) { return cuda_builtin::atomic##op(address, val); }
+#else
+#define USE_CUDA_ATOMIC(op, T) \
+  CUDA_ATOMIC_WRAPPER(op, T) { return atomic##op(address, val); }
 #endif
+
+// For atomicAdd.
+USE_CUDA_ATOMIC(Add, int32);
+// USE_CUDA_ATOMIC(Add, uint32);
+// USE_CUDA_ATOMIC(Add, uint64);
+USE_CUDA_ATOMIC(Add, float);
+
+// For atomicMax.
+USE_CUDA_ATOMIC(Max, int32);
+//#endif
+
+
 // CudaAtomicAdd
 // Specializations of CudaAtomicAdd for complex types, which CudaAtomicAdd does
 // not support. We treat a std::complex<T>* as a T* (the C++ standard section
 // 26.4.4 allows this explicitly) and atomic add the real and imaginary
 // components individually. The operation as a whole is not atomic, but we can
 // safely treat the components independently for the purpose of accumulating.
-__device__ inline std::complex<float> CudaAtomicAdd(std::complex<float>* ptr,
-                                                    std::complex<float> value) {
-  auto ptr_scalar = reinterpret_cast<float*>(ptr);
-  return std::complex<float>(CudaAtomicAdd(ptr_scalar, value.real()),
-                             CudaAtomicAdd(ptr_scalar + 1, value.imag()));
-}
-
-__device__ inline std::complex<double> CudaAtomicAdd(
-    std::complex<double>* ptr, std::complex<double> value) {
-  auto ptr_scalar = reinterpret_cast<double*>(ptr);
-  return std::complex<double>(CudaAtomicAdd(ptr_scalar, value.real()),
-                              CudaAtomicAdd(ptr_scalar + 1, value.imag()));
-}
+//__device__ inline std::complex<float> CudaAtomicAdd(std::complex<float>* ptr,
+//                                                    std::complex<float> value) {
+//  auto ptr_scalar = reinterpret_cast<float*>(ptr);
+//  return std::complex<float>(CudaAtomicAdd(ptr_scalar, value.real()),
+//                             CudaAtomicAdd(ptr_scalar + 1, value.imag()));
+//}
+//
+//__device__ inline std::complex<double> CudaAtomicAdd(
+//    std::complex<double>* ptr, std::complex<double> value) {
+//  auto ptr_scalar = reinterpret_cast<double*>(ptr);
+//  return std::complex<double>(CudaAtomicAdd(ptr_scalar, value.real()),
+//                              CudaAtomicAdd(ptr_scalar + 1, value.imag()));
+//}
 
 // CudaAtomicSub
-template <typename T, typename U>
-__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicSub(T* ptr, U value) {
-  return atomicSub(ptr, value);
-}
-
+//template <typename T, typename U>
+//__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicSub(T* ptr, U value) {
+//  return atomicSub(ptr, value);
+//}
+//
 // Specializations of subtraction which add the negative value.
 __device__ inline float CudaAtomicSub(float* ptr, float value) {
   return CudaAtomicAdd(ptr, -value);
 }
 
-__device__ inline double CudaAtomicSub(double* ptr, double value) {
-  return CudaAtomicAdd(ptr, -value);
-}
-
-__device__ inline tensorflow::uint64 CudaAtomicSub(tensorflow::uint64* ptr,
-                                                   tensorflow::uint64 value) {
-  return CudaAtomicAdd(ptr, -value);
-}
-
-__device__ inline Eigen::half CudaAtomicSub(Eigen::half* ptr,
-                                            Eigen::half value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](Eigen::half a) { return a - value; });
-}
+//__device__ inline double CudaAtomicSub(double* ptr, double value) {
+//  return CudaAtomicAdd(ptr, -value);
+//}
+//
+//__device__ inline tensorflow::uint64 CudaAtomicSub(tensorflow::uint64* ptr,
+//                                                   tensorflow::uint64 value) {
+//  return CudaAtomicAdd(ptr, -value);
+//}
+//
+//__device__ inline Eigen::half CudaAtomicSub(Eigen::half* ptr,
+//                                            Eigen::half value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](Eigen::half a) { return a - value; });
+//}
 
 // CudaAtomicMax
-template <typename T, typename U>
-__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicMax(T* ptr, U value) {
-  return atomicMax(ptr, value);
-}
+//template <typename T, typename U>
+//__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicMax(T* ptr, U value) {
+//  return atomicMax(ptr, value);
+//}
 
-__device__ inline float CudaAtomicMax(float* ptr, float value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](float a) { return max(a, value); });
-}
+//__device__ inline float CudaAtomicMax(float* ptr, float value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](float a) { return max(a, value); });
+//}
+////
+//__device__ inline double CudaAtomicMax(double* ptr, double value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](double a) { return max(a, value); });
+//}
+//
+//__device__ inline Eigen::half CudaAtomicMax(Eigen::half* ptr,
+//                                            Eigen::half value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](Eigen::half a) { return max(a, value); });
+//}
 
-__device__ inline double CudaAtomicMax(double* ptr, double value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](double a) { return max(a, value); });
-}
-
-__device__ inline Eigen::half CudaAtomicMax(Eigen::half* ptr,
-                                            Eigen::half value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](Eigen::half a) { return max(a, value); });
-}
-
-#if __CUDA_ARCH__ < 320
-__device__ inline tensorflow::uint64 CudaAtomicMax(tensorflow::uint64* ptr,
-                                                   tensorflow::uint64 value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](tensorflow::uint64 a) { return max(a, value); });
-}
-#endif
+//#if __CUDA_ARCH__ < 320
+//__device__ inline tensorflow::uint64 CudaAtomicMax(tensorflow::uint64* ptr,
+//                                                   tensorflow::uint64 value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](tensorflow::uint64 a) { return max(a, value); });
+//}
+//#endif
 
 // CudaAtomicMin
-template <typename T, typename U>
-__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicMin(T* ptr, U value) {
-  return atomicMin(ptr, value);
-}
+//template <typename T, typename U>
+//__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicMin(T* ptr, U value) {
+//  return atomicMin(ptr, value);
+//}
+//
+//__device__ inline float CudaAtomicMin(float* ptr, float value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](float a) { return min(a, value); });
+//}
+//
+//__device__ inline double CudaAtomicMin(double* ptr, double value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](double a) { return min(a, value); });
+//}
+//
+//__device__ inline Eigen::half CudaAtomicMin(Eigen::half* ptr,
+//                                            Eigen::half value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](Eigen::half a) { return min(a, value); });
+//}
 
-__device__ inline float CudaAtomicMin(float* ptr, float value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](float a) { return min(a, value); });
-}
-
-__device__ inline double CudaAtomicMin(double* ptr, double value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](double a) { return min(a, value); });
-}
-
-__device__ inline Eigen::half CudaAtomicMin(Eigen::half* ptr,
-                                            Eigen::half value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](Eigen::half a) { return min(a, value); });
-}
-
-#if __CUDA_ARCH__ < 320
-__device__ inline tensorflow::uint64 CudaAtomicMin(tensorflow::uint64* ptr,
-                                                   tensorflow::uint64 value) {
-  return detail::CudaAtomicCasHelper(
-      ptr, [value](tensorflow::uint64 a) { return min(a, value); });
-}
-#endif
+//#if __CUDA_ARCH__ < 320
+//__device__ inline tensorflow::uint64 CudaAtomicMin(tensorflow::uint64* ptr,
+//                                                   tensorflow::uint64 value) {
+//  return detail::CudaAtomicCasHelper(
+//      ptr, [value](tensorflow::uint64 a) { return min(a, value); });
+//}
+//#endif
 
 // CudaAtomicMul
-template <typename T, typename U>
-__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicMul(T* ptr, U value) {
-  return detail::CudaAtomicCasHelper(ptr, [value](T a) { return a * value; });
-}
-
-// CudaAtomicDiv
-template <typename T, typename U>
-__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicDiv(T* ptr, U value) {
-  return detail::CudaAtomicCasHelper(ptr, [value](T a) { return a / value; });
-}
+//template <typename T, typename U>
+//__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicMul(T* ptr, U value) {
+//  return detail::CudaAtomicCasHelper(ptr, [value](T a) { return a * value; });
+//}
+//
+//// CudaAtomicDiv
+//template <typename T, typename U>
+//__device__ detail::ToTypeIfConvertible<U, T> CudaAtomicDiv(T* ptr, U value) {
+//  return detail::CudaAtomicCasHelper(ptr, [value](T a) { return a / value; });
+//}
 //#endif  // GOOGLE_CUDA
 }  // namespace tensorflow
 

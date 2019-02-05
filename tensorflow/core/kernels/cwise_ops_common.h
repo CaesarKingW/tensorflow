@@ -310,9 +310,9 @@ struct BinaryFunctor<CPUDevice, Functor, NDIMS, false> {
   void BCast(const CPUDevice& dev,
              typename TTypes<typename Functor::out_type, NDIMS>::Tensor out,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in0,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast0,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast0,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in1,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast1,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast1,
              bool* error) {
     typename Functor::func func;
     if (AllOne<NDIMS>(bcast0) && AllOne<NDIMS>(bcast1)) {
@@ -386,9 +386,9 @@ struct BinaryFunctor<CPUDevice, Functor, 2, false> {
   void BCast(const CPUDevice& dev,
              typename TTypes<typename Functor::out_type, NDIMS>::Tensor out,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in0,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast0,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast0,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in1,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast1,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast1,
              bool* error) {
     typedef typename Functor::in_type T;
     typename Functor::func func;
@@ -506,9 +506,9 @@ struct BinaryFunctor<CPUDevice, Functor, NDIMS, true> {
   void BCast(const CPUDevice& dev,
              typename TTypes<typename Functor::out_type, NDIMS>::Tensor out,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in0,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast0,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast0,
              typename TTypes<typename Functor::in_type, NDIMS>::ConstTensor in1,
-             typename Eigen::array<Eigen::DenseIndex, NDIMS> bcast1,
+             typename Eigen::array<Eigen::Index, NDIMS> bcast1,
              bool* error) {
     typename Functor::func func(error);
     auto lhs = in0.broadcast(bcast0);

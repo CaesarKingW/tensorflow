@@ -21,7 +21,7 @@ REGISTER5(BinaryOp, CPU, "Less", functor::less, float, Eigen::half, double,
 REGISTER5(BinaryOp, CPU, "Less", functor::less, int64, uint8, int8, int16,
           bfloat16);
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 REGISTER(BinaryOp, GPU, "Less", functor::less, float);
 
 // A special GPU kernel for int32.
@@ -34,7 +34,7 @@ REGISTER_KERNEL_BUILDER(Name("Less")
                             .HostMemory("z")
                             .TypeConstraint<int32>("T"),
                         BinaryOp<CPUDevice, functor::less<int32>>);
-//#endif
+#endif
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER3(BinaryOp, SYCL, "Less", functor::less, float, double, int64);
 REGISTER_KERNEL_BUILDER(Name("Less")

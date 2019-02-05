@@ -18,20 +18,20 @@ limitations under the License.
 namespace tensorflow {
 REGISTER6(BinaryOp, CPU, "Minimum", functor::minimum, float, Eigen::half,
           bfloat16, double, int32, int64);
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 REGISTER(BinaryOp, GPU, "Minimum", functor::minimum, float);
 
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
-//REGISTER_KERNEL_BUILDER(Name("Minimum")
-//                            .Device(DEVICE_GPU)
-//                            .HostMemory("x")
-//                            .HostMemory("y")
-//                            .HostMemory("z")
-//                            .TypeConstraint<int32>("T"),
-//                        BinaryOp<CPUDevice, functor::minimum<int32>>);
-//#endif
+REGISTER_KERNEL_BUILDER(Name("Minimum")
+                            .Device(DEVICE_GPU)
+                            .HostMemory("x")
+                            .HostMemory("y")
+                            .HostMemory("z")
+                            .TypeConstraint<int32>("T"),
+                        BinaryOp<CPUDevice, functor::minimum<int32>>);
+#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 REGISTER3(BinaryOp, SYCL, "Minimum", functor::minimum, float, double, int64);

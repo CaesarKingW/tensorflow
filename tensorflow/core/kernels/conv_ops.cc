@@ -84,8 +84,8 @@ struct LaunchGeneric {
         conv_width *= output->dim_size(i);
       }
 
-      Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1> dim_pair;
-      dim_pair[0] = Eigen::IndexPair<Eigen::DenseIndex>(1, 0);
+      Eigen::array<Eigen::IndexPair<Eigen::Index>, 1> dim_pair;
+      dim_pair[0] = Eigen::IndexPair<Eigen::Index>(1, 0);
       functor::MatMulConvFunctor<Device, T>()(
           ctx->eigen_device<Device>(),
           output->shaped<T, 2>({conv_width, filter.dim_size(3)}),
@@ -100,8 +100,8 @@ struct LaunchGeneric {
       const int k =  // Length of reduction dimension.
           filter.dim_size(0) * filter.dim_size(1) * filter.dim_size(2);
 
-      Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1> dim_pair;
-      dim_pair[0] = Eigen::IndexPair<Eigen::DenseIndex>(1, 0);
+      Eigen::array<Eigen::IndexPair<Eigen::Index>, 1> dim_pair;
+      dim_pair[0] = Eigen::IndexPair<Eigen::Index>(1, 0);
       functor::MatMulConvFunctor<Device, T>()(
           ctx->eigen_device<Device>(),
           output->shaped<T, 2>({input.dim_size(0), filter.dim_size(3)}),
@@ -819,7 +819,7 @@ namespace functor {
       const GPUDevice& d, typename TTypes<T, 2>::Tensor out,                 \
       typename TTypes<T, 2>::ConstTensor in0,                                \
       typename TTypes<T, 2>::ConstTensor in1,                                \
-      const Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1>& dim_pair); \
+      const Eigen::array<Eigen::IndexPair<Eigen::Index>, 1>& dim_pair); \
   extern template struct MatMulConvFunctor<GPUDevice, T>;                    \
   template <>                                                                \
   void TransformFilter<GPUDevice, T, int, 4>::operator()(                    \
@@ -841,15 +841,15 @@ DECLARE_GPU_SPEC(float);
 }  // namespace functor
 
 // Registration of the GPU implementations.
-REGISTER_KERNEL_BUILDER(
-    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-    Conv2DOp<GPUDevice, Eigen::half>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+//    Conv2DOp<GPUDevice, Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     Conv2DOp<GPUDevice, float>);
-REGISTER_KERNEL_BUILDER(
-    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<double>("T"),
-    Conv2DOp<GPUDevice, double>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<double>("T"),
+//    Conv2DOp<GPUDevice, double>);
 
 // To be used inside depthwise_conv_op.cc.
 template struct LaunchConv2DOp<GPUDevice, float>;

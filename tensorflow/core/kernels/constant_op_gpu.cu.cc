@@ -77,39 +77,38 @@ struct FillFunctor<GPUDevice, T> {
 
 #define DEFINE_FILL_GPU(T) template struct FillFunctor<GPUDevice, T>;
 //TF_CALL_REAL_NUMBER_TYPES(DEFINE_FILL_GPU);
-//TF_CALL_GPU_NUMBER_TYPES(DEFINE_FILL_GPU);
-DEFINE_FILL_GPU(float)
-DEFINE_FILL_GPU(bool)
+TF_CALL_GPU_NUMBER_TYPES(DEFINE_FILL_GPU);
+//DEFINE_FILL_GPU(bool)
 //TF_CALL_bool(DEFINE_FILL_GPU);
 #undef DEFINE_FILL_GPU
 
-// Partial specialization of FillFunctor<Device=GPUDevice, T>.
-template <typename T>
-struct SetZeroFunctor<GPUDevice, T> {
-  void operator()(const GPUDevice& d, typename TTypes<T>::Flat out) {
-    To32Bit(out).device(d) = To32Bit(out).constant(T(0));
-  }
-};
-
-#define DEFINE_SETZERO_GPU(T) template struct SetZeroFunctor<GPUDevice, T>;
-//TF_CALL_NUMBER_TYPES(DEFINE_SETZERO_GPU);
-//TF_CALL_bool(DEFINE_SETZERO_GPU);
-DEFINE_SETZERO_GPU(float);
-#undef DEFINE_SETZERO_GPU
-
-// Partial specialization of FillFunctor<Device=GPUDevice, T>.
-template <typename T>
-struct SetOneFunctor<GPUDevice, T> {
-  void operator()(const GPUDevice& d, typename TTypes<T>::Flat out) {
-    To32Bit(out).device(d) = To32Bit(out).constant(T(1));
-  }
-};
-
+//// Partial specialization of FillFunctor<Device=GPUDevice, T>.
+//template <typename T>
+//struct SetZeroFunctor<GPUDevice, T> {
+//  void operator()(const GPUDevice& d, typename TTypes<T>::Flat out) {
+//    To32Bit(out).device(d) = To32Bit(out).constant(T(0));
+//  }
+//};
+//
+//#define DEFINE_SETZERO_GPU(T) template struct SetZeroFunctor<GPUDevice, T>;
+////TF_CALL_NUMBER_TYPES(DEFINE_SETZERO_GPU);
+////TF_CALL_bool(DEFINE_SETZERO_GPU);
+//DEFINE_SETZERO_GPU(float);
+//#undef DEFINE_SETZERO_GPU
+//
+//// Partial specialization of FillFunctor<Device=GPUDevice, T>.
+//template <typename T>
+//struct SetOneFunctor<GPUDevice, T> {
+//  void operator()(const GPUDevice& d, typename TTypes<T>::Flat out) {
+//    To32Bit(out).device(d) = To32Bit(out).constant(T(1));
+//  }
+//};
+//
 //#define DEFINE_SETONE_GPU(T) template struct SetOneFunctor<GPUDevice, T>;
 //TF_CALL_NUMBER_TYPES(DEFINE_SETONE_GPU);
-//TF_CALL_bool(DEFINE_SETONE_GPU);
+////TF_CALL_bool(DEFINE_SETONE_GPU);
 //#undef DEFINE_SETONE_GPU
-
+//
 }  // end namespace functor
 }  // end namespace tensorflow
 

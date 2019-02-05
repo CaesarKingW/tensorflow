@@ -77,15 +77,15 @@ class SelectOp : public OpKernel {
     OP_REQUIRES(
         ctx,
         FastBoundsCheck(cond->NumElements(),
-                        std::numeric_limits<Eigen::DenseIndex>::max()),
+                        std::numeric_limits<Eigen::Index>::max()),
         errors::InvalidArgument("cond vector larger than ",
-                                std::numeric_limits<Eigen::DenseIndex>::max()));
+                                std::numeric_limits<Eigen::Index>::max()));
     OP_REQUIRES(
         ctx,
         FastBoundsCheck(then->flat_outer_dims<T>().dimension(1),
-                        std::numeric_limits<Eigen::DenseIndex>::max()),
+                        std::numeric_limits<Eigen::Index>::max()),
         errors::InvalidArgument("flat outer dims dim 1 size >= ",
-                                std::numeric_limits<Eigen::DenseIndex>::max()));
+                                std::numeric_limits<Eigen::Index>::max()));
 
     OP_REQUIRES(ctx, TensorShapeUtils::IsVectorOrHigher(then->shape()),
                 errors::InvalidArgument(
@@ -261,16 +261,16 @@ struct BatchSelectFunctorBase {
                   TTypes<bool>::ConstVec cond_vec,
                   typename TTypes<T>::ConstMatrix then_flat_outer_dims,
                   typename TTypes<T>::ConstMatrix else_flat_outer_dims) {
-    const Eigen::DenseIndex batch = cond_vec.size();
-    const Eigen::DenseIndex all_but_batch = then_flat_outer_dims.dimension(1);
+    const Eigen::Index batch = cond_vec.size();
+    const Eigen::Index all_but_batch = then_flat_outer_dims.dimension(1);
 
 #if !defined(EIGEN_HAS_INDEX_LIST)
-    Eigen::array<Eigen::DenseIndex, 2> broadcast_dims{{1, all_but_batch}};
-    Eigen::Tensor<Eigen::DenseIndex, 2>::Dimensions reshape_dims{{batch, 1}};
+    Eigen::array<Eigen::Index, 2> broadcast_dims{{1, all_but_batch}};
+    Eigen::Tensor<Eigen::Index, 2>::Dimensions reshape_dims{{batch, 1}};
 #else
-    Eigen::IndexList<Eigen::type2index<1>, Eigen::DenseIndex> broadcast_dims;
+    Eigen::IndexList<Eigen::type2index<1>, Eigen::Index> broadcast_dims;
     broadcast_dims.set(1, all_but_batch);
-    Eigen::IndexList<Eigen::DenseIndex, Eigen::type2index<1> > reshape_dims;
+    Eigen::IndexList<Eigen::Index, Eigen::type2index<1> > reshape_dims;
     reshape_dims.set(0, batch);
 #endif
 

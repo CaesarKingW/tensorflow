@@ -494,7 +494,7 @@ class Conv2DCustomBackpropInputOp : public OpKernel {
           ConstTensorMap;
 
       // Initialize contraction dims (we need to transpose 'B' below).
-      Eigen::array<Eigen::IndexPair<Eigen::DenseIndex>, 1> contract_dims;
+      Eigen::array<Eigen::IndexPair<Eigen::Index>, 1> contract_dims;
       contract_dims[0].first = 1;
       contract_dims[0].second = 1;
 

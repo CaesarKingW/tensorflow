@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #define EIGEN_USE_GPU
 
@@ -23,7 +23,7 @@ limitations under the License.
 #include <utility>
 
 //#include "cuda/include/cuda.h"
-#include "cuda.h"
+//#include "cuda.h"
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/kernels/conv_2d.h"
 #include "tensorflow/core/lib/math/math_util.h"
@@ -1014,13 +1014,13 @@ struct NCHWToNHWC<GPUDevice, T, NDIMS> {
 
 }  // namespace functor
 
-template struct functor::ShuffleAndReverse<GPUDevice, float, 4, int>;
+//template struct functor::ShuffleAndReverse<GPUDevice, float, 4, int>;
 //template struct functor::ShuffleAndReverse<GPUDevice, Eigen::half, 4, int>;
 
 template struct functor::ShuffleAndReverse<GPUDevice, float, 4,
-                                           Eigen::DenseIndex>;
+                                           Eigen::Index>;
 //template struct functor::ShuffleAndReverse<GPUDevice, Eigen::half, 4,
-//                                           Eigen::DenseIndex>;
+//                                           Eigen::Index>;
 
 template struct functor::TransformDepth<GPUDevice, float, int>;
 //template struct functor::TransformDepth<GPUDevice, Eigen::half, int>;
@@ -1031,9 +1031,9 @@ template struct functor::TransformDepth<GPUDevice, float, int>;
 //template struct functor::SwapDimension1And2InTensor3<GPUDevice, uint64>;
 template struct functor::SwapDimension1And2InTensor3<GPUDevice, float4>;
 //template struct functor::SwapDimension1And2InTensor3<GPUDevice, float2,
-                                                     /*conjugate=*/true>;
+//                                                     /*conjugate=*/true>;
 //template struct functor::SwapDimension1And2InTensor3<GPUDevice, double2,
-                                                     /*conjugate=*/true>;
+//                                                     /*conjugate=*/true>;
 //template struct functor::SwapDimension1And2InTensor3<GPUDevice, Eigen::half>;
 
 //template struct functor::SwapDimension0And2InTensor3<GPUDevice, uint8>;
@@ -1086,4 +1086,4 @@ template struct functor::PadInput<GPUDevice, float, int, 5>;
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA

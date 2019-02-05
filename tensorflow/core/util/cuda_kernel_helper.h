@@ -40,32 +40,37 @@ namespace tensorflow {
 
 template <typename T>
 __host__ __device__ inline T ldg(const T* ptr) {
+//#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 350
+//  return CudaLdg(ptr);;
+//#else
+//  return *ptr;
+//#endif
   return CudaLdg(ptr);
 }
-
-template <typename T>
-__host__ __device__ inline const T& tf_min(const T& x, const T& y) {
-  return x < y ? x : y;
-}
-
-template <typename T>
-__host__ __device__ inline const T& tf_max(const T& x, const T& y) {
-  return x < y ? y : x;
-}
-
-// Overloads of the above functions for float and double.
-__host__ __device__ inline float tf_min(float x, float y) {
-  return fminf(x, y);
-}
-__host__ __device__ inline double tf_min(double x, double y) {
-  return fmin(x, y);
-}
-__host__ __device__ inline float tf_max(float x, float y) {
-  return fmaxf(x, y);
-}
-__host__ __device__ inline double tf_max(double x, double y) {
-  return fmax(x, y);
-}
+//
+//template <typename T>
+//__host__ __device__ inline const T& tf_min(const T& x, const T& y) {
+//  return x < y ? x : y;
+//}
+//
+//template <typename T>
+//__host__ __device__ inline const T& tf_max(const T& x, const T& y) {
+//  return x < y ? y : x;
+//}
+//
+//// Overloads of the above functions for float and double.
+//__host__ __device__ inline float tf_min(float x, float y) {
+//  return fminf(x, y);
+//}
+//__host__ __device__ inline double tf_min(double x, double y) {
+//  return fmin(x, y);
+//}
+//__host__ __device__ inline float tf_max(float x, float y) {
+//  return fmaxf(x, y);
+//}
+//__host__ __device__ inline double tf_max(double x, double y) {
+//  return fmax(x, y);
+//}
 
 //__device__ inline Eigen::half CudaShuffleSync(unsigned mask, Eigen::half value,
 //                                              int src_lane,

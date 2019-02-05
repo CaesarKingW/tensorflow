@@ -301,12 +301,12 @@ class TensorShape : public TensorShapeBase<TensorShape> {
 
   /// Fill `*dsizes` from `*this`.
   template <int NDIMS>
-  Eigen::DSizes<Eigen::DenseIndex, NDIMS> AsEigenDSizes() const;
+  Eigen::DSizes<Eigen::Index, NDIMS> AsEigenDSizes() const;
 
   /// Same as `AsEigenDSizes()` but allows for `NDIMS > dims()` -- in
   /// which case we pad the rest of the sizes with 1.
   template <int NDIMS>
-  Eigen::DSizes<Eigen::DenseIndex, NDIMS> AsEigenDSizesWithPadding() const;
+  Eigen::DSizes<Eigen::Index, NDIMS> AsEigenDSizesWithPadding() const;
 
  private:
   // These CHECK fail to ease debugging.
@@ -459,17 +459,17 @@ class PartialTensorShapeUtils {
 // ----------------------------------------------------------------------------
 
 template <int NDIMS>
-Eigen::DSizes<Eigen::DenseIndex, NDIMS> TensorShape::AsEigenDSizes() const {
+Eigen::DSizes<Eigen::Index, NDIMS> TensorShape::AsEigenDSizes() const {
   CheckDimsEqual(NDIMS);
   return AsEigenDSizesWithPadding<NDIMS>();
 }
 
 template <int NDIMS>
-Eigen::DSizes<Eigen::DenseIndex, NDIMS> TensorShape::AsEigenDSizesWithPadding()
+Eigen::DSizes<Eigen::Index, NDIMS> TensorShape::AsEigenDSizesWithPadding()
     const {
   CheckDimsAtLeast(NDIMS);
   static_assert(NDIMS <= TensorShape::MaxDimensions(), "Too many dimensions");
-  Eigen::DSizes<Eigen::DenseIndex, NDIMS> dsizes;
+  Eigen::DSizes<Eigen::Index, NDIMS> dsizes;
   for (int d = 0; d < dims(); d++) {
     dsizes[d] = dim_size(d);
   }

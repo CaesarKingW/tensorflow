@@ -960,8 +960,7 @@ tf_kernel_library(
     ],
     deps = if_cuda([
         ":cuda_solvers",
-        "@cub_archive//:cub",
-    ]) + ARRAY_DEPS,
+    ]) + ["@cub_archive//:cub",] + ARRAY_DEPS,
 )
 
 tf_kernel_library(
@@ -3022,7 +3021,7 @@ tf_kernel_library(
     name = "reduction_ops",
     gpu_srcs = ["reduction_gpu_kernels.cu.h"],
     prefix = "reduction_ops",
-    deps = MATH_DEPS + [":transpose_functor"] + if_cuda(["@cub_archive//:cub"]),
+    deps = MATH_DEPS + [":transpose_functor","@cub_archive//:cub"],
 )
 
 tf_kernel_library(
@@ -3430,10 +3429,10 @@ tf_kernel_library(
             "@libxsmm_archive//:xsmm_avx",
         ],
         "//conditions:default": [],
-    }) + if_cuda([
+    }) + [
         "//tensorflow/core/platform/default/build_config:cublas_plugin",
         "//tensorflow/core/platform/default/build_config:cudnn_plugin",
-    ]) + MATH_DEPS,
+    ] + MATH_DEPS,
 )
 
 tf_kernel_library(
@@ -3447,8 +3446,8 @@ tf_kernel_library(
         "//tensorflow/core:framework",
         "//tensorflow/core:lib",
         "//tensorflow/core:nn_ops_op_lib",
-    ] + if_cuda([
         "@cub_archive//:cub",
+    ] + if_cuda([
         "@local_config_cuda//cuda:cudnn_header",
     ]),
 )
@@ -3533,10 +3532,7 @@ tf_kernel_library(
 tf_kernel_library(
     name = "bias_op",
     prefix = "bias_op",
-    deps = NN_DEPS + if_cuda([
-        ":reduction_ops",
-        "@cub_archive//:cub",
-    ]),
+    deps = NN_DEPS + ["@cub_archive//:cub",":reduction_ops"],
 )
 
 tf_kernel_library(
@@ -3571,10 +3567,7 @@ tf_kernel_library(
 tf_kernel_library(
     name = "softmax_op",
     prefix = "softmax_op",
-    deps = NN_DEPS + if_cuda([
-        ":reduction_ops",
-        "@cub_archive//:cub",
-    ]),
+    deps = NN_DEPS + ["@cub_archive//:cub",":reduction_ops",],
 )
 
 tf_kernel_library(
@@ -3592,7 +3585,7 @@ tf_kernel_library(
 tf_kernel_library(
     name = "topk_op",
     prefix = "topk_op",
-    deps = NN_DEPS + if_cuda(["@cub_archive//:cub"]),
+    deps = NN_DEPS + ["@cub_archive//:cub",] ,
 )
 
 tf_kernel_library(
@@ -3615,7 +3608,7 @@ tf_kernel_library(
         "//tensorflow/core:lib",
         "//tensorflow/core:lib_internal",
         "//third_party/eigen3",
-    ] + if_cuda(["@cub_archive//:cub"]),
+    ] + ["@cub_archive//:cub",] ,
 )
 
 tf_kernel_library(
@@ -3626,7 +3619,7 @@ tf_kernel_library(
         "//tensorflow/core:lib",
         "//tensorflow/core:lib_internal",
         "//third_party/eigen3",
-    ] + if_cuda(["@cub_archive//:cub"]),
+    ] + ["@cub_archive//:cub",] ,
 )
 
 tf_kernel_library(
@@ -3640,7 +3633,7 @@ tf_kernel_library(
         "//tensorflow/core:lib_internal",
         "//tensorflow/core:nn_grad",
         "//tensorflow/core:nn_ops_op_lib",
-    ] + if_cuda(["@cub_archive//:cub"]),
+    ] + ["@cub_archive//:cub",] ,
 )
 
 tf_cuda_cc_test(

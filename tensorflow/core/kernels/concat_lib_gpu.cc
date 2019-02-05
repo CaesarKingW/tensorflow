@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 
 #include "tensorflow/core/kernels/cuda_device_array.h"
 
@@ -124,4 +124,4 @@ TF_CALL_uint8(REGISTER);
 
 }  // namespace tensorflow
 
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA

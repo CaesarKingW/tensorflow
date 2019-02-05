@@ -120,8 +120,8 @@ class TensorSlice {
   template <int NDIMS>
   void FillIndicesAndSizes(
       const TensorShape& shape,
-      Eigen::DSizes<Eigen::DenseIndex, NDIMS>* indices,
-      Eigen::DSizes<Eigen::DenseIndex, NDIMS>* sizes) const;
+      Eigen::DSizes<Eigen::Index, NDIMS>* indices,
+      Eigen::DSizes<Eigen::Index, NDIMS>* sizes) const;
 
   // Interaction with other TensorSlices.
 
@@ -197,8 +197,8 @@ class TensorSlice {
 
 template <int NDIMS>
 void TensorSlice::FillIndicesAndSizes(
-    const TensorShape& shape, Eigen::DSizes<Eigen::DenseIndex, NDIMS>* indices,
-    Eigen::DSizes<Eigen::DenseIndex, NDIMS>* sizes) const {
+    const TensorShape& shape, Eigen::DSizes<Eigen::Index, NDIMS>* indices,
+    Eigen::DSizes<Eigen::Index, NDIMS>* sizes) const {
   CHECK_EQ(shape.dims(), dims()) << "Incompatible dimensions between shape "
                                  << "slices: shape = " << shape.DebugString()
                                  << ", slice = " << DebugString();

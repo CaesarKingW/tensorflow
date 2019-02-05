@@ -183,34 +183,34 @@ class GpuCastOp : public CastOpBase {
     }
     if (src_dtype_ == DT_BOOL) {
       work_ = GetGpuCastFromBool(dst_dtype_);
-    } else if (src_dtype_ == DT_UINT8) {
-      work_ = GetGpuCastFromUint8(dst_dtype_);
-    } else if (src_dtype_ == DT_UINT16) {
-      work_ = GetGpuCastFromUint16(dst_dtype_);
-    } else if (src_dtype_ == DT_UINT32) {
-      work_ = GetGpuCastFromUint32(dst_dtype_);
-    } else if (src_dtype_ == DT_UINT64) {
-      work_ = GetGpuCastFromUint64(dst_dtype_);
-    } else if (src_dtype_ == DT_INT8) {
-      work_ = GetGpuCastFromInt8(dst_dtype_);
-    } else if (src_dtype_ == DT_INT16) {
-      work_ = GetGpuCastFromInt16(dst_dtype_);
+//    } else if (src_dtype_ == DT_UINT8) {
+//      work_ = GetGpuCastFromUint8(dst_dtype_);
+//    } else if (src_dtype_ == DT_UINT16) {
+//      work_ = GetGpuCastFromUint16(dst_dtype_);
+//    } else if (src_dtype_ == DT_UINT32) {
+//      work_ = GetGpuCastFromUint32(dst_dtype_);
+//    } else if (src_dtype_ == DT_UINT64) {
+//      work_ = GetGpuCastFromUint64(dst_dtype_);
+//    } else if (src_dtype_ == DT_INT8) {
+//      work_ = GetGpuCastFromInt8(dst_dtype_);
+//    } else if (src_dtype_ == DT_INT16) {
+//      work_ = GetGpuCastFromInt16(dst_dtype_);
     } else if (src_dtype_ == DT_INT32) {
       work_ = GetGpuCastFromInt32(dst_dtype_);
-    } else if (src_dtype_ == DT_INT64) {
-      work_ = GetGpuCastFromInt64(dst_dtype_);
-    } else if (src_dtype_ == DT_HALF) {
-      work_ = GetGpuCastFromHalf(dst_dtype_);
+//    } else if (src_dtype_ == DT_INT64) {
+//      work_ = GetGpuCastFromInt64(dst_dtype_);
+//    } else if (src_dtype_ == DT_HALF) {
+//      work_ = GetGpuCastFromHalf(dst_dtype_);
     } else if (src_dtype_ == DT_FLOAT) {
       work_ = GetGpuCastFromFloat(dst_dtype_);
-    } else if (src_dtype_ == DT_DOUBLE) {
-      work_ = GetGpuCastFromDouble(dst_dtype_);
-    } else if (src_dtype_ == DT_COMPLEX64) {
-      work_ = GetGpuCastFromComplex64(dst_dtype_);
-    } else if (src_dtype_ == DT_COMPLEX128) {
-      work_ = GetGpuCastFromComplex128(dst_dtype_);
-    } else if (src_dtype_ == DT_BFLOAT16) {
-      work_ = GetGpuCastFromBfloat(dst_dtype_);
+//    } else if (src_dtype_ == DT_DOUBLE) {
+//      work_ = GetGpuCastFromDouble(dst_dtype_);
+//    } else if (src_dtype_ == DT_COMPLEX64) {
+//      work_ = GetGpuCastFromComplex64(dst_dtype_);
+//    } else if (src_dtype_ == DT_COMPLEX128) {
+//      work_ = GetGpuCastFromComplex128(dst_dtype_);
+//    } else if (src_dtype_ == DT_BFLOAT16) {
+//      work_ = GetGpuCastFromBfloat(dst_dtype_);
     }
 
     return work_ == nullptr ? Unimplemented() : Status::OK();
@@ -230,22 +230,22 @@ REGISTER_KERNEL_BUILDER(Name("Cast").Device(DEVICE_CPU), CpuCastOp);
                               .Device(DEVICE_GPU),             \
                           GpuCastOp)
 
-CURRY_TYPES2(REGISTER_CAST_GPU, bool);
-CURRY_TYPES2(REGISTER_CAST_GPU, uint8);
-CURRY_TYPES2(REGISTER_CAST_GPU, uint16);
-CURRY_TYPES2(REGISTER_CAST_GPU, uint32);
-CURRY_TYPES2(REGISTER_CAST_GPU, uint64);
-CURRY_TYPES2(REGISTER_CAST_GPU, int8);
-CURRY_TYPES2(REGISTER_CAST_GPU, int16);
-CURRY_TYPES2(REGISTER_CAST_GPU, int32);
-CURRY_TYPES2(REGISTER_CAST_GPU, int64);
-CURRY_TYPES2(REGISTER_CAST_GPU, Eigen::half);
+//CURRY_TYPES2(REGISTER_CAST_GPU, bool);
+//CURRY_TYPES2(REGISTER_CAST_GPU, uint8);
+//CURRY_TYPES2(REGISTER_CAST_GPU, uint16);
+//CURRY_TYPES2(REGISTER_CAST_GPU, uint32);
+//CURRY_TYPES2(REGISTER_CAST_GPU, uint64);
+//CURRY_TYPES2(REGISTER_CAST_GPU, int8);
+//CURRY_TYPES2(REGISTER_CAST_GPU, int16);
+//CURRY_TYPES2(REGISTER_CAST_GPU, int32);
+//CURRY_TYPES2(REGISTER_CAST_GPU, int64);
+//CURRY_TYPES2(REGISTER_CAST_GPU, Eigen::half);
 CURRY_TYPES2(REGISTER_CAST_GPU, float);
-CURRY_TYPES2(REGISTER_CAST_GPU, double);
-CURRY_TYPES2(REGISTER_CAST_GPU, std::complex<float>);
-CURRY_TYPES2(REGISTER_CAST_GPU, std::complex<double>);
-REGISTER_CAST_GPU(float, bfloat16);
-REGISTER_CAST_GPU(bfloat16, float);
+//CURRY_TYPES2(REGISTER_CAST_GPU, double);
+//CURRY_TYPES2(REGISTER_CAST_GPU, std::complex<float>);
+//CURRY_TYPES2(REGISTER_CAST_GPU, std::complex<double>);
+//REGISTER_CAST_GPU(float, bfloat16);
+//REGISTER_CAST_GPU(bfloat16, float);
 
 #undef REGISTER_CAST_GPU
 #endif  // GOOGLE_CUDA
