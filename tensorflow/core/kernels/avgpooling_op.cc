@@ -369,7 +369,7 @@ TF_CALL_float(REGISTER_CPU_KERNEL);
 TF_CALL_double(REGISTER_CPU_KERNEL);
 TF_CALL_half(REGISTER_CPU_KERNEL);
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 
 // A CUDNN based AvgPoolingGrad implementation. It includes the padding as the
 // candidates for the pooling operation.
@@ -578,6 +578,6 @@ REGISTER_KERNEL_BUILDER(Name("AvgPoolGrad")
 //                            .HostMemory("orig_input_shape"),
 //                        AvgPoolingGradOpCustomGPUKernel<Eigen::half>);
 
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow
