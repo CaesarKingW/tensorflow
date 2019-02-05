@@ -56,8 +56,6 @@ limitations under the License.
 
 #include <iostream>
 
-//namespace perftools {
-//namespace gputools {
 namespace stream_executor {
 namespace cl {
 
@@ -531,7 +529,7 @@ bool CLBlas::DoBlasGemm(Stream *stream, blas::Transpose transa,
       CUDAMemory(a), lda, CUDAMemory(b), ldb, &beta, CUDAMemoryMutable(c), ldc);
 }
 
-bool CUDABlas::DoBlasGemvWithProfiling(
+bool CLBlas::DoBlasGemvWithProfiling(
     Stream *stream, blas::Transpose trans, uint64 m, uint64 n, float alpha,
     const DeviceMemory<float> &a, int lda, const DeviceMemory<float> &x,
     int incx, float beta, DeviceMemory<float> *y, int incy,
@@ -541,69 +539,40 @@ bool CUDABlas::DoBlasGemvWithProfiling(
                                      output_profile_result);
 }
 
+
+
+
 template <typename T>
-bool CUDABlas::DoBlasGemvWithProfilingImpl(
+bool CLBlas::DoBlasGemvWithProfilingImpl(
     Stream *stream, blas::Transpose trans, uint64 m, uint64 n, const T &alpha,
     const DeviceMemory<T> &a, int lda, const DeviceMemory<T> &x, int incx,
     const T &beta, DeviceMemory<T> *y, int incy,
     blas::ProfileResult *output_profile_result) {
-  std::unique_ptr<CUDATimer, TimerDeleter> timer;
-  if (output_profile_result != nullptr) {
-    timer.reset(new CUDATimer(parent_));
-    if (!timer->Init() || !timer->Start(AsCUDAStream(stream))) {
-      return false;
-    }
-  }
-
-  // Call blasGemm
-  bool result =
-      DoBlasGemv(stream, trans, m, n, alpha, a, lda, x, incx, beta, y, incy);
-
-  if (timer != nullptr && result) {
-    // CUDATimer will CHECK-fail if we Stop() it while the stream is in an error
-    // state.
-    if (!timer->Stop(AsCUDAStream(stream))) {
-      return false;
-    }
-    output_profile_result->set_is_valid(true);
-    output_profile_result->set_algorithm(blas::kDefaultBlasGemv);
-    output_profile_result->set_elapsed_time_in_ms(
-        timer->GetElapsedMilliseconds());
-  }
-  return result;
-}
-
-
-template <typename T, typename ParamType>
-bool CUDABlas::DoBlasGemmWithProfilingImpl(
-    Stream *stream, blas::Transpose transa, blas::Transpose transb, uint64 m,
-    uint64 n, uint64 k, const ParamType &alpha, const DeviceMemory<T> &a,
-    int lda, const DeviceMemory<T> &b, int ldb, const ParamType &beta,
-    DeviceMemory<T> *c, int ldc, blas::ProfileResult *output_profile_result) {
-  std::unique_ptr<CUDATimer, TimerDeleter> timer;
-  if (output_profile_result != nullptr) {
-    timer.reset(new CUDATimer(parent_));
-    if (!timer->Init() || !timer->Start(AsCUDAStream(stream))) {
-      return false;
-    }
-  }
-
-  // Call blasGemm
-  bool result = DoBlasGemm(stream, transa, transb, m, n, k, alpha, a, lda, b,
-                           ldb, beta, c, ldc);
-
-  if (timer != nullptr && result) {
-    // CUDATimer will CHECK-fail if we Stop() it while the stream is in an error
-    // state.
-    if (!timer->Stop(AsCUDAStream(stream))) {
-      return false;
-    }
-    output_profile_result->set_is_valid(true);
-    output_profile_result->set_algorithm(blas::kDefaultBlasGemm);
-    output_profile_result->set_elapsed_time_in_ms(
-        timer->GetElapsedMilliseconds());
-  }
-  return result;
+	return false;
+//  std::unique_ptr<CUDATimer, TimerDeleter> timer;
+//  if (output_profile_result != nullptr) {
+//    timer.reset(new CUDATimer(parent_));
+//    if (!timer->Init() || !timer->Start(AsCUDAStream(stream))) {
+//      return false;
+//    }
+//  }
+//
+//  // Call blasGemm
+//  bool result = DoBlasGemm(stream, transa, transb, m, n, k, alpha, a, lda, b,
+//                           ldb, beta, c, ldc);
+//
+//  if (timer != nullptr && result) {
+//    // CUDATimer will CHECK-fail if we Stop() it while the stream is in an error
+//    // state.
+//    if (!timer->Stop(AsCUDAStream(stream))) {
+//      return false;
+//    }
+//    output_profile_result->set_is_valid(true);
+//    output_profile_result->set_algorithm(blas::kDefaultBlasGemm);
+//    output_profile_result->set_elapsed_time_in_ms(
+//        timer->GetElapsedMilliseconds());
+//  }
+//  return result;
 }
 
 bool CLBlas::DoBlasAsum(Stream *stream, uint64 elem_count,
@@ -2508,7 +2477,7 @@ bool CLBlas::DoBlasTrsm(Stream *stream, blas::Side side,
 
 }  // namespace cl
 
-namespace gpu = ::perftools::gputools;
+namespace gpu = ::stream_executor;
 
 void initialize_clblas() {
   // std::cout << "CLBlas::initialize_clblas()" << std::endl;
@@ -2553,8 +2522,7 @@ void initialize_clblas() {
                                                      gpu::cl::kClBlasPlugin);
 }
 }    // namespace stream_executor
-//}  // namespace gputools
-//}  // namespace perftools
+
 
 // REGISTER_MODULE_INITIALIZER(register_clblas,
 //                             { perftools::gputools::initialize_clblas(); });

@@ -29,18 +29,6 @@ limitations under the License.
 
 typedef struct cublasContext *cublasHandle_t;
 
-//namespace perftools {
-//namespace gputools {
-//
-//// Temporarily pull stream_executor into perftools::gputools while we migrate
-//// code to the new namespace.  TODO(b/77980417): Remove this once we've
-//// completed the migration.
-//using namespace stream_executor;  // NOLINT[build/namespaces]
-//
-//}  // namespace gputools
-//}  // namespace perftools
-//namespace perftools {
-//namespace gputools {
 namespace stream_executor {
 class Stream;
 
@@ -105,6 +93,23 @@ class CLBlas : public blas::BlasSupport {
       const port::ArraySlice<DeviceMemory<T> *> &c_array, int ldc,
       int batch_count, ScratchAllocator *scratch_allocator);
 
+  // Helper function for implementing DoBlasGemmWithProfiling.
+  template <typename T, typename ParamType>
+  bool DoBlasGemmWithProfilingImpl(
+      Stream *stream, blas::Transpose transa, blas::Transpose transb, uint64 m,
+      uint64 n, uint64 k, const ParamType &alpha, const DeviceMemory<T> &a,
+      int lda, const DeviceMemory<T> &b, int ldb, const ParamType &beta,
+      DeviceMemory<T> *c, int ldc, blas::ProfileResult *output_profile_result);
+
+  // Helper function for implementing DoBlasGemvWithProfiling.
+  template <typename T>
+  bool DoBlasGemvWithProfilingImpl(Stream *stream, blas::Transpose trans,
+                                   uint64 m, uint64 n, const T &alpha,
+                                   const DeviceMemory<T> &a, int lda,
+                                   const DeviceMemory<T> &x, int incx,
+                                   const T &beta, DeviceMemory<T> *y, int incy,
+                                   blas::ProfileResult *output_profile_result);
+
   // mutex that guards the CLBlast handle for this device.
   mutex mu_;
 
@@ -116,26 +121,9 @@ class CLBlas : public blas::BlasSupport {
   cublasHandle_t blas_ GUARDED_BY(mu_);
 
   SE_DISALLOW_COPY_AND_ASSIGN(CLBlas);
-};
-// Helper function for implementing DoBlasGemmWithProfiling.
-template <typename T, typename ParamType>
-bool DoBlasGemmWithProfilingImpl(
-    Stream *stream, blas::Transpose transa, blas::Transpose transb, uint64 m,
-    uint64 n, uint64 k, const ParamType &alpha, const DeviceMemory<T> &a,
-    int lda, const DeviceMemory<T> &b, int ldb, const ParamType &beta,
-    DeviceMemory<T> *c, int ldc, blas::ProfileResult *output_profile_result);
 
-// Helper function for implementing DoBlasGemvWithProfiling.
-template <typename T>
-bool DoBlasGemvWithProfilingImpl(Stream *stream, blas::Transpose trans,
-                                 uint64 m, uint64 n, const T &alpha,
-                                 const DeviceMemory<T> &a, int lda,
-                                 const DeviceMemory<T> &x, int incx,
-                                 const T &beta, DeviceMemory<T> *y, int incy,
-                                 blas::ProfileResult *output_profile_result);
+};
+
 }  // namespace cl
 }  // namespace stream_executor
-//}  // namespace gputools
-//}  // namespace perftools
-
 #endif  // TENSORFLOW_STREAM_EXECUTOR_CL_CLBLAST_H_
