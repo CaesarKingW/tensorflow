@@ -181,21 +181,21 @@ class AvgPoolingOp<GPUDevice, T> : public UnaryOp<T> {
 };
 
 // Forward declarations of the functor specializations for GPU.
-namespace functor {
-#define DECLARE_GPU_SPEC(T)                                      \
-  template <>                                                    \
-  void SpatialAvgPooling<GPUDevice, T>::operator()(              \
-      const GPUDevice& d, typename TTypes<T, 4>::Tensor output,  \
-      typename TTypes<T, 4>::ConstTensor input, int window_rows, \
-      int window_cols, int row_stride, int col_stride,           \
-      const Eigen::PaddingType& padding);                        \
-  extern template struct SpatialAvgPooling<GPUDevice, T>;
-
-DECLARE_GPU_SPEC(Eigen::half);
-DECLARE_GPU_SPEC(float);
-DECLARE_GPU_SPEC(double);
-#undef DECLARE_GPU_SPEC
-}  // namespace functor
+//namespace functor {
+//#define DECLARE_GPU_SPEC(T)                                      \
+//  template <>                                                    \
+//  void SpatialAvgPooling<GPUDevice, T>::operator()(              \
+//      const GPUDevice& d, typename TTypes<T, 4>::Tensor output,  \
+//      typename TTypes<T, 4>::ConstTensor input, int window_rows, \
+//      int window_cols, int row_stride, int col_stride,           \
+//      const Eigen::PaddingType& padding);                        \
+//  extern template struct SpatialAvgPooling<GPUDevice, T>;
+//
+////DECLARE_GPU_SPEC(Eigen::half);
+//DECLARE_GPU_SPEC(float);
+////DECLARE_GPU_SPEC(double);
+//#undef DECLARE_GPU_SPEC
+//}  // namespace functor
 
 //REGISTER_KERNEL_BUILDER(
 //    Name("AvgPool").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
