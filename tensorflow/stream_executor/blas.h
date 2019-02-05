@@ -481,23 +481,23 @@ class BlasSupport {
       const DeviceMemory<float> &a, int lda, const DeviceMemory<float> &x,
       int incx, float beta, DeviceMemory<float> *y, int incy,
       ProfileResult *output_profile_result) = 0;
-  virtual bool DoBlasGemvWithProfiling(
-      Stream *stream, blas::Transpose trans, uint64 m, uint64 n, double alpha,
-      const DeviceMemory<double> &a, int lda, const DeviceMemory<double> &x,
-      int incx, double beta, DeviceMemory<double> *y, int incy,
-      ProfileResult *output_profile_result) = 0;
-  virtual bool DoBlasGemvWithProfiling(
-      Stream *stream, blas::Transpose trans, uint64 m, uint64 n,
-      std::complex<float> alpha, const DeviceMemory<std::complex<float>> &a,
-      int lda, const DeviceMemory<std::complex<float>> &x, int incx,
-      std::complex<float> beta, DeviceMemory<std::complex<float>> *y, int incy,
-      ProfileResult *output_profile_result) = 0;
-  virtual bool DoBlasGemvWithProfiling(
-      Stream *stream, blas::Transpose trans, uint64 m, uint64 n,
-      std::complex<double> alpha, const DeviceMemory<std::complex<double>> &a,
-      int lda, const DeviceMemory<std::complex<double>> &x, int incx,
-      std::complex<double> beta, DeviceMemory<std::complex<double>> *y,
-      int incy, ProfileResult *output_profile_result) = 0;
+//  virtual bool DoBlasGemvWithProfiling(
+//      Stream *stream, blas::Transpose trans, uint64 m, uint64 n, double alpha,
+//      const DeviceMemory<double> &a, int lda, const DeviceMemory<double> &x,
+//      int incx, double beta, DeviceMemory<double> *y, int incy,
+//      ProfileResult *output_profile_result) = 0;
+//  virtual bool DoBlasGemvWithProfiling(
+//      Stream *stream, blas::Transpose trans, uint64 m, uint64 n,
+//      std::complex<float> alpha, const DeviceMemory<std::complex<float>> &a,
+//      int lda, const DeviceMemory<std::complex<float>> &x, int incx,
+//      std::complex<float> beta, DeviceMemory<std::complex<float>> *y, int incy,
+//      ProfileResult *output_profile_result) = 0;
+//  virtual bool DoBlasGemvWithProfiling(
+//      Stream *stream, blas::Transpose trans, uint64 m, uint64 n,
+//      std::complex<double> alpha, const DeviceMemory<std::complex<double>> &a,
+//      int lda, const DeviceMemory<std::complex<double>> &x, int incx,
+//      std::complex<double> beta, DeviceMemory<std::complex<double>> *y,
+//      int incy, ProfileResult *output_profile_result) = 0;
 
   // Performs a rank-1 update of a general matrix.
   //
@@ -1602,23 +1602,6 @@ class BlasSupport {
       const DeviceMemory<float> &a, int lda, const DeviceMemory<float> &x,     \
       int incx, float beta, DeviceMemory<float> *y, int incy,                  \
       blas::ProfileResult *output_profile_result) override;                    \
-  bool DoBlasGemvWithProfiling(                                                \
-      Stream *stream, blas::Transpose trans, uint64 m, uint64 n, double alpha, \
-      const DeviceMemory<double> &a, int lda, const DeviceMemory<double> &x,   \
-      int incx, double beta, DeviceMemory<double> *y, int incy,                \
-      blas::ProfileResult *output_profile_result) override;                    \
-  bool DoBlasGemvWithProfiling(                                                \
-      Stream *stream, blas::Transpose trans, uint64 m, uint64 n,               \
-      std::complex<float> alpha, const DeviceMemory<std::complex<float>> &a,   \
-      int lda, const DeviceMemory<std::complex<float>> &x, int incx,           \
-      std::complex<float> beta, DeviceMemory<std::complex<float>> *y,          \
-      int incy, blas::ProfileResult *output_profile_result) override;          \
-  bool DoBlasGemvWithProfiling(                                                \
-      Stream *stream, blas::Transpose trans, uint64 m, uint64 n,               \
-      std::complex<double> alpha, const DeviceMemory<std::complex<double>> &a, \
-      int lda, const DeviceMemory<std::complex<double>> &x, int incx,          \
-      std::complex<double> beta, DeviceMemory<std::complex<double>> *y,        \
-      int incy, blas::ProfileResult *output_profile_result) override;          \
   bool DoBlasGer(Stream *stream, uint64 m, uint64 n, float alpha,              \
                  const DeviceMemory<float> &x, int incx,                       \
                  const DeviceMemory<float> &y, int incy,                       \
