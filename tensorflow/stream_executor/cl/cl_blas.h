@@ -109,7 +109,15 @@ class CLBlas : public blas::BlasSupport {
                                    const DeviceMemory<T> &x, int incx,
                                    const T &beta, DeviceMemory<T> *y, int incy,
                                    blas::ProfileResult *output_profile_result);
-
+  // Helper function for implementing DoBlasGemmWithAlgorithm.
+  template <typename InT, typename OutT, typename CompT>
+  bool DoBlasGemmWithAlgorithmImpl(
+      Stream *stream, blas::Transpose transa, blas::Transpose transb, uint64 m,
+      uint64 n, uint64 k, const HostOrDeviceScalar<CompT> &alpha,
+      const DeviceMemory<InT> &a, int lda, const DeviceMemory<InT> &b, int ldb,
+      const HostOrDeviceScalar<CompT> &beta, DeviceMemory<OutT> *c, int ldc,
+      blas::ComputationType computation_type, blas::AlgorithmType algorithm,
+      blas::ProfileResult *output_profile_result);
   // mutex that guards the CLBlast handle for this device.
   mutex mu_;
 
