@@ -135,7 +135,13 @@ function prepare_src() {
   done
   popd > /dev/null
   cp -R $RUNFILES/third_party/eigen3 ${TMPDIR}/third_party
-
+  if [[ $PLATFORM == Darwin ]]; then {
+    echo Mac platform
+    SO_SUFFIX=dylib
+  } else {
+    echo Linux platform
+    SO_SUFFIX=so
+  } fi
   mkdir -p ${TMPDIR}/tensorflow/third_party/coriander
   cp third_party/coriander/build/libcocl.${SO_SUFFIX} ${TMPDIR}/tensorflow/third_party/coriander/ || true
   cp third_party/coriander/build/libeasycl.${SO_SUFFIX} ${TMPDIR}/tensorflow/third_party/coriander/ || true
