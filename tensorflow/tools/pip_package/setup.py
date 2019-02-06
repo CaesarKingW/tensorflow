@@ -240,7 +240,7 @@ setup(
     version=_VERSION.replace('-', ''),
     description=DOCLINES[0],
     long_description='\n'.join(DOCLINES[2:]),
-    url='https://www.tensorflow.org/;https://github.com/pint1022/tensorflow-cl'',
+    url='https://www.tensorflow.org/;https://github.com/pint1022/tensorflow-cl',
     download_url='https://github.com/pint1022/tensorflow',
     author='Pintuitive Inc.',
     author_email='swang@panyi.com',
