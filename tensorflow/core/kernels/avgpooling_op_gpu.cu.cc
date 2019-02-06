@@ -100,6 +100,7 @@ bool RunAvePoolBackwardNHWC(const T* const top_diff, const int num,
   return d.ok();
 }
 
+
 //template bool RunAvePoolBackwardNHWC(
 //    const double* const top_diff, const int num, const int height,
 //    const int width, const int channels, const int pooled_height,

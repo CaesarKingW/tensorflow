@@ -298,7 +298,7 @@ REGISTER_KERNEL_BUILDER(Name("ZerosLike")
                         ZerosLikeOp<CPUDevice, int32>);
 #endif  // TENSORFLOW_USE_SYCL
 
-//#if GOOGLE_CUDA
+#if GOOGLE_CUDA
 //REGISTER_KERNEL(bool, GPU);
 //REGISTER_KERNEL(Eigen::half, GPU);
 //REGISTER_KERNEL(bfloat16, GPU);
@@ -313,7 +313,7 @@ REGISTER_KERNEL_BUILDER(Name("ZerosLike")
                             .TypeConstraint<int32>("T")
                             .HostMemory("y"),
                         ZerosLikeOp<CPUDevice, int32>);
-//#endif  // GOOGLE_CUDA
+#endif  // GOOGLE_CUDA
 
 #undef REGISTER_KERNEL
 
