@@ -29,20 +29,20 @@ REGISTER(BinaryOp, GPU, "Add", functor::add, float);
 // A special GPU kernel for int32.
 // TODO(b/25387198): Also enable int32 in device memory. This kernel
 // registration requires all int32 inputs and outputs to be in host memory.
-//REGISTER_KERNEL_BUILDER(Name("Add")
-//                            .Device(DEVICE_GPU)
-//                            .HostMemory("x")
-//                            .HostMemory("y")
-//                            .HostMemory("z")
-//                            .TypeConstraint<int32>("T"),
-//                        BinaryOp<CPUDevice, functor::add<int32>>);
-//REGISTER_KERNEL_BUILDER(Name("AddV2")
-//                            .Device(DEVICE_GPU)
-//                            .HostMemory("x")
-//                            .HostMemory("y")
-//                            .HostMemory("z")
-//                            .TypeConstraint<int32>("T"),
-//                        BinaryOp<CPUDevice, functor::add<int32>>);
+REGISTER_KERNEL_BUILDER(Name("Add")
+                            .Device(DEVICE_GPU)
+                            .HostMemory("x")
+                            .HostMemory("y")
+                            .HostMemory("z")
+                            .TypeConstraint<int32>("T"),
+                        BinaryOp<CPUDevice, functor::add<int32>>);
+REGISTER_KERNEL_BUILDER(Name("AddV2")
+                            .Device(DEVICE_GPU)
+                            .HostMemory("x")
+                            .HostMemory("y")
+                            .HostMemory("z")
+                            .TypeConstraint<int32>("T"),
+                        BinaryOp<CPUDevice, functor::add<int32>>);
 //#endif
 
 #if TENSORFLOW_USE_SYCL
