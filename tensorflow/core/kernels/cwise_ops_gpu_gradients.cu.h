@@ -34,8 +34,8 @@ namespace tensorflow {
 namespace functor {
 
 typedef Eigen::GpuDevice GPUDevice;
-typedef std::complex<float> complex64;
-typedef std::complex<double> complex128;
+//typedef std::complex<float> complex64;
+//typedef std::complex<double> complex128;
 
 // Partial specialization of SimpleBinaryFunctor<Device=GPUDevice, Functor>.
 template <typename Functor>
