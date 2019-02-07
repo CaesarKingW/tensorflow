@@ -317,7 +317,7 @@ TF_CALL_POD_TYPES(REGISTER_KERNELS);
 TF_CALL_string(REGISTER_KERNELS);
 #undef REGISTER_KERNELS
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 // Forward declarations of the function specializations for GPU (to prevent
 // building the GPU versions here, they will be built compiling _gpu.cu.cc).
@@ -340,14 +340,14 @@ namespace functor {
   DECLARE_GPU_SPEC_DIM(T, 7) \
   DECLARE_GPU_SPEC_DIM(T, 8)
 
-TF_CALL_uint8(DECLARE_GPU_SPEC);
-TF_CALL_int8(DECLARE_GPU_SPEC);
-TF_CALL_bool(DECLARE_GPU_SPEC);
-TF_CALL_half(DECLARE_GPU_SPEC);
+//TF_CALL_uint8(DECLARE_GPU_SPEC);
+//TF_CALL_int8(DECLARE_GPU_SPEC);
+//TF_CALL_bool(DECLARE_GPU_SPEC);
+//TF_CALL_half(DECLARE_GPU_SPEC);
 TF_CALL_float(DECLARE_GPU_SPEC);
-TF_CALL_double(DECLARE_GPU_SPEC);
-TF_CALL_complex64(DECLARE_GPU_SPEC);
-TF_CALL_complex128(DECLARE_GPU_SPEC);
+//TF_CALL_double(DECLARE_GPU_SPEC);
+//TF_CALL_complex64(DECLARE_GPU_SPEC);
+//TF_CALL_complex128(DECLARE_GPU_SPEC);
 #undef DECLARE_GPU_SPEC
 #undef DECLARE_GPU_SPEC_DIM
 }  // namespace functor
@@ -371,15 +371,15 @@ TF_CALL_complex128(DECLARE_GPU_SPEC);
                               .TypeConstraint<int64>("Tidx") \
                               .HostMemory("axis"),           \
                           ReverseV2Op<GPUDevice, T, int64>)
-TF_CALL_uint8(REGISTER_GPU_KERNELS);
-TF_CALL_int8(REGISTER_GPU_KERNELS);
+//TF_CALL_uint8(REGISTER_GPU_KERNELS);
+//TF_CALL_int8(REGISTER_GPU_KERNELS);
 // TODO decide whether we want to enable the bool kernel.
 // TF_CALL_bool(REGISTER_GPU_KERNELS);
-TF_CALL_half(REGISTER_GPU_KERNELS);
+//TF_CALL_half(REGISTER_GPU_KERNELS);
 TF_CALL_float(REGISTER_GPU_KERNELS);
-TF_CALL_double(REGISTER_GPU_KERNELS);
-TF_CALL_complex64(REGISTER_GPU_KERNELS);
-TF_CALL_complex128(REGISTER_GPU_KERNELS);
+//TF_CALL_double(REGISTER_GPU_KERNELS);
+//TF_CALL_complex64(REGISTER_GPU_KERNELS);
+//TF_CALL_complex128(REGISTER_GPU_KERNELS);
 #undef REGISTER_GPU_KERNEL
 
 // A special GPU kernel for int32.
@@ -408,7 +408,7 @@ REGISTER_KERNEL_BUILDER(Name("ReverseV2")
                             .HostMemory("axis")
                             .HostMemory("output"),
                         ReverseV2Op<CPUDevice, int32, int64>);
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 #ifdef TENSORFLOW_USE_SYCL
 #define REGISTER_SYCL_KERNELS(T)                             \
