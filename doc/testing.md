@@ -26,7 +26,7 @@ On a Mac:
 
 First clone the tests:
 ```
-git clone https://github.com/hughperkins/TensorFlow-Examples -b as-unit-tests
+git clone https://github.com/aymericdamien/TensorFlow-Examples
 ```
 
 Then to run them:
@@ -37,9 +37,9 @@ bash ./run_tests.sh
 
 ## Results
 
-Test results, using [wheel v0.18.3](https://github.com/hughperkins/tf-coriander/releases/tag/v0.18.3) :
+Test results, using [wheel v1.11.0](https://github.com/pint1022/tensorflow/releases/tag/v0.18.3) :
 
-| Test | Mac Sierra, using Radeon Pro 450 GPU | Ubuntu 16.04, using NVIDIA K520 |
+| Test | Mac Sierra, using Radeon Pro 450 GPU | Ubuntu 16.04, using NVIDIA K1150 |
 |----- |-------|-------|
 | Unit tests (`py.test -v`) | Pass | Pass |
 | [linear_regression.py](https://github.com/hughperkins/TensorFlow-Examples/blob/as-unit-tests/examples/2_BasicModels/linear_regression.py) |  Ok | Ok |
