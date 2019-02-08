@@ -21,7 +21,7 @@ namespace tensorflow {
 namespace functor {
 //DEFINE_BINARY7(add, Eigen::half, float, double, uint8, int64, complex64,
 //               complex128);
-DEFINE_BINARY2(add, float,int32);
+DEFINE_BINARY1(add, float);
 }  // namespace functor
 }  // namespace tensorflow
 

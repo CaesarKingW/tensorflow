@@ -23,7 +23,7 @@ REGISTER6(BinaryOp, CPU, "AddV2", functor::add, float, Eigen::half, double,
 
 //#if GOOGLE_CUDA
 //REGISTER3(BinaryOp, GPU, "Add", functor::add, float, Eigen::half, double);
-REGISTER2(BinaryOp, GPU, "Add", functor::add, float,int32);
+REGISTER(BinaryOp, GPU, "Add", functor::add, float);
 //REGISTER3(BinaryOp, GPU, "AddV2", functor::add, float, Eigen::half, double);
 
 // A special GPU kernel for int32.
