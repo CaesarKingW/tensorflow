@@ -18,7 +18,7 @@ pip install -r tensorflow/stream_executor/cl/test/requirements.txt
 py.test -v
 ```
 
-On a Mac:
+On a ubuntu 16.04:
 
 <img src="img/mac_sierra_tests.png" width="600" />
 
