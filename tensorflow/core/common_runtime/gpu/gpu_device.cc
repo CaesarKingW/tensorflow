@@ -781,11 +781,11 @@ int64 MinSystemMemory(int64 available_memory) {
   int64 min_system_memory;
   if (available_memory < (1LL << 31)) {
     // 225MiB
-    min_system_memory = 225 * 1024 * 1024;
+    min_system_memory = 50 * 1024 * 1024;
   } else {
     // max(300 MiB, 0.05 * available_memory)
     min_system_memory =
-        std::max(int64{314572800}, static_cast<int64>(available_memory * 0.05));
+        std::max(int64{100*1024*1024}, static_cast<int64>(available_memory * 0.05));
   }
 #if defined(__GNUC__) && defined(__OPTIMIZE__)
 // Do nothing
@@ -803,6 +803,7 @@ int64 MinSystemMemory(int64 available_memory) {
   // and Video RAM
   min_system_memory = 1 << 30;
 #endif
+
   return min_system_memory;
 }
 
