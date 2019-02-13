@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 // See docs in ../ops/array_ops.cc.
 #include "tensorflow/core/kernels/snapshot_op.h"
@@ -27,8 +27,8 @@ typedef Eigen::GpuDevice GPUDevice;
 // Definition of the GPU implementations declared in softsign_op.cc.
 #define DEFINE_GPU_KERNELS(T) template struct functor::Snapshot<GPUDevice, T>;
 
-TF_CALL_POD_TYPES(DEFINE_GPU_KERNELS);
+TF_CALL_GPU_NUMBER_TYPES(DEFINE_GPU_KERNELS);
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA

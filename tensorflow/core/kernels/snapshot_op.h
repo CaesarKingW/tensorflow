@@ -16,9 +16,9 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_SNAPSHOT_OP_H_
 #define TENSORFLOW_CORE_KERNELS_SNAPSHOT_OP_H_
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define EIGEN_USE_GPU
-#endif
+//#endif
 
 #define EIGEN_USE_THREADS
 
