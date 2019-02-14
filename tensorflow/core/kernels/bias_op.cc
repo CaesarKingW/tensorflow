@@ -543,33 +543,35 @@ class BiasGradOp<GPUDevice, T> : public OpKernel {
     if (!AutotuneBiasGrad::GetInstance()->Find(bias_parameters, &algo_config)) {
       BiasGradGPUProfileResult best_result;
       // Initialize the timer.
-      perftools::gputools::Timer timer(stream->parent());
-      stream->InitTimer(&timer);
-      stream->ThenStartTimer(&timer);
+//      perftools::gputools::Timer timer(stream->parent());
+//      stream->InitTimer(&timer);
+//      stream->ThenStartTimer(&timer);
       ComputeWithCustomKernel(context, output_backprop, batch, width, height,
                               channel, output);
-      stream->ThenStopTimer(&timer);
-      uint64 elapsed_microseconds = timer.Microseconds();
-      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
-              << " Native algo latency: " << elapsed_microseconds;
-      if (elapsed_microseconds < best_result.elapsed_time()) {
+//      stream->ThenStopTimer(&timer);
+      uint64 elapsed_microseconds = 0;
+//      uint64 elapsed_microseconds = timer.Microseconds();
+//      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
+//              << " Native algo latency: " << elapsed_microseconds;
+//      if (elapsed_microseconds < best_result.elapsed_time()) {
         best_result.set_algorithm(BiasAddGradGPUMode::kNative);
         best_result.set_elapsed_time(elapsed_microseconds);
-      }
+//      }
 
       // Try reduction and profile.
-      stream->ThenStartTimer(&timer);
+//      stream->ThenStartTimer(&timer);
       ComputeWithReduceSum(context, output_backprop, batch, width, height,
                            channel, output);
-      stream->ThenStopTimer(&timer);
+//      stream->ThenStopTimer(&timer);
 
-      elapsed_microseconds = timer.Microseconds();
-      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
-              << " Reduction algo latency: " << elapsed_microseconds;
-      if (elapsed_microseconds < best_result.elapsed_time()) {
+      elapsed_microseconds = 100000;
+//      elapsed_microseconds = timer.Microseconds();
+//      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
+//              << " Reduction algo latency: " << elapsed_microseconds;
+//      if (elapsed_microseconds < best_result.elapsed_time()) {
         best_result.set_algorithm(BiasAddGradGPUMode::kReduction);
         best_result.set_elapsed_time(elapsed_microseconds);
-      }
+//      }
 
       algo_config.set_mode(best_result.algorithm());
       AutotuneBiasGrad::GetInstance()->Insert(bias_parameters, algo_config);

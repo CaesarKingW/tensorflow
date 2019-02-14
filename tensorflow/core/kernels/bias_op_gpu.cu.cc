@@ -259,11 +259,13 @@ void BiasGradGPU<T>::compute(const GPUDevice& d, const T* output_backprop,
 
   const int max_shared_memory_size = d.sharedMemPerBlock() / 2;
   int32 shared_memory_size = 0;
-  if (data_format == FORMAT_NHWC) {
-    shared_memory_size = bias_size * sizeof(typename AccumulatorType<T>::type);
-  }
+//  if (data_format == FORMAT_NHWC) {
+//    shared_memory_size = bias_size * sizeof(typename AccumulatorType<T>::type);
+//  }
   // Check if we have enough shared memory.
-  if (shared_memory_size <= max_shared_memory_size) {
+//FIXME
+//  if (shared_memory_size <= max_shared_memory_size) {
+  if (false) {
     if (data_format == FORMAT_NHWC) {
       BiasGradNHWC_SharedAtomics<T>
           <<<config.block_count, config.thread_per_block, shared_memory_size,
