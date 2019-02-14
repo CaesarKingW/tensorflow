@@ -141,7 +141,7 @@ bool BFCAllocator::Extend(size_t alignment, size_t rounded_bytes) {
   VLOG(1) << "Total allocated bytes: "
           << strings::HumanReadableNumBytes(total_region_allocated_bytes_);
 
-  cout << "Allocated memory at " << mem_addr << " to "
+  VLOG(1) << "Allocated memory at " << mem_addr << " to "
           << static_cast<void*>(static_cast<char*>(mem_addr) + bytes);
   region_manager_.AddAllocationRegion(mem_addr, bytes);
 

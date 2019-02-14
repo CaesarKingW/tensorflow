@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #define EIGEN_USE_GPU
 
@@ -21,7 +21,7 @@ limitations under the License.
 
 #include "tensorflow/core/framework/register_types.h"
 
-#include "tensorflow/core/kernels/reduction_gpu_kernels.cu.h"
+//#include "tensorflow/core/kernels/reduction_gpu_kernels.cu.h"
 #include "tensorflow/core/kernels/reduction_ops_common.h"
 
 namespace tensorflow {
@@ -49,14 +49,14 @@ class L2LossOp<GPUDevice, T> : public OpKernel {
     Tensor* output = nullptr;
     OP_REQUIRES_OK(context,
                    context->allocate_output(0, TensorShape({}), &output));
-    typedef cub::TransformInputIterator<T, squareHalf<T>, T*> inputIterType;
-    inputIterType input_itr((T*)input.flat<T>().data(), squareHalf<T>());
+//    typedef cub::TransformInputIterator<T, squareHalf<T>, T*> inputIterType;
+//    inputIterType input_itr((T*)input.flat<T>().data(), squareHalf<T>());
     typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
 
     Constants<GPUDevice> constants;
-    functor::ReduceImpl<T, cub::Sum, T*, inputIterType, ReductionAxes>(
-        context, (T*)output->flat<T>().data(), input_itr, 1,
-        input.flat<T>().size(), 1, 1, 0, constants.kZero, cub::Sum());
+//    functor::ReduceImpl<T, cub::Sum, T*, inputIterType, ReductionAxes>(
+//        context, (T*)output->flat<T>().data(), input_itr, 1,
+//        input.flat<T>().size(), 1, 1, 0, constants.kZero, cub::Sum());
   }
 };
 
@@ -67,10 +67,10 @@ class L2LossOp<GPUDevice, T> : public OpKernel {
       L2LossOp<GPUDevice, T>);
 
 REGISTER_GPU_KERNEL(float);
-REGISTER_GPU_KERNEL(double);
-REGISTER_GPU_KERNEL(Eigen::half);
+//REGISTER_GPU_KERNEL(double);
+//REGISTER_GPU_KERNEL(Eigen::half);
 #undef REGISTER_GPU_KERNEL
 
 }  // namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA

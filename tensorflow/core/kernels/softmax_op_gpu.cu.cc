@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 #include "tensorflow/core/lib/strings/str_util.h"
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 #define EIGEN_USE_GPU
 
@@ -27,7 +27,8 @@ limitations under the License.
 
 #include "tensorflow/core/util/cuda_kernel_helper.h"
 
-#include "tensorflow/core/kernels/reduction_gpu_kernels.cu.h"
+//#include "tensorflow/core/kernels/reduction_gpu_kernels.cu.h"
+
 #include "tensorflow/core/kernels/reduction_ops_common.h"
 
 namespace tensorflow {
@@ -46,17 +47,17 @@ __device__ __host__ EIGEN_STRONG_INLINE
   return t;
 }
 
-template <>
-__device__ __host__ EIGEN_STRONG_INLINE float strict_cast<float, Eigen::half>(
-    Eigen::half t) {
-  return functor::HalfToFloat()(t);
-}
+//template <>
+//__device__ __host__ EIGEN_STRONG_INLINE float strict_cast<float, Eigen::half>(
+//    Eigen::half t) {
+//  return functor::HalfToFloat()(t);
+//}
 
-template <>
-__device__ __host__ EIGEN_STRONG_INLINE Eigen::half
-strict_cast<Eigen::half, float>(float t) {
-  return functor::FloatToHalf()(t);
-}
+//template <>
+//__device__ __host__ EIGEN_STRONG_INLINE Eigen::half
+//strict_cast<Eigen::half, float>(float t) {
+//  return functor::FloatToHalf()(t);
+//}
 
 template <typename T>
 struct softmax_traits {
@@ -119,9 +120,9 @@ void DoRowReduction(OpKernelContext* context, T* output, InputIter input,
   Constants<GPUDevice> constants;
 
   Op op;
-
-  functor::ReduceImpl<T, Op, T*, InputIter, ReductionAxes>(
-      context, output, input, 2, rows, cols, 1, 1, constants.kOne, op);
+//FIXME
+//  functor::ReduceImpl<T, Op, T*, InputIter, ReductionAxes>(
+//      context, output, input, 2, rows, cols, 1, 1, constants.kOne, op);
 }
 }  // namespace
 
@@ -145,6 +146,7 @@ class SoftmaxOpGPU : public OpKernel {
                                 {0}, 0, logits_in_.shape(), &softmax_out));
 
     const cudaStream_t& cu_stream = GetCudaStream(context);
+//    const CLStream& cu_stream = GetCudaStream(context);
     if (logits_in_.NumElements() > 0) {
       Tensor max_logits;
       Tensor sum_probs;
@@ -157,36 +159,36 @@ class SoftmaxOpGPU : public OpKernel {
                      context->allocate_temp(DataTypeToEnum<acc_type>::value,
                                             softmax_out->shape(), &sum_probs));
 
-      DoRowReduction<T, cub::Max, const T*>(
-          context, const_cast<T*>(max_logits.flat<T>().data()),
-          reinterpret_cast<const T*>(logits_in_.flat<T>().data()), rows, cols);
+//      DoRowReduction<T, cub::Max, const T*>(
+//          context, const_cast<T*>(max_logits.flat<T>().data()),
+//          reinterpret_cast<const T*>(logits_in_.flat<T>().data()), rows, cols);
 
       const int numThreads = 128;
       const int numBlocks = Eigen::divup(rows * cols, numThreads);
 
-      cub::CountingInputIterator<int> counting_iterator(0);
-      typedef cub::TransformInputIterator<acc_type,
-                                          SubtractAndExpFunctor<T, acc_type>,
-                                          cub::CountingInputIterator<int>>
-          InputIterType;
+//      cub::CountingInputIterator<int> counting_iterator(0);
+//      typedef cub::TransformInputIterator<acc_type,
+//                                          SubtractAndExpFunctor<T, acc_type>,
+//                                          cub::CountingInputIterator<int>>
+//          InputIterType;
 
-      InputIterType input_itr(
-          counting_iterator,
-          SubtractAndExpFunctor<T, acc_type>(
-              reinterpret_cast<const T*>(logits_in_.flat<T>().data()),
-              reinterpret_cast<const T*>(max_logits.flat<T>().data()), cols));
+//      InputIterType input_itr(
+//          counting_iterator,
+//          SubtractAndExpFunctor<T, acc_type>(
+//              reinterpret_cast<const T*>(logits_in_.flat<T>().data()),
+//              reinterpret_cast<const T*>(max_logits.flat<T>().data()), cols));
 
-      DoRowReduction<acc_type, cub::Sum, InputIterType>(
-          context, const_cast<acc_type*>(sum_probs.flat<acc_type>().data()),
-          input_itr, rows, cols);
+//      DoRowReduction<acc_type, cub::Sum, InputIterType>(
+//          context, const_cast<acc_type*>(sum_probs.flat<acc_type>().data()),
+//          input_itr, rows, cols);
 
-      GenerateNormalizedProb<T, acc_type>
-          <<<numBlocks, numThreads, 0, cu_stream>>>(
-              reinterpret_cast<const T*>(logits_in_.flat<T>().data()),
-              reinterpret_cast<const acc_type*>(
-                  sum_probs.flat<acc_type>().data()),
-              reinterpret_cast<const T*>(max_logits.flat<T>().data()),
-              const_cast<T*>(softmax_out->flat<T>().data()), rows, cols, log_);
+//      GenerateNormalizedProb<T, acc_type>
+//          <<<numBlocks, numThreads, 0, cu_stream>>>(
+//              reinterpret_cast<const T*>(logits_in_.flat<T>().data()),
+//              reinterpret_cast<const acc_type*>(
+//                  sum_probs.flat<acc_type>().data()),
+//              reinterpret_cast<const T*>(max_logits.flat<T>().data()),
+//              const_cast<T*>(softmax_out->flat<T>().data()), rows, cols, log_);
     }
   }
 
@@ -194,22 +196,22 @@ class SoftmaxOpGPU : public OpKernel {
   bool log_;
 };
 
-REGISTER_KERNEL_BUILDER(
-    Name("Softmax").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-    SoftmaxOpGPU<Eigen::half>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Softmax").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+//    SoftmaxOpGPU<Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("Softmax").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     SoftmaxOpGPU<float>);
-REGISTER_KERNEL_BUILDER(
-    Name("Softmax").Device(DEVICE_GPU).TypeConstraint<double>("T"),
-    SoftmaxOpGPU<double>);
-REGISTER_KERNEL_BUILDER(
-    Name("LogSoftmax").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-    SoftmaxOpGPU<Eigen::half>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("Softmax").Device(DEVICE_GPU).TypeConstraint<double>("T"),
+//    SoftmaxOpGPU<double>);
+//REGISTER_KERNEL_BUILDER(
+//    Name("LogSoftmax").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+//    SoftmaxOpGPU<Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("LogSoftmax").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     SoftmaxOpGPU<float>);
 
 }  // end namespace tensorflow
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA

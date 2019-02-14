@@ -31,7 +31,7 @@ limitations under the License.
 #include "tensorflow/core/platform/types.h"
 
 //#include "tensorflow/core/kernels/reduction_gpu_kernels.cu.h"
-//#include "tensorflow/core/kernels/reduction_ops_common.h"
+#include "tensorflow/core/kernels/reduction_ops_common.h"
 
 namespace tensorflow {
 
@@ -298,25 +298,25 @@ void BiasGradGPU<T>::compute(const GPUDevice& d, const T* output_backprop,
   }
 }
 
-//template <typename T>
-//void BiasGradGPU<T>::DoRowReduction(OpKernelContext* context, T* output,
-//                                    const T* input, int rows, int cols) {
-//  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
-//  Constants<GPUDevice> constants;
+template <typename T>
+void BiasGradGPU<T>::DoRowReduction(OpKernelContext* context, T* output,
+                                    const T* input, int rows, int cols) {
+  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
+  Constants<GPUDevice> constants;
 //  cub::Sum op;
 //  functor::ReduceImpl<T, cub::Sum, T*, const T*, ReductionAxes>(
 //      context, output, input, 2, rows, cols, 1, 1, constants.kOne, op);
-//}
-//
-//template <typename T>
-//void BiasGradGPU<T>::DoColReduction(OpKernelContext* context, T* output,
-//                                    const T* input, int rows, int cols) {
-//  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
-//  Constants<GPUDevice> constants;
+}
+
+template <typename T>
+void BiasGradGPU<T>::DoColReduction(OpKernelContext* context, T* output,
+                                    const T* input, int rows, int cols) {
+  typedef const Eigen::array<TTypes<float>::Tensor::Index, 1>& ReductionAxes;
+  Constants<GPUDevice> constants;
 //  cub::Sum op;
 //  functor::ReduceImpl<T, cub::Sum, T*, const T*, ReductionAxes>(
 //      context, output, input, 2, rows, cols, 1, 1, constants.kZero, op);
-//}
+}
 
 #define DEFINE_GPU_SPECS(T)   \
   template struct BiasGPU<T>; \
