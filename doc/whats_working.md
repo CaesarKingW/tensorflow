@@ -11,3 +11,8 @@
 - gradients, automatic differentiation, back-propagation
 - trainers, eg `tf.train.AdamOptimizer`
 - ReLU, `tf.nn.relu`
+
+# What's not working
+- shared memory on device
+- 'cub' library and function calls to the cub
+-  float type only
