@@ -768,7 +768,7 @@ class Conv3DBackpropInputOp<GPUDevice, T> : public OpKernel {
       }
       OP_REQUIRES(context,
                   best_result.is_valid() || best_result_no_scratch.is_valid(),
-                  errors::NotFound("No algorithm worked!"));
+                  errors::NotFound("grad_ops_3d: No algorithm worked!"));
       if (best_result.is_valid()) {
         algorithm_config.set_algorithm(best_result.algorithm());
       }
@@ -1166,7 +1166,7 @@ class Conv3DBackpropFilterOp<GPUDevice, T> : public OpKernel {
       }
       OP_REQUIRES(context,
                   best_result.is_valid() || best_result_no_scratch.is_valid(),
-                  errors::NotFound("No algorithm worked!"));
+                  errors::NotFound("grad_ops_3d_2: No algorithm worked!"));
       if (best_result.is_valid()) {
         algorithm_config.set_algorithm(best_result.algorithm());
       }

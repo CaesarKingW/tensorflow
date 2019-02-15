@@ -2347,13 +2347,13 @@ bool CldnnSupport::GetConvolveAlgorithms(
 //    algo_types.push_back(CUDNN_CONVOLUTION_FWD_ALGO_WINOGRAD_NONFUSED);
 //  }
 //
-//  out_algorithms->clear();
-//  for (auto i : algo_types) {
-//    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
+  out_algorithms->clear();
+  for (auto i : algo_types) {
+    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
 //    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
 //      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
 //    }
-//  }
+  }
   return true;
 }
 
@@ -2406,13 +2406,13 @@ bool CldnnSupport::GetConvolveBackwardDataAlgorithms(
 //    algo_types.push_back(CUDNN_CONVOLUTION_BWD_DATA_ALGO_WINOGRAD_NONFUSED);
 //  }
 //
-//  out_algorithms->clear();
-//  for (auto i : algo_types) {
-//    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
-//    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
-//      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
-//    }
-//  }
+  out_algorithms->clear();
+  for (auto i : algo_types) {
+    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
+    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
+      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
+    }
+  }
   return true;
 }
 
@@ -2438,13 +2438,13 @@ bool CldnnSupport::GetConvolveBackwardFilterAlgorithms(
 ////    algo_types.push_back(CUDNN_CONVOLUTION_BWD_FILTER_ALGO_WINOGRAD_NONFUSED);
 //  }
 //
-//  out_algorithms->clear();
-//  for (auto i : algo_types) {
-//    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
-//    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
-//      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
-//    }
-//  }
+  out_algorithms->clear();
+  for (auto i : algo_types) {
+    out_algorithms->push_back({i, /*use_tensor_ops=*/false});
+    if (cc_major >= 7 && CUDNN_VERSION >= 7000 && TensorOpMathEnabled()) {
+      out_algorithms->push_back({i, /*use_tensor_ops=*/true});
+    }
+  }
   return true;
 }
 

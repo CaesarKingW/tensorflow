@@ -44,10 +44,10 @@ limitations under the License.
 #include "tensorflow/core/util/use_cudnn.h"
 #include "tensorflow/core/util/work_sharder.h"
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #include "tensorflow/core/kernels/conv_ops_gpu.h"
 #include "tensorflow/core/platform/stream_executor.h"
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 namespace {
 
@@ -531,7 +531,7 @@ template struct LaunchConv2DBackpropFilterOp<CPUDevice, float>;
 template struct LaunchConv2DBackpropFilterOp<CPUDevice, double>;
 
 // GPU definitions.
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 // The slow version (but compiles for GPU)
 
 // A dummy type to group forward backward filter autotune results together.
@@ -948,21 +948,21 @@ void LaunchConv2DBackpropFilterOp<Eigen::GpuDevice, T>::operator()(
               .ok();
       if (cudnn_launch_status) {
         if (profile_result.is_valid()) {
-          if (profile_result.elapsed_time_in_ms() <
-              best_result.elapsed_time_in_ms()) {
-            best_result = profile_result;
-          }
-          if (scratch_allocator.TotalByteSize() == 0 &&
-              profile_result.elapsed_time_in_ms() <
-                  best_result_no_scratch.elapsed_time_in_ms()) {
+//          if (profile_result.elapsed_time_in_ms() <
+//              best_result.elapsed_time_in_ms()) {
+//            best_result = profile_result;
+//          }
+//          if (scratch_allocator.TotalByteSize() == 0 &&
+//              profile_result.elapsed_time_in_ms() <
+//                  best_result_no_scratch.elapsed_time_in_ms()) {
             best_result_no_scratch = profile_result;
-          }
+//          }
         }
       }
     }
     OP_REQUIRES(ctx,
                 best_result.is_valid() || best_result_no_scratch.is_valid(),
-                errors::NotFound("No algorithm worked!"));
+                errors::NotFound("filter_ops: No algorithm worked!"));
     if (best_result.is_valid()) {
       algorithm_config.set_algorithm(best_result.algorithm());
     }
@@ -1062,6 +1062,6 @@ template struct LaunchConv2DBackpropFilterOp<GPUDevice, float>;
 //template struct LaunchConv2DBackpropFilterOp<GPUDevice, Eigen::half>;
 //template struct LaunchConv2DBackpropFilterOp<GPUDevice, double>;
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

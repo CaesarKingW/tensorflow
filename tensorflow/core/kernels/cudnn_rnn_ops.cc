@@ -1447,7 +1447,7 @@ class CudnnRNNForwardOpV2<GPUDevice, T>
     }
 
     if (!best_result.is_valid()) {
-      return Status(error::Code::INTERNAL, "No algorithm worked!");
+      return Status(error::Code::INTERNAL, "rnn_ops: No algorithm worked!");
     }
     algo_config->set_algorithm(best_result.algorithm());
     AutoTuneRnnConfigMap::GetInstance()->Insert(rnn_params, *algo_config);
