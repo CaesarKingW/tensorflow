@@ -250,7 +250,7 @@ TF_CALL_ALL_TYPES(REGISTER)
 #undef REGISTER
 #endif  // INTEL_MKL
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 Status TransposeGpuOp::DoTranspose(OpKernelContext* ctx, const Tensor& in,
                                    gtl::ArraySlice<int32> perm, Tensor* out) {
   typedef Eigen::GpuDevice GPUDevice;
@@ -279,7 +279,7 @@ Status ConjugateTransposeGpuOp::DoTranspose(OpKernelContext* ctx,
                           ConjugateTransposeGpuOp);
 TF_CALL_POD_TYPES(REGISTER);
 #undef REGISTER
-#endif
+//#endif
 
 #ifdef TENSORFLOW_USE_SYCL
 Status TransposeSyclOp::DoTranspose(OpKernelContext* ctx, const Tensor& in,
