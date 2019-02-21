@@ -175,21 +175,21 @@ Status DoTransposeImpl(const Device& d, const Tensor& in,
 //    case DT_INT8:
 //    case DT_QINT8:
 //    case DT_QUINT8:
-//    case DT_UINT8:
-//      Transpose<Device, uint8>::run(d, in, perm, out);
-//      break;
+    case DT_UINT8:
+      Transpose<Device, uint8>::run(d, in, perm, out);
+      break;
 //
 //    case DT_BFLOAT16:
 //    case DT_HALF:
 //    case DT_INT16:
 //    case DT_QINT16:
 //    case DT_QUINT16:
-//    case DT_UINT16:
-//      Transpose<Device, uint16>::run(d, in, perm, out);
-//      break;
+    case DT_UINT16:
+      Transpose<Device, uint16>::run(d, in, perm, out);
+      break;
 
     case DT_FLOAT:
-    case DT_INT32:
+//    case DT_INT32:
 //    case DT_QINT32:
       Transpose<Device, uint32>::run(d, in, perm, out);
       break;

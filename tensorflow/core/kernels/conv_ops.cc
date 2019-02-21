@@ -835,15 +835,15 @@ namespace functor {
   extern template struct PadInput<GPUDevice, T, int, 4>
 
 DECLARE_GPU_SPEC(float);
-//DECLARE_GPU_SPEC(Eigen::half);
+DECLARE_GPU_SPEC(Eigen::half);
 //DECLARE_GPU_SPEC(double);
 #undef DECLARE_GPU_SPEC
 }  // namespace functor
 
 // Registration of the GPU implementations.
-//REGISTER_KERNEL_BUILDER(
-//    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-//    Conv2DOp<GPUDevice, Eigen::half>);
+REGISTER_KERNEL_BUILDER(
+    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+    Conv2DOp<GPUDevice, Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     Conv2DOp<GPUDevice, float>);
@@ -853,7 +853,7 @@ REGISTER_KERNEL_BUILDER(
 
 // To be used inside depthwise_conv_op.cc.
 template struct LaunchConv2DOp<GPUDevice, float>;
-//template struct LaunchConv2DOp<GPUDevice, Eigen::half>;
+template struct LaunchConv2DOp<GPUDevice, Eigen::half>;
 //template struct LaunchConv2DOp<GPUDevice, double>;
 
 //#endif  // GOOGLE_CUDA

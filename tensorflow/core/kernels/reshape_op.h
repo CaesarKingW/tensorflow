@@ -70,13 +70,16 @@ class ReshapeOp : public OpKernel {
       OP_REQUIRES(
           context, product * missing == input.NumElements(),
           errors::InvalidArgument(
-              "Input to reshape is a tensor with ", input.NumElements(),
+              "compute: Input to reshape is a tensor with ", input.NumElements(),
               " values, but the requested shape requires a multiple of ",
               product));
       shape.set_dim(unknown_index, missing);
     }
+//    if (shape.num_elements() <= 0)
+//    	return;
+
     OP_REQUIRES(context, shape.num_elements() == input.NumElements(),
-                errors::InvalidArgument("Input to reshape is a tensor with ",
+                errors::InvalidArgument("compute_1: Input to reshape is a tensor with ",
                                         input.NumElements(),
                                         " values, but the requested shape has ",
                                         shape.num_elements()));
@@ -112,7 +115,8 @@ class ReshapeOp : public OpKernel {
                                        " must be non-negative, not ", size);
       } else {
         shape->AddDim(size);
-        (*product) *= size;
+        if (size > 0)
+           (*product) *= size;
       }
     }
     return Status::OK();

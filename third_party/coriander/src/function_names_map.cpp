@@ -62,6 +62,7 @@ void FunctionNamesMap::populateKnownValues() {
     knownFunctionsMap["floorf"] = "floor";
     knownFunctionsMap["logf"] = "log";
     knownFunctionsMap["sqrtf"] = "sqrt";
+    knownFunctionsMap["urem"] = "urem";
 
     knownFunctionsMap["sqrt"] = "sqrt";
     knownFunctionsMap["pow"] = "pow";
