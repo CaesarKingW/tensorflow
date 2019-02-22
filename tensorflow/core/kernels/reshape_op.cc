@@ -42,8 +42,9 @@ REGISTER_KERNEL_BUILDER(Name("Reshape")
                               .TypeConstraint<type>("T")        \
                               .TypeConstraint<int64>("Tshape"), \
                           ReshapeOp);
-TF_CALL_NUMBER_TYPES_NO_INT32(REGISTER_GPU_KERNEL);
-TF_CALL_bool(REGISTER_GPU_KERNEL);
+//TF_CALL_NUMBER_TYPES_NO_INT32(REGISTER_GPU_KERNEL);
+TF_CALL_GPU_ALL_TYPES(REGISTER_GPU_KERNEL);
+//TF_CALL_bool(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 
 #ifdef TENSORFLOW_USE_SYCL

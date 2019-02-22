@@ -171,9 +171,9 @@ Status DoTransposeImpl(const Device& d, const Tensor& in,
   CHECK_EQ(in.dims(), perm.size());
   CHECK_EQ(in.dtype(), out->dtype());
   switch (in.dtype()) {
-//    case DT_BOOL:
-//    case DT_INT8:
-//    case DT_QINT8:
+    case DT_BOOL:
+    case DT_INT8:
+    case DT_QINT8:
 //    case DT_QUINT8:
     case DT_UINT8:
       Transpose<Device, uint8>::run(d, in, perm, out);
