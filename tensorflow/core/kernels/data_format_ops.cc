@@ -179,7 +179,7 @@ TF_CALL_int32(DECLARE_GPU_SPECS);
   extern template struct DataFormatVecPermute<GPUDevice, T>;
 #define DECLARE_GPU_SPECS(T) DECLARE_GPU_SPEC(T);
 TF_CALL_int32(DECLARE_GPU_SPECS);
-//TF_CALL_int64(DECLARE_GPU_SPECS);
+TF_CALL_int64(DECLARE_GPU_SPECS);
 #undef DECLARE_GPU_SPEC
 }  // namespace functor
 
@@ -189,7 +189,7 @@ TF_CALL_int32(DECLARE_GPU_SPECS);
       Name("DataFormatDimMap").Device(DEVICE_GPU).TypeConstraint<T>("T"), \
       DataFormatDimMapOp<GPUDevice, T>);
 TF_CALL_int32(REGISTER_GPU_KERNEL);
-//TF_CALL_int64(REGISTER_GPU_KERNEL);
+TF_CALL_int64(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 
 #define REGISTER_GPU_KERNEL(T)                                                \
@@ -204,7 +204,7 @@ TF_CALL_int32(REGISTER_GPU_KERNEL);
                               .TypeConstraint<T>("T"),                        \
                           DataFormatVecPermuteOp<CPUDevice, T>);
 TF_CALL_int32(REGISTER_GPU_KERNEL);
-//TF_CALL_int64(REGISTER_GPU_KERNEL);
+TF_CALL_int64(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 //#endif  // GOOGLE_CUDA
 

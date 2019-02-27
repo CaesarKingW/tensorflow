@@ -949,6 +949,8 @@ void LaunchConv2DBackpropInputOp<GPUDevice, T>::operator()(
   static int64 ConvolveBackwardDataScratchSize = GetCudnnWorkspaceLimit(
       "TF_CUDNN_WORKSPACE_LIMIT_IN_MB", 1LL << 32  // 4GB by default
   );
+  //FIXME:
+//  ConvolveBackwardDataScratchSize=0;
   CudnnScratchAllocator scratch_allocator(ConvolveBackwardDataScratchSize, ctx);
   int device_id = stream->parent()->device_ordinal();
   DataType dtype = out_backprop.dtype();
