@@ -3791,22 +3791,22 @@ struct ThenBlasWithProfileImpl {
 };
 }  // anonymous namespace
 
-//Stream &Stream::ThenBlasGemvWithProfiling(
-//    blas::Transpose trans, uint64 m, uint64 n, float alpha,
-//    const DeviceMemory<float> &a, int lda, const DeviceMemory<float> &x,
-//    int incx, float beta, DeviceMemory<float> *y, int incy,
-//    blas::ProfileResult *output_profile_result) {
-//  VLOG_CALL(PARAM(trans), PARAM(m), PARAM(n), PARAM(alpha), PARAM(a),
-//            PARAM(lda), PARAM(x), PARAM(incx), PARAM(beta), PARAM(y),
-//            PARAM(incy));
-//
-//  ThenBlasWithProfileImpl<
-//      blas::Transpose, uint64, uint64, float, const DeviceMemory<float> &, int,
-//      const DeviceMemory<float> &, int, float, DeviceMemory<float> *, int>
-//      impl;
-//  return impl(this, &blas::BlasSupport::DoBlasGemvWithProfiling, trans, m, n,
-//              alpha, a, lda, x, incx, beta, y, incy, output_profile_result);
-//}
+Stream &Stream::ThenBlasGemvWithProfiling(
+    blas::Transpose trans, uint64 m, uint64 n, float alpha,
+    const DeviceMemory<float> &a, int lda, const DeviceMemory<float> &x,
+    int incx, float beta, DeviceMemory<float> *y, int incy,
+    blas::ProfileResult *output_profile_result) {
+  VLOG_CALL(PARAM(trans), PARAM(m), PARAM(n), PARAM(alpha), PARAM(a),
+            PARAM(lda), PARAM(x), PARAM(incx), PARAM(beta), PARAM(y),
+            PARAM(incy));
+
+  ThenBlasWithProfileImpl<
+      blas::Transpose, uint64, uint64, float, const DeviceMemory<float> &, int,
+      const DeviceMemory<float> &, int, float, DeviceMemory<float> *, int>
+      impl;
+  return impl(this, &blas::BlasSupport::DoBlasGemvWithProfiling, trans, m, n,
+              alpha, a, lda, x, incx, beta, y, incy, output_profile_result);
+}
 
 //Stream &Stream::ThenBlasGemvWithProfiling(
 //    blas::Transpose trans, uint64 m, uint64 n, double alpha,

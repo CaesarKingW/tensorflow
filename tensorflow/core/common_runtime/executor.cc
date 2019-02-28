@@ -1717,6 +1717,13 @@ void ExecutorState::Process(TaggedNode tagged_node, int64 scheduled_nsec) {
         nodestats::SetOpStart(stats);
         device->ComputeAsync(async, &state->ctx, done);
       } else {
+//          if (vlog_) {
+            VLOG(2) << "PPU: " << id << " step "
+                    << params.step_id << " " << SummarizeNode(*node)
+                    << (tagged_node.is_dead ? " is dead: " : "")
+                    << " device: " << device->name();
+//          }
+
         // Synchronous computes.
         OpKernelContext ctx(&params, item.num_outputs);
         nodestats::SetOpStart(stats);

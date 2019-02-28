@@ -174,59 +174,59 @@ Status DoTransposeImpl(const Device& d, const Tensor& in,
     case DT_BOOL:
     case DT_INT8:
     case DT_QINT8:
-    case DT_QUINT8:
+//    case DT_QUINT8:
     case DT_UINT8:
       Transpose<Device, uint8>::run(d, in, perm, out);
       break;
-
-    case DT_BFLOAT16:
-    case DT_HALF:
-    case DT_INT16:
-    case DT_QINT16:
-    case DT_QUINT16:
+//
+//    case DT_BFLOAT16:
+//    case DT_HALF:
+//    case DT_INT16:
+//    case DT_QINT16:
+//    case DT_QUINT16:
     case DT_UINT16:
       Transpose<Device, uint16>::run(d, in, perm, out);
       break;
 
     case DT_FLOAT:
     case DT_INT32:
-    case DT_QINT32:
+//    case DT_QINT32:
       Transpose<Device, uint32>::run(d, in, perm, out);
       break;
 
-    case DT_DOUBLE:
-    case DT_INT64:
-      Transpose<Device, uint64>::run(d, in, perm, out);
-      break;
+//    case DT_DOUBLE:
+//    case DT_INT64:
+//      Transpose<Device, uint64>::run(d, in, perm, out);
+//      break;
 
-    case DT_COMPLEX64:
-      if (conjugate) {
-#if defined(__ANDROID__) and !defined(__clang__)
-        // Workaround for GCC compiler bug in Android toolchain.
-        return errors::Unimplemented(
-            "Conjugate transpose of complex64 not supported for GCC on "
-            "Android.");
-#else
-        Transpose<Device, complex64, /*conjugate=*/true>::run(d, in, perm, out);
-#endif
-      } else {
-        Transpose<Device, uint64>::run(d, in, perm, out);
-      }
-      break;
+//    case DT_COMPLEX64:
+//      if (conjugate) {
+//#if defined(__ANDROID__) and !defined(__clang__)
+//        // Workaround for GCC compiler bug in Android toolchain.
+//        return errors::Unimplemented(
+//            "Conjugate transpose of complex64 not supported for GCC on "
+//            "Android.");
+//#else
+//        Transpose<Device, complex64, /*conjugate=*/true>::run(d, in, perm, out);
+//#endif
+//      } else {
+//        Transpose<Device, uint64>::run(d, in, perm, out);
+//      }
+//      break;
 
-    case DT_COMPLEX128:
-      if (conjugate) {
-        Transpose<Device, complex128, /*conjugate=*/true>::run(d, in, perm,
-                                                               out);
-      } else {
-        Transpose<Device, complex128, /*conjugate=*/false>::run(d, in, perm,
-                                                                out);
-      }
-      break;
-
-    case DT_STRING:
-      Transpose<Device, string>::run(d, in, perm, out);
-      break;
+//    case DT_COMPLEX128:
+//      if (conjugate) {
+//        Transpose<Device, complex128, /*conjugate=*/true>::run(d, in, perm,
+//                                                               out);
+//      } else {
+//        Transpose<Device, complex128, /*conjugate=*/false>::run(d, in, perm,
+//                                                                out);
+//      }
+//      break;
+//
+//    case DT_STRING:
+//      Transpose<Device, string>::run(d, in, perm, out);
+//      break;
 
     default:
       return errors::Unimplemented("Unsupported dtype on CPU: ", in.dtype());

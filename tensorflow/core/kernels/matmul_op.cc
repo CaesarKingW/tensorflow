@@ -24,11 +24,11 @@ limitations under the License.
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/kernels/fill_functor.h"
 #include "tensorflow/core/util/matmul_autotune.h"
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #include "cuda/include/cuda.h"
 #include "tensorflow/core/kernels/gpu_utils.h"
 #include "tensorflow/core/platform/stream_executor.h"
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 namespace tensorflow {
 
@@ -111,11 +111,11 @@ bool ExplicitVectorMatrixOptimization<Eigen::half>(
 
 template <typename Device, typename T>
 struct LaunchMatMulBase {
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
   typedef se::blas::AlgorithmType AlgorithmType;
-#else
-  typedef int64 AlgorithmType;
-#endif  // GOOGLE_CUDA
+//#else
+//  typedef int64 AlgorithmType;
+//#endif  // GOOGLE_CUDA
 
   static void launch(
       OpKernelContext* ctx, const Tensor& a, const Tensor& b,
@@ -154,7 +154,7 @@ template <typename T, bool USE_CUBLAS>
 struct LaunchMatMul<SYCLDevice, T, USE_CUBLAS> : public LaunchMatMulSYCL<T> {};
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 namespace {
 
@@ -433,7 +433,7 @@ struct LaunchMatMul<GPUDevice, T, true /* USE_CUBLAS */> {
   }
 };
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 template <typename Device, typename T, bool USE_CUBLAS>
 class MatMulOp : public OpKernel {
@@ -618,13 +618,13 @@ TF_CALL_complex64(REGISTER_CPU);
 TF_CALL_complex128(REGISTER_CPU);
 #endif
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 TF_CALL_float(REGISTER_GPU);
-TF_CALL_double(REGISTER_GPU);
-TF_CALL_complex64(REGISTER_GPU);
-TF_CALL_complex128(REGISTER_GPU);
-TF_CALL_half(REGISTER_GPU);
-#endif  // GOOGLE_CUDA
+//TF_CALL_double(REGISTER_GPU);
+//TF_CALL_complex64(REGISTER_GPU);
+//TF_CALL_complex128(REGISTER_GPU);
+//TF_CALL_half(REGISTER_GPU);
+//#endif  // GOOGLE_CUDA
 
 #ifdef TENSORFLOW_USE_SYCL
 #define REGISTER_SYCL(T)                                         \

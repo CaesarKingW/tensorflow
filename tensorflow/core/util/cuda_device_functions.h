@@ -484,7 +484,7 @@ using ToTypeIfConvertible =
 
 template <typename T, typename U>
 __device__ detail::ToTypeIfConvertible<U, T> CudaAtomicAdd(T* ptr, U value) {
-  return atomicAdd(ptr, value);
+  return atomicAdd( ptr, value);
 }
 
 __device__ inline Eigen::half CudaAtomicAdd(Eigen::half* ptr,

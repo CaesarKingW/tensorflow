@@ -126,6 +126,18 @@ class ArgMinOp
   REGISTER_KERNEL_BUILDER(Name("ArgMax")                            \
                               .Device(DEVICE_CPU)                   \
                               .TypeConstraint<type>("T")            \
+                              .TypeConstraint<int64>("output_type") \
+                              .HostMemory("dimension"),             \
+                          ArgMaxOp<CPUDevice, type, int64>);        \
+  REGISTER_KERNEL_BUILDER(Name("ArgMin")                            \
+                              .Device(DEVICE_CPU)                   \
+                              .TypeConstraint<type>("T")            \
+                              .TypeConstraint<int64>("output_type") \
+                              .HostMemory("dimension"),             \
+                          ArgMinOp<CPUDevice, type, int64>);        \
+  REGISTER_KERNEL_BUILDER(Name("ArgMax")                            \
+                              .Device(DEVICE_CPU)                   \
+                              .TypeConstraint<type>("T")            \
                               .TypeConstraint<int32>("output_type") \
                               .HostMemory("dimension"),             \
                           ArgMaxOp<CPUDevice, type, int32>);        \

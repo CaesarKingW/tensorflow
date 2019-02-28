@@ -23,8 +23,8 @@ limitations under the License.
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/kernels/relu_op_functor.h"
-#include "tensorflow/core/util/cuda_kernel_helper.h"
-#include "tensorflow/core/util/cuda_launch_config.h"
+//#include "tensorflow/core/util/cuda_kernel_helper.h"
+//#include "tensorflow/core/util/cuda_launch_config.h"
 
 namespace tensorflow {
 
@@ -37,52 +37,52 @@ namespace functor {
 __global__ void ReluGradHalfKernel(const Eigen::half* gradient,
                                    const Eigen::half* feature,
                                    Eigen::half* backprop, int32 count) {
-  int32 half2_count = count >> 1;
-  int32 index = blockIdx.x * blockDim.x + threadIdx.x;
-  const int32 total_device_threads = gridDim.x * blockDim.x;
-
-  while (index < half2_count) {
-    // The fast branch.
-    // One half2, two fp16, is fetched and processed at a time.
-    half2 gradient_h2 = reinterpret_cast<const half2*>(gradient)[index];
-    half2 feature_h2 = reinterpret_cast<const half2*>(feature)[index];
-    half2* p_backprop_h2 = reinterpret_cast<half2*>(backprop) + index;
-
-#if __CUDA_ARCH__ >= 530
-    // Fast path, when half2 primitives are available.
-    const half2 kZeroH2 = __float2half2_rn(0.f);
-    // mask = (feature > 0)
-    half2 mask_h2 = __hgt2(feature_h2, kZeroH2);
-    // backprop = mask * gradient
-    half2 backprop_h2 = __hmul2(mask_h2, gradient_h2);
-#else
-    // Fall back: convert half2 to float2 for processing.
-    float2 feature_f2 = __half22float2(feature_h2);
-    float2 gradient_f2 = __half22float2(gradient_h2);
-    float2 backprop_f2 = make_float2((feature_f2.x > 0) ? gradient_f2.x : 0,
-                                     (feature_f2.y > 0) ? gradient_f2.y : 0);
-    // Convert back to half2.
-    half2 backprop_h2 = __float22half2_rn(backprop_f2);
-#endif
-
-    // Write back the result.
-    *p_backprop_h2 = backprop_h2;
-
-    index += total_device_threads;
-  }
-
-  if ((count & 0x1) == 1 && index == half2_count) {
-    // If the total number of the elements is odd, process the last element.
-    Eigen::half grad_h = gradient[count - 1];
-    Eigen::half feature_h = feature[count - 1];
-
-    float grad_f = static_cast<float>(grad_h);
-    float feature_f = static_cast<float>(feature_h);
-    float backprop_f = (feature_f > 0) ? grad_f : 0;
-
-    Eigen::half backprop_h(backprop_f);
-    backprop[count - 1] = backprop_h;
-  }
+//  int32 half2_count = count >> 1;
+//  int32 index = blockIdx.x * blockDim.x + threadIdx.x;
+//  const int32 total_device_threads = gridDim.x * blockDim.x;
+//
+//  while (index < half2_count) {
+//    // The fast branch.
+//    // One half2, two fp16, is fetched and processed at a time.
+//    half2 gradient_h2 = reinterpret_cast<const half2*>(gradient)[index];
+//    half2 feature_h2 = reinterpret_cast<const half2*>(feature)[index];
+//    half2* p_backprop_h2 = reinterpret_cast<half2*>(backprop) + index;
+//
+//#if __CUDA_ARCH__ >= 530
+//    // Fast path, when half2 primitives are available.
+//    const half2 kZeroH2 = __float2half2_rn(0.f);
+//    // mask = (feature > 0)
+//    half2 mask_h2 = __hgt2(feature_h2, kZeroH2);
+//    // backprop = mask * gradient
+//    half2 backprop_h2 = __hmul2(mask_h2, gradient_h2);
+//#else
+//    // Fall back: convert half2 to float2 for processing.
+//    float2 feature_f2 = __half22float2(feature_h2);
+//    float2 gradient_f2 = __half22float2(gradient_h2);
+//    float2 backprop_f2 = make_float2((feature_f2.x > 0) ? gradient_f2.x : 0,
+//                                     (feature_f2.y > 0) ? gradient_f2.y : 0);
+//    // Convert back to half2.
+//    half2 backprop_h2 = __float22half2_rn(backprop_f2);
+//#endif
+//
+//    // Write back the result.
+//    *p_backprop_h2 = backprop_h2;
+//
+//    index += total_device_threads;
+//  }
+//
+//  if ((count & 0x1) == 1 && index == half2_count) {
+//    // If the total number of the elements is odd, process the last element.
+//    Eigen::half grad_h = gradient[count - 1];
+//    Eigen::half feature_h = feature[count - 1];
+//
+//    float grad_f = static_cast<float>(grad_h);
+//    float feature_f = static_cast<float>(feature_h);
+//    float backprop_f = (feature_f > 0) ? grad_f : 0;
+//
+//    Eigen::half backprop_h(backprop_f);
+//    backprop[count - 1] = backprop_h;
+//  }
 }
 
 template <typename Device>
@@ -104,19 +104,19 @@ struct ReluGrad<Device, Eigen::half> {
     if (count == 0) return;
     int32 half2_count = Eigen::divup(count, 2);
     constexpr int32 kThreadInBlock = 512;
-    CudaLaunchConfig config = GetCudaLaunchConfigFixedBlockSize(
-        half2_count, d, ReluGradHalfKernel, 0, kThreadInBlock);
-    ReluGradHalfKernel<<<config.block_count, config.thread_per_block, 0,
-                         d.stream()>>>(gradient.data(), feature.data(),
-                                       backprop.data(), count);
+//    CudaLaunchConfig config = GetCudaLaunchConfigFixedBlockSize(
+//        half2_count, d, ReluGradHalfKernel, 0, kThreadInBlock);
+//    ReluGradHalfKernel<<<config.block_count, config.thread_per_block, 0,
+//                         d.stream()>>>(gradient.data(), feature.data(),
+//                                       backprop.data(), count);
   }
 };
 
 __global__ void Relu_int8x4_kernel(int vect_count, const int32* input,
                                    int32* output) {
-  CUDA_1D_KERNEL_LOOP(index, vect_count) {
-    output[index] = __vmaxs4(input[index], 0);
-  }
+//  CUDA_1D_KERNEL_LOOP(index, vect_count) {
+//    output[index] = max(input[index], 0);
+//  }
 }
 
 // Functor used by ReluOp to do the computations.
@@ -133,12 +133,12 @@ struct Relu<Device, qint8> {
 
     int32 vect_count = Eigen::divup(count, 4);
     constexpr int32 kThreadInBlock = 512;
-    CudaLaunchConfig config = GetCudaLaunchConfigFixedBlockSize(
-        vect_count, d, Relu_int8x4_kernel, 0, kThreadInBlock);
-    Relu_int8x4_kernel<<<config.block_count, config.thread_per_block, 0,
-                         d.stream()>>>(
-        vect_count, reinterpret_cast<const int32*>(input.data()),
-        reinterpret_cast<int32*>(output.data()));
+//    CudaLaunchConfig config = GetCudaLaunchConfigFixedBlockSize(
+//        vect_count, d, Relu_int8x4_kernel, 0, kThreadInBlock);
+//    Relu_int8x4_kernel<<<config.block_count, config.thread_per_block, 0,
+//                         d.stream()>>>(
+//        vect_count, reinterpret_cast<const int32*>(input.data()),
+//        reinterpret_cast<int32*>(output.data()));
   }
 };
 

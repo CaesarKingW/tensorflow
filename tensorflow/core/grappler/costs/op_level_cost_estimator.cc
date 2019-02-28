@@ -390,7 +390,8 @@ OpLevelCostEstimator::DeviceInfo OpLevelCostEstimator::GetDeviceInfo(
       }
     }
   } else if (device.type() == "GPU") {
-    const string architecture = device.environment().at("architecture");
+//    const string architecture = device.environment().at("architecture");
+    const string architecture = "PPU";
     int cores_per_multiprocessor;
     if (architecture < "3") {
       // Fermi
@@ -401,17 +402,26 @@ OpLevelCostEstimator::DeviceInfo OpLevelCostEstimator::GetDeviceInfo(
     } else if (architecture < "6") {
       // Maxwell
       cores_per_multiprocessor = 128;
+    } else if (architecture == "PPU") {
+      // Pintuitive
+      cores_per_multiprocessor = 256;
     } else {
       // Pascal (compute capability version 6) and Volta (compute capability
       // version 7)
       cores_per_multiprocessor = 64;
     }
-    gflops = device.num_cores() * device.frequency() * 1e-3 *
-             cores_per_multiprocessor * kOpsPerMac;
-    if (device.bandwidth() > 0) {
-      gb_per_sec = device.bandwidth() / 1e6;
-    } else {
-      gb_per_sec = 100;
+    if (architecture == "PPU") {
+    	gflops = 3200;
+    	gb_per_sec = 100;
+    } else
+    {
+        gflops = device.num_cores() * device.frequency() * 1e-3 *
+                 cores_per_multiprocessor * kOpsPerMac;
+        if (device.bandwidth() > 0) {
+          gb_per_sec = device.bandwidth() / 1e6;
+        } else {
+          gb_per_sec = 100;
+        }
     }
   }
   VLOG(1) << "Device: " << device.type() << " gflops: " << gflops

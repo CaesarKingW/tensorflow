@@ -21,12 +21,17 @@ limitations under the License.
 #define EIGEN_USE_GPU
 
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
-#include "external/cub_archive/cub/device/device_reduce.cuh"
-#include "external/cub_archive/cub/device/device_segmented_reduce.cuh"
-#include "external/cub_archive/cub/iterator/counting_input_iterator.cuh"
-#include "external/cub_archive/cub/iterator/transform_input_iterator.cuh"
-#include "external/cub_archive/cub/warp/warp_reduce.cuh"
-#include "cuda/include/cuComplex.h"
+//#include "external/cub_archive/cub/device/device_reduce.cuh"
+//#include "external/cub_archive/cub/device/device_segmented_reduce.cuh"
+//#include "external/cub_archive/cub/iterator/counting_input_iterator.cuh"
+//#include "external/cub_archive/cub/iterator/transform_input_iterator.cuh"
+//#include "external/cub_archive/cub/warp/warp_reduce.cuh"
+//#include "thrust/system/cuda/detail/cub/device/device_reduce.cuh"
+////#include "thrust/system/cuda/detail/cub/device/device_segmented_reduce.cuh"
+//#include "thrust/system/cuda/detail/cub/iterator/counting_input_iterator.cuh"
+//#include "thrust/system/cuda/detail/cub/iterator/transform_input_iterator.cuh"
+//#include "thrust/system/cuda/detail/cub/warp/warp_reduce.cuh"
+//#include "cuda/include/cuComplex.h"
 #include "tensorflow/core/kernels/reduction_ops.h"
 #include "tensorflow/core/lib/core/bits.h"
 #include "tensorflow/core/util/cuda_kernel_helper.h"
@@ -49,25 +54,25 @@ struct Sum {
 
 // needed to work around a compiler bug in nvcc - it doesn't seem to like
 // the overloaded addition op for std::complex
-template <>
-struct Sum<std::complex<float>> {
-  __host__ __device__ std::complex<float> operator()(
-      const std::complex<float>& a, const std::complex<float>& b) const {
-    auto result = cuCaddf(make_cuComplex(a.real(), a.imag()),
-                          make_cuComplex(b.real(), b.imag()));
-    return std::complex<float>(result.x, result.y);
-  }
-};
+//template <>
+//struct Sum<std::complex<float>> {
+//  __host__ __device__ std::complex<float> operator()(
+//      const std::complex<float>& a, const std::complex<float>& b) const {
+//    auto result = cuCaddf(make_cuComplex(a.real(), a.imag()),
+//                          make_cuComplex(b.real(), b.imag()));
+//    return std::complex<float>(result.x, result.y);
+//  }
+//};
 
-template <>
-struct Sum<std::complex<double>> {
-  __host__ __device__ std::complex<double> operator()(
-      const std::complex<double>& a, const std::complex<double>& b) const {
-    auto result = cuCadd(make_cuDoubleComplex(a.real(), a.imag()),
-                         make_cuDoubleComplex(b.real(), b.imag()));
-    return std::complex<double>(result.x, result.y);
-  }
-};
+//template <>
+//struct Sum<std::complex<double>> {
+//  __host__ __device__ std::complex<double> operator()(
+//      const std::complex<double>& a, const std::complex<double>& b) const {
+//    auto result = cuCadd(make_cuDoubleComplex(a.real(), a.imag()),
+//                         make_cuDoubleComplex(b.real(), b.imag()));
+//    return std::complex<double>(result.x, result.y);
+//  }
+//};
 
 template <typename T>
 struct Prod {
@@ -78,25 +83,25 @@ struct Prod {
 
 // needed to work around a compiler bug in nvcc - it doesn't seem to like
 // the overloaded multiply op for std::complex
-template <>
-struct Prod<std::complex<float>> {
-  __host__ __device__ std::complex<float> operator()(
-      const std::complex<float>& a, const std::complex<float>& b) const {
-    auto result = cuCmulf(make_cuComplex(a.real(), a.imag()),
-                          make_cuComplex(b.real(), b.imag()));
-    return std::complex<float>(result.x, result.y);
-  }
-};
+//template <>
+//struct Prod<std::complex<float>> {
+//  __host__ __device__ std::complex<float> operator()(
+//      const std::complex<float>& a, const std::complex<float>& b) const {
+//    auto result = cuCmulf(make_cuComplex(a.real(), a.imag()),
+//                          make_cuComplex(b.real(), b.imag()));
+//    return std::complex<float>(result.x, result.y);
+//  }
+//};
 
-template <>
-struct Prod<std::complex<double>> {
-  __host__ __device__ std::complex<double> operator()(
-      const std::complex<double>& a, const std::complex<double>& b) const {
-    auto result = cuCmul(make_cuDoubleComplex(a.real(), a.imag()),
-                         make_cuDoubleComplex(b.real(), b.imag()));
-    return std::complex<double>(result.x, result.y);
-  }
-};
+//template <>
+//struct Prod<std::complex<double>> {
+//  __host__ __device__ std::complex<double> operator()(
+//      const std::complex<double>& a, const std::complex<double>& b) const {
+//    auto result = cuCmul(make_cuDoubleComplex(a.real(), a.imag()),
+//                         make_cuDoubleComplex(b.real(), b.imag()));
+//    return std::complex<double>(result.x, result.y);
+//  }
+//};
 
 template <typename T, typename outT = T>
 struct DividesBy {
@@ -109,59 +114,59 @@ struct DividesBy {
 
 // needed to work around a compiler bug in nvcc - it doesn't seem to like
 // the overloaded ops for std::complex
-template <>
-struct DividesBy<std::complex<float>> {
-  cuFloatComplex divisor;
+//template <>
+//struct DividesBy<std::complex<float>> {
+//  cuFloatComplex divisor;
+//
+//  __host__ __device__ explicit DividesBy(std::complex<float> divisor)
+//      : divisor(make_cuComplex(divisor.real(), divisor.imag())) {}
+//
+//  // implements
+//  __host__ __device__ std::complex<float> operator()(
+//      const std::complex<float>& x) const {
+//    auto result = cuCdivf(make_cuComplex(x.real(), x.imag()), divisor);
+//    return std::complex<float>(result.x, result.y);
+//  }
+//};
 
-  __host__ __device__ explicit DividesBy(std::complex<float> divisor)
-      : divisor(make_cuComplex(divisor.real(), divisor.imag())) {}
-
-  // implements
-  __host__ __device__ std::complex<float> operator()(
-      const std::complex<float>& x) const {
-    auto result = cuCdivf(make_cuComplex(x.real(), x.imag()), divisor);
-    return std::complex<float>(result.x, result.y);
-  }
-};
-
-template <>
-struct DividesBy<std::complex<double>> {
-  cuDoubleComplex divisor;
-
-  __host__ __device__ explicit DividesBy(std::complex<double> divisor)
-      : divisor(make_cuDoubleComplex(divisor.real(), divisor.imag())) {}
-
-  // implements
-  __host__ __device__ std::complex<double> operator()(
-      const std::complex<double>& x) const {
-    auto result = cuCdiv(make_cuDoubleComplex(x.real(), x.imag()), divisor);
-    return std::complex<double>(result.x, result.y);
-  }
-};
-
-template <>
-struct DividesBy<float, Eigen::half> {
-  float divisor;
-
-  __host__ __device__ explicit DividesBy(float divisor) : divisor(divisor) {}
-
-  __host__ __device__ Eigen::half operator()(const float& x) const {
-    return Eigen::half(x / divisor);
-  }
-};
-
-struct HalfToFloat {
-  __host__ __device__ float operator()(const Eigen::half& x) const {
-    return Eigen::half_impl::half_to_float(x);
-  }
-};
-
-struct FloatToHalf {
-  __host__ __device__ Eigen::half operator()(const float& x) const {
-    return Eigen::half_impl::float_to_half_rtne(x);
-  }
-};
-
+//template <>
+//struct DividesBy<std::complex<double>> {
+//  cuDoubleComplex divisor;
+//
+//  __host__ __device__ explicit DividesBy(std::complex<double> divisor)
+//      : divisor(make_cuDoubleComplex(divisor.real(), divisor.imag())) {}
+//
+//  // implements
+//  __host__ __device__ std::complex<double> operator()(
+//      const std::complex<double>& x) const {
+//    auto result = cuCdiv(make_cuDoubleComplex(x.real(), x.imag()), divisor);
+//    return std::complex<double>(result.x, result.y);
+//  }
+//};
+//
+//template <>
+//struct DividesBy<float, Eigen::half> {
+//  float divisor;
+//
+//  __host__ __device__ explicit DividesBy(float divisor) : divisor(divisor) {}
+//
+//  __host__ __device__ Eigen::half operator()(const float& x) const {
+//    return Eigen::half(x / divisor);
+//  }
+//};
+//
+//struct HalfToFloat {
+//  __host__ __device__ float operator()(const Eigen::half& x) const {
+//    return Eigen::half_impl::half_to_float(x);
+//  }
+//};
+//
+//struct FloatToHalf {
+//  __host__ __device__ Eigen::half operator()(const float& x) const {
+//    return Eigen::half_impl::float_to_half_rtne(x);
+//  }
+//};
+//
 struct And {
   __host__ __device__ bool operator()(const bool& a, const bool& b) const {
     return a && b;
@@ -313,11 +318,11 @@ __global__ void ColumnReduceMax16ColumnsKernel(
 
   const int rows_in_this_warp = min(rows_per_warp, num_rows - start_row_warp);
   // not the most efficient way to do this sum
-  for (int i = 1; i < rows_in_this_warp; ++i) {
-    value_type tmp = cub::ShuffleIndex<32, value_type>(
-        sum, static_cast<int>(threadIdx.x + i * num_cols), 0xffffffff);
-    if (lane < num_cols) sum = op(sum, tmp);
-  }
+//  for (int i = 1; i < rows_in_this_warp; ++i) {
+//    value_type tmp = cub::ShuffleIndex<32, value_type>(
+//        sum, static_cast<int>(threadIdx.x + i * num_cols), 0xffffffff);
+//    if (lane < num_cols) sum = op(sum, tmp);
+//  }
 
   if (lane < num_cols) partial_sums[lane * 33 + threadIdx.y] = sum;
 
@@ -382,7 +387,8 @@ __global__ void ColumnReduceKernel(
     //  #         #  block boundary
     //  -         =
     //            =
-    const int numRowsThisBlock =
+//    const int numRowsThisBlock =
+    int numRowsThisBlock =
         min(blockDim.y, num_rows - blockIdx.y * blockDim.y);
 
     for (int row = 1; row < numRowsThisBlock; ++row) {
@@ -915,49 +921,49 @@ struct ReduceFunctor<GPUDevice, Eigen::internal::MeanReducer<T>> {
   }
 };
 
-template <>
-struct ReduceFunctor<GPUDevice, Eigen::internal::MeanReducer<Eigen::half>> {
-  template <typename OUT_T, typename IN_T, typename ReductionAxes>
-  static void Reduce(OpKernelContext* ctx, OUT_T out, IN_T in,
-                     const ReductionAxes& reduction_axes,
-                     const Eigen::internal::MeanReducer<Eigen::half>& reducer) {
-    float divisor = 1.f;
-    if (out.rank() == 0)
-      divisor = in.size();
-    else if (out.rank() == 1 && in.rank() == 2 && reduction_axes[0] == 0)
-      divisor = in.dimension(0);
-    else if (out.rank() == 1 && in.rank() == 2 && reduction_axes[0] == 1)
-      divisor = in.dimension(1);
-    else if (out.rank() == 1 && in.rank() == 3 && reduction_axes[0] == 0 &&
-             reduction_axes[1] == 2)
-      divisor = in.dimension(0) * in.dimension(2);
-    else if (out.rank() == 2 && in.rank() == 3 && reduction_axes[0] == 1)
-      divisor = in.dimension(1);
-    DividesBy<float, Eigen::half> div_op(divisor);
+//template <>
+//struct ReduceFunctor<GPUDevice, Eigen::internal::MeanReducer<Eigen::half>> {
+//  template <typename OUT_T, typename IN_T, typename ReductionAxes>
+//  static void Reduce(OpKernelContext* ctx, OUT_T out, IN_T in,
+//                     const ReductionAxes& reduction_axes,
+//                     const Eigen::internal::MeanReducer<Eigen::half>& reducer) {
+//    float divisor = 1.f;
+//    if (out.rank() == 0)
+//      divisor = in.size();
+//    else if (out.rank() == 1 && in.rank() == 2 && reduction_axes[0] == 0)
+//      divisor = in.dimension(0);
+//    else if (out.rank() == 1 && in.rank() == 2 && reduction_axes[0] == 1)
+//      divisor = in.dimension(1);
+//    else if (out.rank() == 1 && in.rank() == 3 && reduction_axes[0] == 0 &&
+//             reduction_axes[1] == 2)
+//      divisor = in.dimension(0) * in.dimension(2);
+//    else if (out.rank() == 2 && in.rank() == 3 && reduction_axes[0] == 1)
+//      divisor = in.dimension(1);
+//    DividesBy<float, Eigen::half> div_op(divisor);
+//
+//    typedef cub::TransformInputIterator<float, HalfToFloat, Eigen::half*>
+//        inputIterType;
+//    inputIterType input_itr((Eigen::half*)in.data(), HalfToFloat());
+//
+//    typedef TransformOutputIterator<Eigen::half, float,
+//                                    DividesBy<float, Eigen::half>>
+//        outputIterType;
+//    outputIterType itr((Eigen::half*)out.data(), div_op);
+//
+//    ReduceImpl<float, cub::Sum, outputIterType, inputIterType, ReductionAxes>(
+//        ctx, itr, input_itr, in.rank(), in.dimension(0),
+//        in.rank() >= 2 ? in.dimension(1) : 1,
+//        in.rank() >= 3 ? in.dimension(2) : 1, out.rank(), reduction_axes,
+//        cub::Sum());
+//  }
 
-    typedef cub::TransformInputIterator<float, HalfToFloat, Eigen::half*>
-        inputIterType;
-    inputIterType input_itr((Eigen::half*)in.data(), HalfToFloat());
-
-    typedef TransformOutputIterator<Eigen::half, float,
-                                    DividesBy<float, Eigen::half>>
-        outputIterType;
-    outputIterType itr((Eigen::half*)out.data(), div_op);
-
-    ReduceImpl<float, cub::Sum, outputIterType, inputIterType, ReductionAxes>(
-        ctx, itr, input_itr, in.rank(), in.dimension(0),
-        in.rank() >= 2 ? in.dimension(1) : 1,
-        in.rank() >= 3 ? in.dimension(2) : 1, out.rank(), reduction_axes,
-        cub::Sum());
-  }
-
-  template <typename OUT_T>
-  static void FillIdentity(
-      const GPUDevice& d, OUT_T out,
-      const Eigen::internal::MeanReducer<Eigen::half>& reducer) {
-    FillIdentityEigenImpl(d, To32Bit(out), reducer);
-  }
-};
+//  template <typename OUT_T>
+//  static void FillIdentity(
+//      const GPUDevice& d, OUT_T out,
+//      const Eigen::internal::MeanReducer<Eigen::half>& reducer) {
+//    FillIdentityEigenImpl(d, To32Bit(out), reducer);
+//  }
+//};
 
 template <typename T>
 struct ReduceFunctor<GPUDevice, Eigen::internal::MaxReducer<T>> {

@@ -46,10 +46,10 @@ limitations under the License.
 #include "tensorflow/core/util/env_var.h"
 #include "tensorflow/core/util/use_cudnn.h"
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #include "tensorflow/core/platform/stream_executor.h"
 #include "tensorflow/core/util/stream_executor_util.h"
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 /*
  * This module implements ops that fuse a multi-layer multi-step RNN/LSTM model
@@ -77,7 +77,7 @@ namespace tensorflow {
 
 using CPUDevice = Eigen::ThreadPoolDevice;
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 
 using GPUDevice = Eigen::GpuDevice;
 using se::Stream;
@@ -958,9 +958,9 @@ class CudnnRNNParamsSizeOp<GPUDevice, T, Index> : public CudnnRNNKernelCommon {
                               .TypeConstraint<int32>("S"), \
                           CudnnRNNParamsSizeOp<GPUDevice, T, int32>);
 
-TF_CALL_half(REGISTER_GPU);
+//TF_CALL_half(REGISTER_GPU);
 TF_CALL_float(REGISTER_GPU);
-TF_CALL_double(REGISTER_GPU);
+//TF_CALL_double(REGISTER_GPU);
 #undef REGISTER_GPU
 
 // Convert weight and bias params from a platform-specific layout to the
@@ -1092,9 +1092,9 @@ class CudnnRNNParamsToCanonical<GPUDevice, T> : public CudnnRNNKernelCommon {
                               .HostMemory("input_size")     \
                               .TypeConstraint<T>("T"),      \
                           CudnnRNNParamsToCanonical<GPUDevice, T>);
-TF_CALL_half(REGISTER_GPU);
+//TF_CALL_half(REGISTER_GPU);
 TF_CALL_float(REGISTER_GPU);
-TF_CALL_double(REGISTER_GPU);
+//TF_CALL_double(REGISTER_GPU);
 #undef REGISTER_GPU
 
 // Convert weight and bias params from the canonical form to a
@@ -1138,9 +1138,9 @@ class CudnnRNNCanonicalToParams<GPUDevice, T> : public CudnnRNNKernelCommon {
                               .HostMemory("input_size")     \
                               .TypeConstraint<T>("T"),      \
                           CudnnRNNCanonicalToParams<GPUDevice, T>);
-TF_CALL_half(REGISTER_GPU);
+//TF_CALL_half(REGISTER_GPU);
 TF_CALL_float(REGISTER_GPU);
-TF_CALL_double(REGISTER_GPU);
+//TF_CALL_double(REGISTER_GPU);
 #undef REGISTER_GPU
 
 // Run the forward operation of the RNN model.
@@ -1276,9 +1276,9 @@ class CudnnRNNForwardOp<GPUDevice, T> : public CudnnRNNKernelCommon {
       Name("CudnnRNN").Device(DEVICE_GPU).TypeConstraint<T>("T"), \
       CudnnRNNForwardOp<GPUDevice, T>);
 
-TF_CALL_half(REGISTER_GPU);
+//TF_CALL_half(REGISTER_GPU);
 TF_CALL_float(REGISTER_GPU);
-TF_CALL_double(REGISTER_GPU);
+//TF_CALL_double(REGISTER_GPU);
 #undef REGISTER_GPU
 
 template <typename T>
@@ -1447,7 +1447,7 @@ class CudnnRNNForwardOpV2<GPUDevice, T>
     }
 
     if (!best_result.is_valid()) {
-      return Status(error::Code::INTERNAL, "No algorithm worked!");
+      return Status(error::Code::INTERNAL, "rnn_ops: No algorithm worked!");
     }
     algo_config->set_algorithm(best_result.algorithm());
     AutoTuneRnnConfigMap::GetInstance()->Insert(rnn_params, *algo_config);
@@ -1462,9 +1462,9 @@ class CudnnRNNForwardOpV2<GPUDevice, T>
                               .TypeConstraint<T>("T"),     \
                           CudnnRNNForwardOpV2<GPUDevice, T>);
 
-TF_CALL_half(REGISTER_GPU);
+//TF_CALL_half(REGISTER_GPU);
 TF_CALL_float(REGISTER_GPU);
-TF_CALL_double(REGISTER_GPU);
+//TF_CALL_double(REGISTER_GPU);
 #undef REGISTER_GPU
 
 // Run the backward operation of the RNN model.
@@ -1667,14 +1667,14 @@ class CudnnRNNBackwardOpV2<GPUDevice, T>
                               .TypeConstraint<T>("T"),     \
                           CudnnRNNBackwardOpV2<GPUDevice, T>);
 
-TF_CALL_half(REGISTER_GPU);
+//TF_CALL_half(REGISTER_GPU);
 TF_CALL_float(REGISTER_GPU);
-TF_CALL_double(REGISTER_GPU);
+//TF_CALL_double(REGISTER_GPU);
 #undef REGISTER_GPU
 
 // TODO(zhengxq): Add the conversion of Cudnn RNN Params from and to
 // its canonical form.
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

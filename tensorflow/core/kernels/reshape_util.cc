@@ -95,7 +95,7 @@ void Reshape(OpKernelContext *context, const Tensor &input_indices_in,
 
   OP_REQUIRES(
       context, output_shape.num_elements() == dense_size,
-      errors::InvalidArgument("Input to reshape is a tensor with ", dense_size,
+      errors::InvalidArgument("util: Input to reshape is a tensor with ", dense_size,
                               " dense values, but the requested shape has ",
                               output_shape.num_elements()));
 

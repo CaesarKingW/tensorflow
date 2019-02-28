@@ -1072,6 +1072,9 @@ void NewInstructionDumper::runGeneration(LocalValueInfo *localValueInfo, const s
         case Instruction::UDiv:
             dumpBinaryOperator(localValueInfo, "/");
             break;
+        case Instruction::URem:
+            dumpBinaryOperator(localValueInfo, "%");
+            break;
         case Instruction::SRem:
             dumpBinaryOperator(localValueInfo, "%");
             break;

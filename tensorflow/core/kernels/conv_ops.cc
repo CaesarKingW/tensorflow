@@ -750,15 +750,15 @@ void LaunchConv2DOp<GPUDevice, T>::operator()(
               .ok();
       if (cudnn_launch_status) {
         if (profile_result.is_valid()) {
-          if (profile_result.elapsed_time_in_ms() <
-              best_result.elapsed_time_in_ms()) {
-            best_result = profile_result;
-          }
-          if (scratch_allocator.TotalByteSize() == 0 &&
-              profile_result.elapsed_time_in_ms() <
-                  best_result_no_scratch.elapsed_time_in_ms()) {
+//          if (profile_result.elapsed_time_in_ms() <
+//              best_result.elapsed_time_in_ms()) {
+//            best_result = profile_result;
+//          }
+//          if (scratch_allocator.TotalByteSize() == 0 &&
+//              profile_result.elapsed_time_in_ms() <
+//                  best_result_no_scratch.elapsed_time_in_ms()) {
             best_result_no_scratch = profile_result;
-          }
+//          }
         }
       }
     }
@@ -766,7 +766,7 @@ void LaunchConv2DOp<GPUDevice, T>::operator()(
     // utility function.
     OP_REQUIRES(ctx,
                 best_result.is_valid() || best_result_no_scratch.is_valid(),
-                errors::NotFound("No algorithm worked!"));
+                errors::NotFound("conv_ops: No algorithm worked!"));
     if (best_result.is_valid()) {
       algorithm_config.set_algorithm(best_result.algorithm());
     }
@@ -835,15 +835,15 @@ namespace functor {
   extern template struct PadInput<GPUDevice, T, int, 4>
 
 DECLARE_GPU_SPEC(float);
-//DECLARE_GPU_SPEC(Eigen::half);
+DECLARE_GPU_SPEC(Eigen::half);
 //DECLARE_GPU_SPEC(double);
 #undef DECLARE_GPU_SPEC
 }  // namespace functor
 
 // Registration of the GPU implementations.
-//REGISTER_KERNEL_BUILDER(
-//    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
-//    Conv2DOp<GPUDevice, Eigen::half>);
+REGISTER_KERNEL_BUILDER(
+    Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<Eigen::half>("T"),
+    Conv2DOp<GPUDevice, Eigen::half>);
 REGISTER_KERNEL_BUILDER(
     Name("Conv2D").Device(DEVICE_GPU).TypeConstraint<float>("T"),
     Conv2DOp<GPUDevice, float>);
@@ -853,7 +853,7 @@ REGISTER_KERNEL_BUILDER(
 
 // To be used inside depthwise_conv_op.cc.
 template struct LaunchConv2DOp<GPUDevice, float>;
-//template struct LaunchConv2DOp<GPUDevice, Eigen::half>;
+template struct LaunchConv2DOp<GPUDevice, Eigen::half>;
 //template struct LaunchConv2DOp<GPUDevice, double>;
 
 //#endif  // GOOGLE_CUDA

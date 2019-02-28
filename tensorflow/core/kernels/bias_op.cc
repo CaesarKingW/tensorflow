@@ -26,11 +26,11 @@ limitations under the License.
 #include "tensorflow/core/kernels/bounds_check.h"
 #include "tensorflow/core/util/tensor_format.h"
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #include "tensorflow/core/kernels/bias_op_gpu.h"
 #include "tensorflow/core/platform/stream_executor.h"
 #include "tensorflow/stream_executor/cuda/cuda_stream.h"
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 namespace tensorflow {
 
@@ -304,7 +304,7 @@ REGISTER_KERNEL(double);
 #undef REGISTER_KERNEL
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 template <typename T>
 class BiasOp<GPUDevice, T> : public BinaryOp<T> {
  public:
@@ -543,33 +543,35 @@ class BiasGradOp<GPUDevice, T> : public OpKernel {
     if (!AutotuneBiasGrad::GetInstance()->Find(bias_parameters, &algo_config)) {
       BiasGradGPUProfileResult best_result;
       // Initialize the timer.
-      perftools::gputools::Timer timer(stream->parent());
-      stream->InitTimer(&timer);
-      stream->ThenStartTimer(&timer);
+//      perftools::gputools::Timer timer(stream->parent());
+//      stream->InitTimer(&timer);
+//      stream->ThenStartTimer(&timer);
       ComputeWithCustomKernel(context, output_backprop, batch, width, height,
                               channel, output);
-      stream->ThenStopTimer(&timer);
-      uint64 elapsed_microseconds = timer.Microseconds();
-      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
-              << " Native algo latency: " << elapsed_microseconds;
-      if (elapsed_microseconds < best_result.elapsed_time()) {
+//      stream->ThenStopTimer(&timer);
+      uint64 elapsed_microseconds = 0;
+//      uint64 elapsed_microseconds = timer.Microseconds();
+//      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
+//              << " Native algo latency: " << elapsed_microseconds;
+//      if (elapsed_microseconds < best_result.elapsed_time()) {
         best_result.set_algorithm(BiasAddGradGPUMode::kNative);
         best_result.set_elapsed_time(elapsed_microseconds);
-      }
+//      }
 
       // Try reduction and profile.
-      stream->ThenStartTimer(&timer);
+//      stream->ThenStartTimer(&timer);
       ComputeWithReduceSum(context, output_backprop, batch, width, height,
                            channel, output);
-      stream->ThenStopTimer(&timer);
+//      stream->ThenStopTimer(&timer);
 
-      elapsed_microseconds = timer.Microseconds();
-      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
-              << " Reduction algo latency: " << elapsed_microseconds;
-      if (elapsed_microseconds < best_result.elapsed_time()) {
+      elapsed_microseconds = 100000;
+//      elapsed_microseconds = timer.Microseconds();
+//      VLOG(1) << "BiasAddGrad " << bias_parameters.ToString()
+//              << " Reduction algo latency: " << elapsed_microseconds;
+//      if (elapsed_microseconds < best_result.elapsed_time()) {
         best_result.set_algorithm(BiasAddGradGPUMode::kReduction);
         best_result.set_elapsed_time(elapsed_microseconds);
-      }
+//      }
 
       algo_config.set_mode(best_result.algorithm());
       AutotuneBiasGrad::GetInstance()->Insert(bias_parameters, algo_config);
@@ -602,6 +604,6 @@ class BiasGradOp<GPUDevice, T> : public OpKernel {
 TF_CALL_GPU_NUMBER_TYPES(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 }  // namespace tensorflow

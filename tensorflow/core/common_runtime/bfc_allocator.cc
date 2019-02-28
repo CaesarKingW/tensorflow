@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 #include <atomic>
-
+#include <iostream>
 #include "tensorflow/core/common_runtime/bfc_allocator.h"
 
 #include "tensorflow/core/common_runtime/allocator_retry.h"
@@ -27,6 +27,8 @@ limitations under the License.
 #include "tensorflow/core/platform/mutex.h"
 #include "tensorflow/core/platform/types.h"
 
+#define VDEBUG 1
+using namespace std;
 namespace tensorflow {
 
 BFCAllocator::BFCAllocator(SubAllocator* sub_allocator, size_t total_memory,
@@ -180,6 +182,8 @@ BFCAllocator::ChunkHandle BFCAllocator::AllocateChunk() {
 
 void BFCAllocator::DeallocateChunk(ChunkHandle h) {
   Chunk* c = ChunkFromHandle(h);
+//  cout << "DeallocateChunk \n";
+
   c->next = free_chunks_list_;
   free_chunks_list_ = h;
 }
@@ -201,6 +205,8 @@ void* BFCAllocator::AllocateRaw(size_t unused_alignment, size_t num_bytes) {
 
 void* BFCAllocator::AllocateRaw(size_t unused_alignment, size_t num_bytes,
                                 const AllocationAttributes& allocation_attr) {
+//  cout << "AllocateRaw " << num_bytes << "\n";
+
   if (allocation_attr.no_retry_on_failure) {
     // Return immediately upon the first failure if this is for allocating an
     // optional scratch space.
@@ -334,6 +340,8 @@ void* BFCAllocator::FindChunkPtr(BinNum bin_num, size_t rounded_bytes,
 
 void BFCAllocator::SplitChunk(BFCAllocator::ChunkHandle h, size_t num_bytes) {
   // Allocate the new chunk before we do any ChunkFromHandle
+//  cout << "SplitChunk " << num_bytes;
+
   ChunkHandle h_new_chunk = AllocateChunk();
 
   Chunk* c = ChunkFromHandle(h);
@@ -373,6 +381,7 @@ void BFCAllocator::DeallocateRaw(void* ptr) {
 }
 
 void BFCAllocator::DeallocateRawInternal(void* ptr) {
+//  cout << "DeallocateRawInternal \n";
   if (ptr == nullptr) {
     LOG(ERROR) << "tried to deallocate nullptr";
     return;
@@ -425,7 +434,7 @@ void BFCAllocator::Merge(BFCAllocator::ChunkHandle h1,
 void BFCAllocator::DeleteChunk(ChunkHandle h) {
   // Delete h and cleanup all state
   Chunk* c = ChunkFromHandle(h);
-  //  VLOG(4) << "Removing: " << c->ptr;
+    VLOG(4) << "Removing: " << c->ptr;
   region_manager_.erase(c->ptr);
   DeallocateChunk(h);
 }

@@ -1088,7 +1088,7 @@ def tf_gpu_kernel_library(srcs, copts=[], cuda_copts=[], deps=[], hdrs=[],
   copts = copts + _cuda_copts() + if_cuda(cuda_copts)
   if copts == None:
     copts = []
-  copts = copts + ['-Iexternal/protobuf_archive/src']
+  copts = copts + ['-Iexternal/protobuf_archive/src', '-Ithird_party/coriander/third_party/thrust/','-Ithird_party/coriander/hird_party/thrust/thrust/system/cuda/detail/']
   copts += ['-x', 'cuda']
   native.cc_library(
       srcs = srcs,

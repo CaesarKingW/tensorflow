@@ -2120,10 +2120,13 @@ class DataLayoutOptimizer : GraphProcessor {
               break;
             }
           }
+          VLOG(1) << " >>>>>>> removed " << node->name();
           nodes_removable.insert(trans_first);
           nodes_removable.insert(trans_second);
         }
       }
+      if (IsTransposeNHWCToNCHW(node->name()))
+          VLOG(1) << "IsTransposeNHWCToNCHW " << node->name();
     }
     graph_->mutable_node()->erase(
         std::remove_if(

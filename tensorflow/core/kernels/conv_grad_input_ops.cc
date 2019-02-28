@@ -949,6 +949,8 @@ void LaunchConv2DBackpropInputOp<GPUDevice, T>::operator()(
   static int64 ConvolveBackwardDataScratchSize = GetCudnnWorkspaceLimit(
       "TF_CUDNN_WORKSPACE_LIMIT_IN_MB", 1LL << 32  // 4GB by default
   );
+  //FIXME:
+//  ConvolveBackwardDataScratchSize=0;
   CudnnScratchAllocator scratch_allocator(ConvolveBackwardDataScratchSize, ctx);
   int device_id = stream->parent()->device_ordinal();
   DataType dtype = out_backprop.dtype();
@@ -995,21 +997,21 @@ void LaunchConv2DBackpropInputOp<GPUDevice, T>::operator()(
               .ok();
       if (cudnn_launch_status) {
         if (profile_result.is_valid()) {
-          if (profile_result.elapsed_time_in_ms() <
-              best_result.elapsed_time_in_ms()) {
-            best_result = profile_result;
-          }
-          if (scratch_allocator.TotalByteSize() == 0 &&
-              profile_result.elapsed_time_in_ms() <
-                  best_result_no_scratch.elapsed_time_in_ms()) {
+//          if (profile_result.elapsed_time_in_ms() <
+//              best_result.elapsed_time_in_ms()) {
+//            best_result = profile_result;
+//          }
+//          if (scratch_allocator.TotalByteSize() == 0 &&
+//              profile_result.elapsed_time_in_ms() <
+//                  best_result_no_scratch.elapsed_time_in_ms()) {
             best_result_no_scratch = profile_result;
-          }
+//          }
         }
       }
     }
     OP_REQUIRES(ctx,
                 best_result.is_valid() || best_result_no_scratch.is_valid(),
-                errors::NotFound("No algorithm worked!"));
+                errors::NotFound("input_ops: No algorithm worked!"));
     if (best_result.is_valid()) {
       algorithm_config.set_algorithm(best_result.algorithm());
     }
