@@ -68,7 +68,7 @@ REGISTER_KERNEL_BUILDER(Name("Shape")
                         ShapeOp<int64>);
 #endif  // TENSORFLOW_USE_SYCL
 
-#if GOOGLE_CUDA
+//#if GOOGLE_CUDA
 #define REGISTER_GPU_KERNEL(type)                                \
   REGISTER_KERNEL_BUILDER(Name("Shape")                          \
                               .Device(DEVICE_GPU)                \
@@ -85,7 +85,7 @@ REGISTER_KERNEL_BUILDER(Name("Shape")
 
 TF_CALL_NUMBER_TYPES_NO_INT32(REGISTER_GPU_KERNEL);
 TF_CALL_bool(REGISTER_GPU_KERNEL);
-TF_CALL_variant(REGISTER_GPU_KERNEL);
+//TF_CALL_variant(REGISTER_GPU_KERNEL);
 #undef REGISTER_GPU_KERNEL
 
 // A special GPU kernel for int32.
@@ -106,7 +106,7 @@ REGISTER_KERNEL_BUILDER(Name("Shape")
                             .TypeConstraint<int64>("out_type"),
                         ShapeOp<int64>);
 
-#endif  // GOOGLE_CUDA
+//#endif  // GOOGLE_CUDA
 
 // ShapeN ---------------------------------------
 REGISTER_KERNEL_BUILDER(Name("ShapeN")

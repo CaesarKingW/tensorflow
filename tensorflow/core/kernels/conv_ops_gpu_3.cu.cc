@@ -236,145 +236,235 @@ __global__ void SwapDimension1And2InTensor3Simple(int nthreads, const T* input,
 // the best performance on K40 GPUs.
 template <typename T, int NumThreads, int TileSizeI, int TileSizeJ,
           bool conjugate = false>
-__global__ void SwapDimension1And2InTensor3UsingTiles(
-    const T* __restrict__ input, Dimension<3> input_dims,
-    T* __restrict__ output) {
-  eigen_assert(blockDim.x == NumThreads);
-  eigen_assert(blockDim.y == 1);
-  eigen_assert(blockDim.z == 1);
-  eigen_assert(gridDim.y == 1);
-  eigen_assert(gridDim.z == 1);
-
-  constexpr int ReadRowPerPass = NumThreads / TileSizeJ;
-  constexpr int WriteRowPerPass = NumThreads / TileSizeI;
+//__global__ void SwapDimension1And2InTensor3UsingTiles(
+//    const T* __restrict__ input, Dimension<3> input_dims,
+//    T* __restrict__ output) {
+__global__ void SwapDimension1And2InTensor3UsingTiles(const T* input,
+                                                      Dimension<3> input_dims,
+                                                      T* output) {
   // One extra line in the inner dimension to avoid share memory bank conflict.
-  // This is to mimic the following, but no constructor of T can be invoked.
-  //     __shared__ T shared_memory_tile[TileSizeI][TileSizeJ + 1];
-//  __shared__ __align__(
-//      alignof(T)) char shared_mem_raw[TileSizeI * (TileSizeJ + 1) * sizeof(T)];
-//  typedef T(*SharedMemoryTile)[TileSizeJ + 1];
-//  SharedMemoryTile shared_memory_tile =
-//      reinterpret_cast<SharedMemoryTile>(shared_mem_raw);
   __shared__ T shared_memory_tile[TileSizeI][TileSizeJ + 1];
 
   int x = threadIdx.x;
+  if (x >= TileSizeI) {
+    return;
+  }
 
   Dimension<3> output_dims = {
-      input_dims[0],
-      input_dims[2],
-      input_dims[1],
+      input_dims[0], input_dims[2], input_dims[1],
   };
 
   Dimension<3> input_dims_in_tiles = {
-      input_dims[0],
-      (input_dims[1] + TileSizeI - 1) / TileSizeI,
-      (input_dims[2] + TileSizeJ - 1) / TileSizeJ,
+      input_dims[0], (input_dims[1] + TileSizeJ - 1) / TileSizeJ,
+      (input_dims[2] + TileSizeI - 1) / TileSizeI,
   };
 
   Index<3> input_tile_index =
       FlatToTensorIndex(blockIdx.x, input_dims_in_tiles);
 
   Index<3> input_tile_origin = {
-      input_tile_index[0],
-      input_tile_index[1] * TileSizeI,
-      input_tile_index[2] * TileSizeJ,
+      input_tile_index[0], input_tile_index[1] * TileSizeJ,
+      input_tile_index[2] * TileSizeI,
   };
 
   int input_origin_flat_index =
       TensorIndexToFlat(input_tile_origin, input_dims);
 
-  bool full_tile = true;
   int tile_width = TileSizeJ;
-
   // Only the last row or column may not have the full size.
   if (input_tile_index[2] == input_dims_in_tiles[2] - 1) {
     tile_width = input_dims[2] - (input_dims_in_tiles[2] - 1) * TileSizeJ;
-    full_tile &= false;
   }
-
   int tile_height = TileSizeI;
-
   if (input_tile_index[1] == input_dims_in_tiles[1] - 1) {
     tile_height = input_dims[1] - (input_dims_in_tiles[1] - 1) * TileSizeI;
-    full_tile &= false;
   }
 
-  // Calculate effective thread number. This ensures that we use the largest
-  // number of threads available to form a regular thread block with no
-  // trailing incomplete lines.
-  constexpr int in_effective_thread_num = NumThreads / TileSizeJ * TileSizeJ;
-
-  if (x < in_effective_thread_num) {
-    // Orient the logical thread block with respect to the input array.
-    // ie. align the contiguous dimension of thread blocks with the contiguous
-    // dimension of the input array.
-    int ti = x / TileSizeJ;
-    int tj = x % TileSizeJ;
-    int input_index = input_origin_flat_index + ti * input_dims[2] + tj;
-    int input_increment = ReadRowPerPass * input_dims[2];
-
-    if (full_tile) {
-#pragma unroll
-      for (int i_loc = ti; i_loc < (TileSizeI); i_loc += ReadRowPerPass) {
-        shared_memory_tile[i_loc][tj] =
-            maybe_conj<T, conjugate>::run(input[input_index]);
-        input_index += input_increment;
-      }
-    } else {
-      if (tj < tile_width) {
-        for (int i_loc = ti; i_loc < (tile_height); i_loc += ReadRowPerPass) {
-          shared_memory_tile[i_loc][tj] =
-              maybe_conj<T, conjugate>::run(input[input_index]);
-          input_index += input_increment;
-        }
-      }
+  // Load the data from input memory to the shared memory tile.
+  if (x < tile_width) {
+    int input_flat_index = input_origin_flat_index + x;
+    for (int y = 0; y < tile_height; y++) {
+      shared_memory_tile[y][x] = input[input_flat_index];
+      input_flat_index += input_dims[2];
     }
   }
 
   __syncthreads();
 
-  Index<3> output_tile_index = {
-      input_tile_index[0],
-      input_tile_index[2],
-      input_tile_index[1],
-  };
+    Index<3> output_tile_index = {
+        input_tile_index[0],
+        input_tile_index[2],
+        input_tile_index[1],
+    };
 
-  Index<3> output_tile_origin = {
-      output_tile_index[0],
-      output_tile_index[1] * TileSizeJ,
-      output_tile_index[2] * TileSizeI,
-  };
+    Index<3> output_tile_origin = {
+        output_tile_index[0],
+        output_tile_index[1] * TileSizeJ,
+        output_tile_index[2] * TileSizeI,
+    };
 
+//  Index<3> output_tile_index = {
+//      input_tile_index[0], input_tile_index[2], input_tile_index[1],
+//  };
+//
+//  Index<3> output_tile_origin = {
+//      output_tile_index[0], output_tile_index[1] * TileSize,
+//      output_tile_index[2] * TileSize,
+//  };
+//
   int output_origin_flat_index =
       TensorIndexToFlat(output_tile_origin, output_dims);
 
-  constexpr int out_effective_thread_num = NumThreads / TileSizeI * TileSizeI;
+  int output_flat_index = output_origin_flat_index + x;
 
-  if (x < out_effective_thread_num) {
-    // Re-orient the logical thread block with respect to the output array.
-    // ie. align the contiguous dimension of thread blocks with contiguous
-    // dimension of the output array.
-    int ti = x / TileSizeI;
-    int tj = x % TileSizeI;
-    int output_index = output_origin_flat_index + ti * output_dims[2] + tj;
-    int output_increment = WriteRowPerPass * output_dims[2];
-
-    if (full_tile) {
-#pragma unroll
-      for (int i_loc = ti; i_loc < (TileSizeJ); i_loc += WriteRowPerPass) {
-        output[output_index] = shared_memory_tile[tj][i_loc];
-        output_index += output_increment;
-      }
-    } else {
-      if (tj < tile_height) {
-        for (int i_loc = ti; i_loc < (tile_width); i_loc += WriteRowPerPass) {
-          output[output_index] = shared_memory_tile[tj][i_loc];
-          output_index += output_increment;
-        }
-      }
+  // Load the data from the shared memory tile to the output memory.
+  if (x < tile_height) {
+    for (int y = 0; y < tile_width; y++) {
+      output[output_flat_index] = shared_memory_tile[x][y];
+      output_flat_index += output_dims[2];
     }
   }
 }
+
+//__global__ void SwapDimension1And2InTensor3UsingTiles(
+//    const T* __restrict__ input, Dimension<3> input_dims,
+//    T* __restrict__ output) {
+//  eigen_assert(blockDim.x == NumThreads);
+//  eigen_assert(blockDim.y == 1);
+//  eigen_assert(blockDim.z == 1);
+//  eigen_assert(gridDim.y == 1);
+//  eigen_assert(gridDim.z == 1);
+//
+//  constexpr int ReadRowPerPass = NumThreads / TileSizeJ;
+//  constexpr int WriteRowPerPass = NumThreads / TileSizeI;
+//  // One extra line in the inner dimension to avoid share memory bank conflict.
+//  // This is to mimic the following, but no constructor of T can be invoked.
+//  //     __shared__ T shared_memory_tile[TileSizeI][TileSizeJ + 1];
+////  __shared__ __align__(
+////      alignof(T)) char shared_mem_raw[TileSizeI * (TileSizeJ + 1) * sizeof(T)];
+////  typedef T(*SharedMemoryTile)[TileSizeJ + 1];
+////  SharedMemoryTile shared_memory_tile =
+////      reinterpret_cast<SharedMemoryTile>(shared_mem_raw);
+//  __shared__ T shared_memory_tile[TileSizeI][TileSizeJ + 1];
+//
+//  int x = threadIdx.x;
+//
+//  Dimension<3> output_dims = {
+//      input_dims[0],
+//      input_dims[2],
+//      input_dims[1],
+//  };
+//
+//  Dimension<3> input_dims_in_tiles = {
+//      input_dims[0],
+//      (input_dims[1] + TileSizeI - 1) / TileSizeI,
+//      (input_dims[2] + TileSizeJ - 1) / TileSizeJ,
+//  };
+//
+//  Index<3> input_tile_index =
+//      FlatToTensorIndex(blockIdx.x, input_dims_in_tiles);
+//
+//  Index<3> input_tile_origin = {
+//      input_tile_index[0],
+//      input_tile_index[1] * TileSizeI,
+//      input_tile_index[2] * TileSizeJ,
+//  };
+//
+//  int input_origin_flat_index =
+//      TensorIndexToFlat(input_tile_origin, input_dims);
+//
+//  bool full_tile = true;
+//  int tile_width = TileSizeJ;
+//
+//  // Only the last row or column may not have the full size.
+//  if (input_tile_index[2] == input_dims_in_tiles[2] - 1) {
+//    tile_width = input_dims[2] - (input_dims_in_tiles[2] - 1) * TileSizeJ;
+//    full_tile &= false;
+//  }
+//
+//  int tile_height = TileSizeI;
+//
+//  if (input_tile_index[1] == input_dims_in_tiles[1] - 1) {
+//    tile_height = input_dims[1] - (input_dims_in_tiles[1] - 1) * TileSizeI;
+//    full_tile &= false;
+//  }
+//
+//  // Calculate effective thread number. This ensures that we use the largest
+//  // number of threads available to form a regular thread block with no
+//  // trailing incomplete lines.
+//  constexpr int in_effective_thread_num = NumThreads / TileSizeJ * TileSizeJ;
+//
+//  if (x < in_effective_thread_num) {
+//    // Orient the logical thread block with respect to the input array.
+//    // ie. align the contiguous dimension of thread blocks with the contiguous
+//    // dimension of the input array.
+//    int ti = x / TileSizeJ;
+//    int tj = x % TileSizeJ;
+//    int input_index = input_origin_flat_index + ti * input_dims[2] + tj;
+//    int input_increment = ReadRowPerPass * input_dims[2];
+//
+//    if (full_tile) {
+//#pragma unroll
+//      for (int i_loc = ti; i_loc < (TileSizeI); i_loc += ReadRowPerPass) {
+//        shared_memory_tile[i_loc][tj] =
+//            maybe_conj<T, conjugate>::run(input[input_index]);
+//        input_index += input_increment;
+//      }
+//    } else {
+//      if (tj < tile_width) {
+//        for (int i_loc = ti; i_loc < (tile_height); i_loc += ReadRowPerPass) {
+//          shared_memory_tile[i_loc][tj] =
+//              maybe_conj<T, conjugate>::run(input[input_index]);
+//          input_index += input_increment;
+//        }
+//      }
+//    }
+//  }
+//
+//  __syncthreads();
+//
+//  Index<3> output_tile_index = {
+//      input_tile_index[0],
+//      input_tile_index[2],
+//      input_tile_index[1],
+//  };
+//
+//  Index<3> output_tile_origin = {
+//      output_tile_index[0],
+//      output_tile_index[1] * TileSizeJ,
+//      output_tile_index[2] * TileSizeI,
+//  };
+//
+//  int output_origin_flat_index =
+//      TensorIndexToFlat(output_tile_origin, output_dims);
+//
+//  constexpr int out_effective_thread_num = NumThreads / TileSizeI * TileSizeI;
+//
+//  if (x < out_effective_thread_num) {
+//    // Re-orient the logical thread block with respect to the output array.
+//    // ie. align the contiguous dimension of thread blocks with contiguous
+//    // dimension of the output array.
+//    int ti = x / TileSizeI;
+//    int tj = x % TileSizeI;
+//    int output_index = output_origin_flat_index + ti * output_dims[2] + tj;
+//    int output_increment = WriteRowPerPass * output_dims[2];
+//
+//    if (full_tile) {
+//#pragma unroll
+//      for (int i_loc = ti; i_loc < (TileSizeJ); i_loc += WriteRowPerPass) {
+//        output[output_index] = shared_memory_tile[tj][i_loc];
+//        output_index += output_increment;
+//      }
+//    } else {
+//      if (tj < tile_height) {
+//        for (int i_loc = ti; i_loc < (tile_width); i_loc += WriteRowPerPass) {
+//          output[output_index] = shared_memory_tile[tj][i_loc];
+//          output_index += output_increment;
+//        }
+//      }
+//    }
+//  }
+//}
 
 // A Cuda custom kernel that convert input to output, given proper padding on
 // the left and the top. The padded value is zero.
