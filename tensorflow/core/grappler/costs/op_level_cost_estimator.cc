@@ -391,7 +391,7 @@ OpLevelCostEstimator::DeviceInfo OpLevelCostEstimator::GetDeviceInfo(
     }
   } else if (device.type() == "GPU") {
 //    const string architecture = device.environment().at("architecture");
-    const string architecture = "PPU";
+    const string architecture = "7";
     int cores_per_multiprocessor;
     if (architecture < "3") {
       // Fermi
@@ -427,8 +427,8 @@ OpLevelCostEstimator::DeviceInfo OpLevelCostEstimator::GetDeviceInfo(
   VLOG(1) << "Device: " << device.type() << " gflops: " << gflops
           << " gb_per_sec: " << gb_per_sec;
 
-  DCHECK_LT(0, gflops) << device.DebugString();
-  DCHECK_LT(0, gb_per_sec) << device.DebugString();
+  //DCHECK_LT(0, gflops) << device.DebugString();
+  //DCHECK_LT(0, gb_per_sec) << device.DebugString();
 
   return {gflops, gb_per_sec};
 }
